@@ -26,9 +26,31 @@ namespace MarkdownManagerNew.Repositories
             this.userManager = new UserManager<ApplicationUser>(userStore);  
         }
 
-        public List<Document> listDocuments(string userid)
+        public List<Document> listUserDocuments(string userid)
         {
-            ApplicationUser currentuser = dbContext.Users.Single(x => x.Id == userid);
+            ApplicationUser currentuser = dbContext.Users
+                .Where(x => x.Id == userid).Single();
+
+            var documentsFromUserRights = dbContext.Documents
+                .Where(d => d.Users.Contains(currentuser)).ToList();
+
+            var documentsFromGroups = dbContext.Documents
+                .TakeWhile(d => d.Groups.Any(x => currentuser.Groups.Contains(x))).ToList();
+
+            List<Document> query = new List<Document>();
+
+            foreach (var d in documentsFromUserRights)
+            {
+                query.Add(d);
+            }
+
+            foreach (var d in documentsFromGroups)
+            {
+                query.Add(d);
+            }
+
+            return query;
+
         }
 
     }

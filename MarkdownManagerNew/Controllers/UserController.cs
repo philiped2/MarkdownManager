@@ -6,33 +6,36 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MarkdownManagerNew.Models;
+using MarkdownManagerNew.Repositories;
 
 namespace MarkdownManagerNew.Controllers
 {
     public class UserController : Controller
     {
-        
+        Repository repo = new Repository();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: User
         public ActionResult Index()
         {
-            return View(db.ApplicationUsers.ToList());
+            return View(repo.listUserDocuments(User.Identity.GetUserId()));
         }
 
         // GET: User/Details/5
-        public ActionResult Details(string id)
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.ApplicationUsers.Find(id);
-            if (applicationUser == null)
+            Document document = db.Documents.Find(id);
+            if (document == null)
             {
                 return HttpNotFound();
             }
-            return View(applicationUser);
+            return View(document);
         }
 
         // GET: User/Create
@@ -46,31 +49,31 @@ namespace MarkdownManagerNew.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,MailAdress,FirstName,LastName,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Create([Bind(Include = "Id,Description,Name,Markdown,DateCreated,LastChanged,CreatorId")] Document document)
         {
             if (ModelState.IsValid)
             {
-                db.ApplicationUsers.Add(applicationUser);
+                db.Documents.Add(document);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(applicationUser);
+            return View(document);
         }
 
         // GET: User/Edit/5
-        public ActionResult Edit(string id)
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.ApplicationUsers.Find(id);
-            if (applicationUser == null)
+            Document document = db.Documents.Find(id);
+            if (document == null)
             {
                 return HttpNotFound();
             }
-            return View(applicationUser);
+            return View(document);
         }
 
         // POST: User/Edit/5
@@ -78,39 +81,39 @@ namespace MarkdownManagerNew.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,MailAdress,FirstName,LastName,Email,EmailConfirmed,PasswordHash,SecurityStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEndDateUtc,LockoutEnabled,AccessFailedCount,UserName")] ApplicationUser applicationUser)
+        public ActionResult Edit([Bind(Include = "Id,Description,Name,Markdown,DateCreated,LastChanged,CreatorId")] Document document)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(applicationUser).State = EntityState.Modified;
+                db.Entry(document).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(applicationUser);
+            return View(document);
         }
 
         // GET: User/Delete/5
-        public ActionResult Delete(string id)
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            ApplicationUser applicationUser = db.ApplicationUsers.Find(id);
-            if (applicationUser == null)
+            Document document = db.Documents.Find(id);
+            if (document == null)
             {
                 return HttpNotFound();
             }
-            return View(applicationUser);
+            return View(document);
         }
 
         // POST: User/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            ApplicationUser applicationUser = db.ApplicationUsers.Find(id);
-            db.ApplicationUsers.Remove(applicationUser);
+            Document document = db.Documents.Find(id);
+            db.Documents.Remove(document);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -159,7 +159,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -169,6 +168,10 @@
     <Compile Include="Migrations\201602291059328_initial.cs" />
     <Compile Include="Migrations\201602291059328_initial.Designer.cs">
       <DependentUpon>201602291059328_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602291358344_changedidentitymodels.cs" />
+    <Compile Include="Migrations\201602291358344_changedidentitymodels.Designer.cs">
+      <DependentUpon>201602291358344_changedidentitymodels.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -247,11 +250,6 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Admin\Create.cshtml" />
-    <Content Include="Views\Admin\Delete.cshtml" />
-    <Content Include="Views\Admin\Details.cshtml" />
-    <Content Include="Views\Admin\Edit.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -264,6 +262,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201602291059328_initial.resx">
       <DependentUpon>201602291059328_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602291358344_changedidentitymodels.resx">
+      <DependentUpon>201602291358344_changedidentitymodels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
