@@ -12,7 +12,7 @@ namespace MarkdownManagerNew.Controllers
 {
     public class UserController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        
 
         // GET: User
         public ActionResult Index()
