@@ -31,5 +31,12 @@ namespace MarkdownManagerNew.Repositories
             ApplicationUser currentuser = dbContext.Users.Single(x => x.Id == userid);
         }
 
+        public List<Document> listAllDocuments()
+        {
+            List<Document> documentList = dbContext.Documents.ToList();
+
+            return documentList;
+        }
+
     }
 }

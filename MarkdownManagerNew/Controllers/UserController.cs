@@ -7,17 +7,25 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MarkdownManagerNew.Models;
+using MarkdownManagerNew.Repositories;
 
 namespace MarkdownManagerNew.Controllers
 {
     public class UserController : Controller
     {
-        
+
+        Repository repo = new Repository();
 
         // GET: User
         public ActionResult Index()
         {
-            return View(db.ApplicationUsers.ToList());
+
+        }
+
+        [Authorize (Roles = "Admin")]
+        public ActionResult AdminIndex()
+        {
+            return View(repo.listAllDocuments());
         }
 
         // GET: User/Details/5
