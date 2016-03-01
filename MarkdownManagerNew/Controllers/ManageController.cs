@@ -29,7 +29,7 @@ namespace MarkdownManagerNew.Controllers
         public ApplicationSignInManager SignInManager
         {
             get
-           Documents {
+            {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
             private set 
