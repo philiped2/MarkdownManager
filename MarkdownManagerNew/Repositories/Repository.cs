@@ -32,10 +32,11 @@ namespace MarkdownManagerNew.Repositories
                 .Where(x => x.Id == userid).Single();
 
             var documentsFromUserRights = dbContext.Documents
-                .Where(d => d.Users.Contains(currentuser)).ToList();
+                .Where(d => d.Users.Contains(currentuser));
+                .Where(d => d.Users.Select(d => d.)
 
             var documentsFromGroups = dbContext.Documents
-                .TakeWhile(d => d.Groups.Any(x => currentuser.Groups.Contains(x))).ToList();
+                .TakeWhile(d => d.Groups.Any(x => currentuser.Groups.Contains(x)));
 
             List<Document> query = new List<Document>();
 
