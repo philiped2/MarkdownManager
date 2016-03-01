@@ -53,5 +53,12 @@ namespace MarkdownManagerNew.Repositories
 
         }
 
+        public List<Document> listAllDocuments()
+        {
+            List<Document> documentList = dbContext.Documents.ToList();
+
+            return documentList;
+        }
+
     }
 }
