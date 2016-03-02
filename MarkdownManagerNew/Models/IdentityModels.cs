@@ -13,7 +13,7 @@ namespace MarkdownManagerNew.Models
     {
         public ApplicationUser()
         {
-            Groups = new List<Group>();
+            var Groups = new List<Group>();
 
             Documents = new List<Document>();
         }
@@ -56,6 +56,22 @@ namespace MarkdownManagerNew.Models
         public DbSet<File> Files { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Document> Documents { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ApplicationUser>()
+            .HasKey(t => t.Id)
+            .HasMany(t => t.Documents)
+             .WithMany(t => t.Users)
+            .Map(m =>
+             {
+                m.ToTable("Userdocuments");
+             m.MapLeftKey("UserId");
+             m.MapRightKey("DocumentId");
+                });
+             }
+
+
 
         public static ApplicationDbContext Create()
         {

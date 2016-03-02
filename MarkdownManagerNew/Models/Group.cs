@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -23,7 +24,7 @@ namespace MarkdownManagerNew.Models
         public int Id { get; set; }
 
         [Display(Name = "Medlemmar")] //FKEY
-        public virtual List<ApplicationUser> Users { get; set; }
+        public virtual ICollection<ApplicationUser> Users { get; set; }
 
         [Display(Name = "Dokument")] //FKEY
         public virtual ICollection<Document> Documents { get; set; }
@@ -34,6 +35,9 @@ namespace MarkdownManagerNew.Models
         [Display(Name = "Namn")]
         public string Name { get; set; }
 
+        //public string CreatorId { get; set; }
+        //[ForeignKey("CreatorId")]
+        [Display(Name = "Skapare")]
         public string CreatorId { get; set; }
 
         [Display(Name = "Datum skapad")]

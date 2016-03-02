@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -21,7 +22,7 @@ namespace MarkdownManagerNew.Models
             Tags = new List<Tag>();
         }
 
-        [Key]
+        //[Key]
         public int Id { get; set; }
 
         [Display(Name = "Beskrivning")]
@@ -45,8 +46,8 @@ namespace MarkdownManagerNew.Models
         [Display(Name = "Gruppmedlemmar")]
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
-        //public string CreatorID { get; set; }
-        //[ForeignKey("CreatorID")]
+        //public string CreatorId { get; set; }
+        //[ForeignKey("CreatorId")]
         [Display(Name = "Skapare")]
         public string CreatorId { get; set; }
     }
