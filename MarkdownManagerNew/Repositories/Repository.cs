@@ -26,29 +26,15 @@ namespace MarkdownManagerNew.Repositories
             this.userManager = new UserManager<ApplicationUser>(userStore);  
         }
 
-        public List<Document> listUserDocuments(string userid)
+        public List<Document> GetUserDocuments(ApplicationUser user)
         {
-            ApplicationUser currentuser = dbContext.Users
-                .Where(x => x.Id == userid).Single();
+            var documentsByUserRights = user.Documents.ToList();
 
-            //var documentsFromUserRights = dbContext.Documents
-            //    .s
+            List<Document> documentsByGroupRights = user.Groups.Select(g => g.Documents);
 
-            var documentsFromGroups = dbContext.Documents
-                .TakeWhile(d => d.Groups.Any(x => currentuser.Groups.Contains(x)));
-
+            var mergedList = documentsByUserRights.Union(new List<Document>()); //Mergea dessa
+            
             List<Document> query = new List<Document>();
-
-            //foreach (var d in documentsFromUserRights)
-            //{
-            //    query.Add(d);
-            //}
-
-            foreach (var d in documentsFromGroups)
-            {
-                query.Add(d);
-            }
-
             return query;
 
         }
@@ -58,6 +44,14 @@ namespace MarkdownManagerNew.Repositories
             List<Document> documentList = dbContext.Documents.ToList();
 
             return documentList;
+        }
+
+        public ApplicationUser GetUser (string userId)
+        {
+            ApplicationUser query = dbContext.Users
+                .Where(x => x.Id == userId).Single();
+
+            return query;
         }
 
     }
