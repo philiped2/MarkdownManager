@@ -26,15 +26,24 @@ namespace MarkdownManagerNew.Repositories
             this.userManager = new UserManager<ApplicationUser>(userStore);  
         }
 
-        public List<Document> GetUserDocuments(ApplicationUser user)
+        public List<Document> GetUserDocuments(ApplicationUser user) //Fixa denna med lamba-linq sedan
         {
-            var documentsByUserRights = user.Documents.ToList();
-
-            //List<Document> documentsByGroupRights = user.Groups.Select(g => g.Documents);
-
-            var mergedList = documentsByUserRights.Union(new List<Document>()); //Mergea dessa
-            
             List<Document> query = new List<Document>();
+            var documentsByUserRights = user.Documents.ToList();
+            
+            foreach (var item in documentsByUserRights)
+            {
+                query.Add(item);
+            }
+
+            foreach (var group in user.Groups)
+            {
+                foreach (var document in group.Documents)
+                {
+                    query.Add(document);
+                }
+            }
+
             return query;
 
         }
