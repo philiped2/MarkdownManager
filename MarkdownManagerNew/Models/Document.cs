@@ -20,10 +20,12 @@ namespace MarkdownManagerNew.Models
             Groups = new List<Group>();
 
             Tags = new List<Tag>();
+
+            Files = new List<File>();
         }
 
-        //[Key]
-        public int Id { get; set; }
+        [Key]
+        public int ID { get; set; }
 
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }
@@ -45,10 +47,15 @@ namespace MarkdownManagerNew.Models
         public virtual ICollection<Tag> Tags { get; set; }
         [Display(Name = "Gruppmedlemmar")]
         public virtual ICollection<ApplicationUser> Users { get; set; }
+        [Display(Name = "Filer")]
+        public virtual ICollection<File> Files { get; set; }
 
-        public string CreatorId { get; set; }
-        [ForeignKey("CreatorId")]
+        //public string CreatorId { get; set; }
+
+        public string CreatorID { get; set; }
+        [Required]
         [Display(Name = "Skapare")]
-        public virtual ApplicationUser Creator { get; set; }
+        //[ForeignKey("CreatorID")]
+        public virtual ApplicationUser Creator { get; set; } //Lägg till virtual. Gör det på andra creators också
     }
 }

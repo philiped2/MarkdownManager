@@ -8,24 +8,29 @@ using System.Web;
 using System.Web.Mvc;
 using MarkdownManagerNew.Models;
 using MarkdownManagerNew.Repositories;
+using Microsoft.AspNet.Identity;
 
 namespace MarkdownManagerNew.Controllers
 {
-    //[Authorize(Roles="Admin")]
     [Authorize]
-    public class AdminController : Controller
+    public class UserController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-        private Repository repo = new Repository();
-
-        // GET: Admin
+        private ApplicationDbContext db = new ApplicationDbContext(); //Ta bort sen
+        Repository repo = new Repository();
+        
+        private ApplicationUser GetCurrentUser()
+        {
+            return repo.GetUser(User.Identity.GetUserId());
+        }
+        // GET: User
         public ActionResult Index()
         {
-            return View(repo.GetAllDocuments());
-            //return View(db.Documents.ToList());
+            return View(repo.GetUserDocuments(GetCurrentUser()));
+            //return View(repo.listAllDocuments());
         }
 
-        // GET: Admin/Details/5
+
+        // GET: User/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,13 +45,13 @@ namespace MarkdownManagerNew.Controllers
             return View(document);
         }
 
-        // GET: Admin/Create
+        // GET: User/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Create
+        // POST: User/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -63,7 +68,7 @@ namespace MarkdownManagerNew.Controllers
             return View(document);
         }
 
-        // GET: Admin/Edit/5
+        // GET: User/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,7 +83,7 @@ namespace MarkdownManagerNew.Controllers
             return View(document);
         }
 
-        // POST: Admin/Edit/5
+        // POST: User/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -94,7 +99,7 @@ namespace MarkdownManagerNew.Controllers
             return View(document);
         }
 
-        // GET: Admin/Delete/5
+        // GET: User/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,7 +114,7 @@ namespace MarkdownManagerNew.Controllers
             return View(document);
         }
 
-        // POST: Admin/Delete/5
+        // POST: User/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
