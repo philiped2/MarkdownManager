@@ -173,6 +173,10 @@
     <Compile Include="Migrations\201602291358344_changedidentitymodels.Designer.cs">
       <DependentUpon>201602291358344_changedidentitymodels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201603011038415_AddedForeignKeyToCreatorsInModels.cs" />
+    <Compile Include="Migrations\201603011038415_AddedForeignKeyToCreatorsInModels.Designer.cs">
+      <DependentUpon>201603011038415_AddedForeignKeyToCreatorsInModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Document.cs" />
@@ -270,6 +274,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602291358344_changedidentitymodels.resx">
       <DependentUpon>201602291358344_changedidentitymodels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603011038415_AddedForeignKeyToCreatorsInModels.resx">
+      <DependentUpon>201603011038415_AddedForeignKeyToCreatorsInModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -89,8 +89,8 @@ namespace MarkdownManagerNew.Migrations
                     userManager.AddToRole(olle.Id, "User");
                 }
 
-                var group1 = new Group { Name = "Grupp1", CreatorId = philip.Id, Description = "Den första gruppen" };
-                var group2 = new Group { Name = "Grupp2", CreatorId = philip.Id, Description = "Den andra gruppen" };
+                var group1 = new Group { Name = "Grupp1", Description = "Den första gruppen", CreatorId = philip.Id };
+                var group2 = new Group { Name = "Grupp2", Description = "Den andra gruppen", CreatorId = william.Id };
 
                 var tag1a = new Tag { Label = "tag1a" };
                 var tag1b = new Tag { Label = "tag1b" };

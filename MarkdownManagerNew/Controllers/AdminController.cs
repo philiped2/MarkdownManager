@@ -7,17 +7,20 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MarkdownManagerNew.Models;
+using MarkdownManagerNew.Repositories;
 
 namespace MarkdownManagerNew.Controllers
 {
     public class AdminController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private Repository repo = new Repository();
 
         // GET: Admin
         public ActionResult Index()
         {
-            return View(db.Documents.ToList());
+            return View(repo.GetAllDocuments());
+            //return View(db.Documents.ToList());
         }
 
         // GET: Admin/Details/5

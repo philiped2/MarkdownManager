@@ -58,6 +58,13 @@
             @Html.DisplayFor(model => model.CreatorId)
         </dd>
 
+        <dt>
+            Tags
+        </dt>
+        @foreach (var tag in Model.Tags)
+        {
+            <dd>@tag.Label</dd>
+        }
     </dl>
 </div>
 <p>
