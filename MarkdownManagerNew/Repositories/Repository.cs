@@ -30,7 +30,7 @@ namespace MarkdownManagerNew.Repositories
         {
             var documentsByUserRights = user.Documents.ToList();
 
-            List<Document> documentsByGroupRights = user.Groups.Select(g => g.Documents);
+            //List<Document> documentsByGroupRights = user.Groups.Select(g => g.Documents);
 
             var mergedList = documentsByUserRights.Union(new List<Document>()); //Mergea dessa
             

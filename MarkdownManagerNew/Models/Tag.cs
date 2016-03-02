@@ -14,7 +14,7 @@ namespace MarkdownManagerNew.Models
         }
 
         [Key]
-        public int Id { get; set; }
+        public int ID { get; set; }
         [Display(Name = "Tagg")]
         public string Label { get; set; }
         [Display(Name = "Dokument")]

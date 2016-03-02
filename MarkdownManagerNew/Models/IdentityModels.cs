@@ -13,9 +13,11 @@ namespace MarkdownManagerNew.Models
     {
         public ApplicationUser()
         {
-            var Groups = new List<Group>();
+            Groups = new List<Group>();
 
             Documents = new List<Document>();
+
+            Files = new List<File>();
         }
 
         //[Required]
@@ -35,6 +37,9 @@ namespace MarkdownManagerNew.Models
 
         [Display(Name = "Grupper")]
         public virtual ICollection<Group> Groups { get; set; }
+
+        [Display(Name = "Filer")]
+        public virtual ICollection<File> Files { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -59,19 +64,47 @@ namespace MarkdownManagerNew.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ApplicationUser>()
-            .HasKey(t => t.Id)
-            .HasMany(t => t.Documents)
-             .WithMany(t => t.Users)
-            .Map(m =>
-             {
-                m.ToTable("Userdocuments");
-             m.MapLeftKey("UserId");
-             m.MapRightKey("DocumentId");
-                });
-             }
+            modelBuilder.Entity<Document>()
+            .HasMany(t => t.Users)
+            .WithMany(u => u.Documents);
+
+            modelBuilder.Entity<Group>()
+            .HasMany(t => t.Users)
+            .WithMany(u => u.Groups);
+
+            modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+        }
 
 
+        //    modelBuilder.Entity<Document>()
+        //    .HasMany(t => t.Groups)
+        //    .WithMany(g => g.Documents);
+
+        //    modelBuilder.Entity<Document>()
+        //    .HasMany(t => t.Tags)
+        //    .WithMany(t => t.Documents);
+
+        
+
+        //    modelBuilder.Entity<Group>()
+        //        .HasMany(g => g.Users)
+        //        .WithMany(u => u.Groups);
+
+        //    modelBuilder.Entity<File>()
+        //        .HasRequired<ApplicationUser>(f => f.Creator)
+        //        .WithMany(u => u.Files)
+        //        .HasForeignKey(f => f.CreatorId);
+
+        //    modelBuilder.Entity<File>()
+        //        .HasRequired<Document>(g => g.Document)
+        //        .WithMany(d => d.Files)
+        //        .HasForeignKey(f => f.DocumentId);
+
+        
+
+        //}
 
         public static ApplicationDbContext Create()
         {

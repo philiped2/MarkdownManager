@@ -21,7 +21,7 @@ namespace MarkdownManagerNew.Models
         }
 
         [Key]
-        public int Id { get; set; }
+        public int ID { get; set; }
 
         [Display(Name = "Medlemmar")] //FKEY
         public virtual ICollection<ApplicationUser> Users { get; set; }
@@ -36,9 +36,11 @@ namespace MarkdownManagerNew.Models
         public string Name { get; set; }
 
         //public string CreatorId { get; set; }
-        //[ForeignKey("CreatorId")]
+        public string CreatorID { get; set; }
+        [Required]
         [Display(Name = "Skapare")]
-        public string CreatorId { get; set; }
+        //[ForeignKey("CreatorID")]
+        public ApplicationUser Creator { get; set; }
 
         [Display(Name = "Datum skapad")]
         public Nullable<DateTime> DateCreated { get; set; }

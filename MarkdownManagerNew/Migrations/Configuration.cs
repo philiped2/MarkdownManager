@@ -89,8 +89,8 @@ namespace MarkdownManagerNew.Migrations
                     userManager.AddToRole(olle.Id, "User");
                 }
 
-                var group1 = new Group { Name = "Grupp1", Description = "Den första gruppen", CreatorId = philip.Id };
-                var group2 = new Group { Name = "Grupp2", Description = "Den andra gruppen", CreatorId = william.Id };
+                var group1 = new Group { Name = "Grupp1", Description = "Den första gruppen", CreatorID = philip.Id };
+                var group2 = new Group { Name = "Grupp2", Description = "Den andra gruppen", CreatorID = william.Id };
 
                 var tag1a = new Tag { Label = "tag1a" };
                 var tag1b = new Tag { Label = "tag1b" };
@@ -105,10 +105,10 @@ namespace MarkdownManagerNew.Migrations
                 var tag4a = new Tag { Label = "tag4a" };
                 var tag4b = new Tag { Label = "tag4b" };
 
-                var document1 = new Document { Name = "Document1", CreatorId = philip.Id, Description = "Första dokumentet" };
-                var document2 = new Document { Name = "Document2", CreatorId = alexander.Id, Description = "Andra dokumentet" };
-                var document3 = new Document { Name = "Document3", CreatorId = william.Id, Description = "Tredje dokumentet" };
-                var document4 = new Document { Name = "Document4", CreatorId = olle.Id, Description = "Fjärde dokumentet" };
+                var document1 = new Document { Name = "Document1", CreatorID = philip.Id, Description = "Första dokumentet" };
+                var document2 = new Document { Name = "Document2", CreatorID = alexander.Id, Description = "Andra dokumentet" };
+                var document3 = new Document { Name = "Document3", CreatorID = william.Id, Description = "Tredje dokumentet" };
+                var document4 = new Document { Name = "Document4", CreatorID = olle.Id, Description = "Fjärde dokumentet" };
 
                 group1.Users.Add(philip);  // GROUP --> USERS
                 group1.Users.Add(alexander);
