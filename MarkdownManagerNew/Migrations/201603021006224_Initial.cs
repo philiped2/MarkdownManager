@@ -3,7 +3,7 @@ namespace MarkdownManagerNew.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -17,7 +17,7 @@ namespace MarkdownManagerNew.Migrations
                         Markdown = c.String(),
                         DateCreated = c.DateTime(),
                         LastChanged = c.DateTime(),
-                        CreatorId = c.String(),
+                        Creator = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -28,7 +28,7 @@ namespace MarkdownManagerNew.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         Description = c.String(),
                         Name = c.String(),
-                        CreatorId = c.String(),
+                        Creator = c.String(),
                         DateCreated = c.DateTime(),
                         LastChanged = c.DateTime(),
                     })
@@ -113,14 +113,14 @@ namespace MarkdownManagerNew.Migrations
                         Description = c.String(),
                         ContentType = c.String(),
                         Data = c.Byte(nullable: false),
-                        CreatorId = c.String(maxLength: 128),
-                        DocumentId = c.String(maxLength: 128),
+                        Creator_Id = c.String(maxLength: 128),
+                        Document_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.CreatorId)
-                .ForeignKey("dbo.AspNetUsers", t => t.DocumentId)
-                .Index(t => t.CreatorId)
-                .Index(t => t.DocumentId);
+                .ForeignKey("dbo.AspNetUsers", t => t.Creator_Id)
+                .ForeignKey("dbo.Documents", t => t.Document_Id)
+                .Index(t => t.Creator_Id)
+                .Index(t => t.Document_Id);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -189,8 +189,8 @@ namespace MarkdownManagerNew.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Files", "DocumentId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Files", "CreatorId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Files", "Document_Id", "dbo.Documents");
+            DropForeignKey("dbo.Files", "Creator_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.TagDocuments", "Document_Id", "dbo.Documents");
             DropForeignKey("dbo.TagDocuments", "Tag_Id", "dbo.Tags");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
@@ -211,8 +211,8 @@ namespace MarkdownManagerNew.Migrations
             DropIndex("dbo.GroupDocuments", new[] { "Document_Id" });
             DropIndex("dbo.GroupDocuments", new[] { "Group_Id" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropIndex("dbo.Files", new[] { "DocumentId" });
-            DropIndex("dbo.Files", new[] { "CreatorId" });
+            DropIndex("dbo.Files", new[] { "Document_Id" });
+            DropIndex("dbo.Files", new[] { "Creator_Id" });
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });

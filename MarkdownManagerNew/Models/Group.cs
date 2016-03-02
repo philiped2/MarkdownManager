@@ -35,10 +35,10 @@ namespace MarkdownManagerNew.Models
         [Display(Name = "Namn")]
         public string Name { get; set; }
 
-        //public string CreatorId { get; set; }
-        //[ForeignKey("CreatorId")]
-        [Display(Name = "Skapare")]
         public string CreatorId { get; set; }
+        [ForeignKey("CreatorId")]
+        [Display(Name = "Skapare")]
+        public virtual string Creator { get; set; }
 
         [Display(Name = "Datum skapad")]
         public Nullable<DateTime> DateCreated { get; set; }

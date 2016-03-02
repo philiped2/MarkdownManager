@@ -46,9 +46,9 @@ namespace MarkdownManagerNew.Models
         [Display(Name = "Gruppmedlemmar")]
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
-        //public string CreatorId { get; set; }
-        //[ForeignKey("CreatorId")]
-        [Display(Name = "Skapare")]
         public string CreatorId { get; set; }
+        [ForeignKey("CreatorId")]
+        [Display(Name = "Skapare")]
+        public virtual ApplicationUser Creator { get; set; }
     }
 }

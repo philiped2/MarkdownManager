@@ -165,17 +165,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201602291059328_initial.cs" />
-    <Compile Include="Migrations\201602291059328_initial.Designer.cs">
-      <DependentUpon>201602291059328_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201602291358344_changedidentitymodels.cs" />
-    <Compile Include="Migrations\201602291358344_changedidentitymodels.Designer.cs">
-      <DependentUpon>201602291358344_changedidentitymodels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201603011038415_AddedForeignKeyToCreatorsInModels.cs" />
-    <Compile Include="Migrations\201603011038415_AddedForeignKeyToCreatorsInModels.Designer.cs">
-      <DependentUpon>201603011038415_AddedForeignKeyToCreatorsInModels.cs</DependentUpon>
+    <Compile Include="Migrations\201603021006224_Initial.cs" />
+    <Compile Include="Migrations\201603021006224_Initial.Designer.cs">
+      <DependentUpon>201603021006224_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -190,10 +182,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-MarkdownManagerNew-20160229115113.mdf" />
-    <Content Include="App_Data\aspnet-MarkdownManagerNew-20160229115113_log.ldf">
-      <DependentUpon>aspnet-MarkdownManagerNew-20160229115113.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -260,7 +248,9 @@
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -269,14 +259,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201602291059328_initial.resx">
-      <DependentUpon>201602291059328_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201602291358344_changedidentitymodels.resx">
-      <DependentUpon>201602291358344_changedidentitymodels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201603011038415_AddedForeignKeyToCreatorsInModels.resx">
-      <DependentUpon>201603011038415_AddedForeignKeyToCreatorsInModels.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603021006224_Initial.resx">
+      <DependentUpon>201603021006224_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
