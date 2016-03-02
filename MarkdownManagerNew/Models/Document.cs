@@ -51,7 +51,7 @@ namespace MarkdownManagerNew.Models
         public virtual ICollection<File> Files { get; set; }
 
         //public string CreatorId { get; set; }
-
+        // En onödig kommentar
         public string CreatorID { get; set; }
         [Required]
         [Display(Name = "Skapare")]
