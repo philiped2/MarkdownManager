@@ -28,14 +28,7 @@ namespace MarkdownManagerNew.Repositories
 
         public List<Document> GetUserDocuments(ApplicationUser user)
         {
-            var documentsByUserRights = user.Documents.ToList();
-
-            //List<Document> documentsByGroupRights = user.Groups.Select(g => g.Documents);
-
-            var mergedList = documentsByUserRights.Union(new List<Document>()); //Mergea dessa
             
-            List<Document> query = new List<Document>();
-            return query;
 
         }
 
