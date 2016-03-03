@@ -166,9 +166,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603021151592_initial.cs" />
-    <Compile Include="Migrations\201603021151592_initial.Designer.cs">
-      <DependentUpon>201603021151592_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201603031310596_initial.cs" />
+    <Compile Include="Migrations\201603031310596_initial.Designer.cs">
+      <DependentUpon>201603031310596_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -183,10 +183,6 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-MarkdownManagerNew-201603020922520.mdf" />
-    <Content Include="App_Data\aspnet-MarkdownManagerNew-201603020922520_log.ldf">
-      <DependentUpon>aspnet-MarkdownManagerNew-201603020922520.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -253,7 +249,9 @@
     <Content Include="Views\Admin\Edit.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -262,8 +260,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603021151592_initial.resx">
-      <DependentUpon>201603021151592_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603031310596_initial.resx">
+      <DependentUpon>201603031310596_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

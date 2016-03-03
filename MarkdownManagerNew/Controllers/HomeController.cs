@@ -10,6 +10,15 @@ namespace MarkdownManagerNew.Controllers
     {
         public ActionResult Index()
         {
+            if (User.IsInRole("Admin"))
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            if (User.IsInRole("User"))
+            {
+                return RedirectToAction("Index", "User");
+            }
+
             return View();
         }
 

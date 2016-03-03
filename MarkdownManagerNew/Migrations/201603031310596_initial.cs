@@ -20,11 +20,11 @@ namespace MarkdownManagerNew.Migrations
                         CreatorID = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.ApplicationUsers", t => t.CreatorID, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.CreatorID, cascadeDelete: true)
                 .Index(t => t.CreatorID);
             
             CreateTable(
-                "dbo.ApplicationUsers",
+                "dbo.AspNetUsers",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
@@ -41,23 +41,22 @@ namespace MarkdownManagerNew.Migrations
                         LockoutEndDateUtc = c.DateTime(),
                         LockoutEnabled = c.Boolean(nullable: false),
                         AccessFailedCount = c.Int(nullable: false),
-                        UserName = c.String(),
+                        UserName = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.IdentityUserClaims",
+                "dbo.AspNetUserClaims",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        UserId = c.String(),
+                        UserId = c.String(nullable: false, maxLength: 128),
                         ClaimType = c.String(),
                         ClaimValue = c.String(),
-                        ApplicationUser_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id)
-                .Index(t => t.ApplicationUser_Id);
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
             
             CreateTable(
                 "dbo.Files",
@@ -72,7 +71,7 @@ namespace MarkdownManagerNew.Migrations
                         DocumentID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.ApplicationUsers", t => t.CreatorID, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.CreatorID, cascadeDelete: true)
                 .ForeignKey("dbo.Documents", t => t.DocumentID, cascadeDelete: false)
                 .Index(t => t.CreatorID)
                 .Index(t => t.DocumentID);
@@ -89,36 +88,33 @@ namespace MarkdownManagerNew.Migrations
                         LastChanged = c.DateTime(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.ApplicationUsers", t => t.CreatorID, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.CreatorID, cascadeDelete: true)
                 .Index(t => t.CreatorID);
             
             CreateTable(
-                "dbo.IdentityUserLogins",
+                "dbo.AspNetUserLogins",
                 c => new
                     {
                         UserId = c.String(nullable: false, maxLength: 128),
-                        LoginProvider = c.String(),
-                        ProviderKey = c.String(),
-                        ApplicationUser_Id = c.String(maxLength: 128),
+                        LoginProvider = c.String(nullable: false, maxLength: 128),
+                        ProviderKey = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id)
-                .Index(t => t.ApplicationUser_Id);
+                .PrimaryKey(t => new { t.UserId, t.LoginProvider, t.ProviderKey })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.IdentityUserRoles",
+                "dbo.AspNetUserRoles",
                 c => new
                     {
-                        RoleId = c.String(nullable: false, maxLength: 128),
                         UserId = c.String(nullable: false, maxLength: 128),
-                        ApplicationUser_Id = c.String(maxLength: 128),
-                        IdentityRole_Id = c.String(maxLength: 128),
+                        RoleId = c.String(nullable: false, maxLength: 128),
                     })
-                .PrimaryKey(t => new { t.RoleId, t.UserId })
-                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id)
-                .ForeignKey("dbo.IdentityRoles", t => t.IdentityRole_Id)
-                .Index(t => t.ApplicationUser_Id)
-                .Index(t => t.IdentityRole_Id);
+                .PrimaryKey(t => new { t.UserId, t.RoleId })
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetRoles", t => t.RoleId, cascadeDelete: true)
+                .Index(t => t.UserId)
+                .Index(t => t.RoleId);
             
             CreateTable(
                 "dbo.Tags",
@@ -130,11 +126,11 @@ namespace MarkdownManagerNew.Migrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.IdentityRoles",
+                "dbo.AspNetRoles",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        Name = c.String(),
+                        Name = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -160,7 +156,7 @@ namespace MarkdownManagerNew.Migrations
                     })
                 .PrimaryKey(t => new { t.Group_ID, t.ApplicationUser_Id })
                 .ForeignKey("dbo.Groups", t => t.Group_ID, cascadeDelete: true)
-                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id, cascadeDelete: false)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id, cascadeDelete: false)
                 .Index(t => t.Group_ID)
                 .Index(t => t.ApplicationUser_Id);
             
@@ -186,7 +182,7 @@ namespace MarkdownManagerNew.Migrations
                     })
                 .PrimaryKey(t => new { t.Document_ID, t.ApplicationUser_Id })
                 .ForeignKey("dbo.Documents", t => t.Document_ID, cascadeDelete: true)
-                .ForeignKey("dbo.ApplicationUsers", t => t.ApplicationUser_Id, cascadeDelete: false)
+                .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id, cascadeDelete: false)
                 .Index(t => t.Document_ID)
                 .Index(t => t.ApplicationUser_Id);
             
@@ -194,22 +190,22 @@ namespace MarkdownManagerNew.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.IdentityUserRoles", "IdentityRole_Id", "dbo.IdentityRoles");
-            DropForeignKey("dbo.DocumentApplicationUsers", "ApplicationUser_Id", "dbo.ApplicationUsers");
+            DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
+            DropForeignKey("dbo.DocumentApplicationUsers", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.DocumentApplicationUsers", "Document_ID", "dbo.Documents");
             DropForeignKey("dbo.TagDocuments", "Document_ID", "dbo.Documents");
             DropForeignKey("dbo.TagDocuments", "Tag_ID", "dbo.Tags");
-            DropForeignKey("dbo.Documents", "CreatorID", "dbo.ApplicationUsers");
-            DropForeignKey("dbo.IdentityUserRoles", "ApplicationUser_Id", "dbo.ApplicationUsers");
-            DropForeignKey("dbo.IdentityUserLogins", "ApplicationUser_Id", "dbo.ApplicationUsers");
-            DropForeignKey("dbo.GroupApplicationUsers", "ApplicationUser_Id", "dbo.ApplicationUsers");
+            DropForeignKey("dbo.Documents", "CreatorID", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.GroupApplicationUsers", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.GroupApplicationUsers", "Group_ID", "dbo.Groups");
             DropForeignKey("dbo.GroupDocuments", "Document_ID", "dbo.Documents");
             DropForeignKey("dbo.GroupDocuments", "Group_ID", "dbo.Groups");
-            DropForeignKey("dbo.Groups", "CreatorID", "dbo.ApplicationUsers");
+            DropForeignKey("dbo.Groups", "CreatorID", "dbo.AspNetUsers");
             DropForeignKey("dbo.Files", "DocumentID", "dbo.Documents");
-            DropForeignKey("dbo.Files", "CreatorID", "dbo.ApplicationUsers");
-            DropForeignKey("dbo.IdentityUserClaims", "ApplicationUser_Id", "dbo.ApplicationUsers");
+            DropForeignKey("dbo.Files", "CreatorID", "dbo.AspNetUsers");
+            DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropIndex("dbo.DocumentApplicationUsers", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.DocumentApplicationUsers", new[] { "Document_ID" });
             DropIndex("dbo.TagDocuments", new[] { "Document_ID" });
@@ -218,26 +214,26 @@ namespace MarkdownManagerNew.Migrations
             DropIndex("dbo.GroupApplicationUsers", new[] { "Group_ID" });
             DropIndex("dbo.GroupDocuments", new[] { "Document_ID" });
             DropIndex("dbo.GroupDocuments", new[] { "Group_ID" });
-            DropIndex("dbo.IdentityUserRoles", new[] { "IdentityRole_Id" });
-            DropIndex("dbo.IdentityUserRoles", new[] { "ApplicationUser_Id" });
-            DropIndex("dbo.IdentityUserLogins", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
+            DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.Groups", new[] { "CreatorID" });
             DropIndex("dbo.Files", new[] { "DocumentID" });
             DropIndex("dbo.Files", new[] { "CreatorID" });
-            DropIndex("dbo.IdentityUserClaims", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.Documents", new[] { "CreatorID" });
             DropTable("dbo.DocumentApplicationUsers");
             DropTable("dbo.TagDocuments");
             DropTable("dbo.GroupApplicationUsers");
             DropTable("dbo.GroupDocuments");
-            DropTable("dbo.IdentityRoles");
+            DropTable("dbo.AspNetRoles");
             DropTable("dbo.Tags");
-            DropTable("dbo.IdentityUserRoles");
-            DropTable("dbo.IdentityUserLogins");
+            DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.Groups");
             DropTable("dbo.Files");
-            DropTable("dbo.IdentityUserClaims");
-            DropTable("dbo.ApplicationUsers");
+            DropTable("dbo.AspNetUserClaims");
+            DropTable("dbo.AspNetUsers");
             DropTable("dbo.Documents");
         }
     }

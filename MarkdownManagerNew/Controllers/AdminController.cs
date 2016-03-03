@@ -11,8 +11,7 @@ using MarkdownManagerNew.Repositories;
 
 namespace MarkdownManagerNew.Controllers
 {
-    //[Authorize(Roles="Admin")]
-    [Authorize]
+    [Authorize(Roles="Admin")]
     public class AdminController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
