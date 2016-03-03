@@ -20,8 +20,9 @@ namespace MarkdownManagerNew.Migrations
         protected override void Seed(MarkdownManagerNew.Models.ApplicationDbContext context)
         {
 
-            //if (System.Diagnostics.Debugger.IsAttached == false)
-            //    System.Diagnostics.Debugger.Launch();
+            if (System.Diagnostics.Debugger.IsAttached == false)
+                System.Diagnostics.Debugger.Launch();
+
             var userStore = new UserStore<ApplicationUser>(context);
             var userManager = new UserManager<ApplicationUser>(userStore);
 
@@ -54,8 +55,7 @@ namespace MarkdownManagerNew.Migrations
                     roleManager.Create(role);
                 }
 
-                if (System.Diagnostics.Debugger.IsAttached == false)
-                    System.Diagnostics.Debugger.Launch();
+                
 
                 var philip = new ApplicationUser { UserName = "Philip", FirstName = "Philip", LastName = "Edin", Email = "philip.e@markdownmanager.com" };
 
