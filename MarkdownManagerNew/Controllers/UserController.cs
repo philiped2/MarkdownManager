@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace MarkdownManagerNew.Controllers
 {
-    [Authorize]
+    [Authorize(Roles="User")]
     public class UserController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext(); //Ta bort sen
@@ -23,6 +23,7 @@ namespace MarkdownManagerNew.Controllers
             return repo.GetUser(User.Identity.GetUserId());
         }
         // GET: User
+        
         public ActionResult Index()
         {
             return View(repo.GetUserDocuments(GetCurrentUser()));

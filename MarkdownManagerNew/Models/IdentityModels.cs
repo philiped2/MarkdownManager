@@ -72,9 +72,35 @@ namespace MarkdownManagerNew.Models
             .HasMany(t => t.Users)
             .WithMany(u => u.Groups);
 
-            modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
-            modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
-            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+            modelBuilder.Entity<ApplicationUser>()
+            .HasMany(t => t.Roles);
+
+            var user = modelBuilder.Entity<ApplicationUser>()
+            .ToTable("AspNetUsers");
+            user.HasMany(u => u.Roles).WithRequired().HasForeignKey(ur => ur.UserId);
+            user.HasMany(u => u.Claims).WithRequired().HasForeignKey(uc => uc.UserId);
+            user.HasMany(u => u.Logins).WithRequired().HasForeignKey(ul => ul.UserId);
+            user.Property(u => u.UserName).IsRequired();
+
+            modelBuilder.Entity<IdentityUserRole>()
+                .HasKey(r => new { r.UserId, r.RoleId })
+                .ToTable("AspNetUserRoles");
+
+            modelBuilder.Entity<IdentityUserLogin>()
+                .HasKey(l => new { l.UserId, l.LoginProvider, l.ProviderKey })
+                .ToTable("AspNetUserLogins");
+
+            modelBuilder.Entity<IdentityUserClaim>()
+                .ToTable("AspNetUserClaims");
+
+            var role = modelBuilder.Entity<IdentityRole>()
+                .ToTable("AspNetRoles");
+            role.Property(r => r.Name).IsRequired();
+            role.HasMany(r => r.Users).WithRequired().HasForeignKey(ur => ur.RoleId);
+
+            //modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
+            //modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+            //modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
         }
 
 
