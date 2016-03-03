@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using MarkdownManagerNew.Models;
 using MarkdownManagerNew.Repositories;
 using Microsoft.AspNet.Identity;
+using MarkdownManagerNew.Viewmodels;
 
 namespace MarkdownManagerNew.Controllers
 {
@@ -30,6 +31,25 @@ namespace MarkdownManagerNew.Controllers
             //return View(repo.listAllDocuments());
         }
 
+        [HttpPost]
+        public ActionResult CreateGroup(string title, string description)
+        {
+            // ändra parameters till:  List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
+            var user = GetCurrentUser();
+            repo.CreateGroup(user, title, description);
+            ViewBag.Test = "A new group has been created!";
+            return View();
+        }
+
+
+        [HttpGet]
+        public ActionResult CreateGroup()
+        {
+            ViewBag.Test = "No group has been created";
+            CreateGroupViewModel viewModel = new CreateGroupViewModel();
+            repo.ListUsersToCreateGroup(viewModel);
+            return View(viewModel);
+        }
 
         // GET: User/Details/5
         public ActionResult Details(int? id)

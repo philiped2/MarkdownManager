@@ -22,3 +22,10 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#CreateGroupWindow
+{
+    background-color: yellow;
+    font-size: 50px;
+    height: 500px;
+}
