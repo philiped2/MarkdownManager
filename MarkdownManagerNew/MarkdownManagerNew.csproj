@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\CheckBoxListItem.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Group.cs" />
@@ -184,10 +185,6 @@
     <Compile Include="Viewmodels\CreateGroupViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\aspnet-MarkdownManagerNew-201603020922520.mdf" />
-    <Content Include="App_Data\aspnet-MarkdownManagerNew-201603020922520_log.ldf">
-      <DependentUpon>aspnet-MarkdownManagerNew-201603020922520.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -255,7 +252,9 @@
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\User\CreateGroup.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

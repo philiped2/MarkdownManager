@@ -32,13 +32,15 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateGroup(string title, string description)
+        //public ActionResult CreateGroup(List<string> groupMembers, string title, string description, CreateGroupViewModel viewModel)
+        public ActionResult CreateGroup(CreateGroupViewModel viewModel)
         {
             // ändra parameters till:  List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
             var user = GetCurrentUser();
-            repo.CreateGroup(user, title, description);
+            //repo.CreateGroup(groupMembers, user, title, description, viewModel);
+            repo.CreateGroup(viewModel, user);
             ViewBag.Test = "A new group has been created!";
-            return View();
+            return View(viewModel);
         }
 
 
@@ -47,7 +49,21 @@ namespace MarkdownManagerNew.Controllers
         {
             ViewBag.Test = "No group has been created";
             CreateGroupViewModel viewModel = new CreateGroupViewModel();
-            repo.ListUsersToCreateGroup(viewModel);
+
+            List<ApplicationUser> tempUserList = repo.ListUsersToCreateGroup();
+            var checkBoxListItems = new List<CheckBoxListItem>();
+
+            foreach (var user in tempUserList)
+            {
+                checkBoxListItems.Add(new CheckBoxListItem()
+                {
+                    ID = user.Id,
+                    Display = user.LastName + "," + user.FirstName,
+                    IsChecked = false
+                });
+            }
+            viewModel.CheckBoxUsers = checkBoxListItems;
+
             return View(viewModel);
         }
 

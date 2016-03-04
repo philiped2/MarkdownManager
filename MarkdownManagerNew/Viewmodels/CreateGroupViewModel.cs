@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using MarkdownManagerNew.Models;
 using System.Data.Entity;
+using System.ComponentModel.DataAnnotations;
 
 namespace MarkdownManagerNew.Viewmodels
 {
@@ -11,14 +12,20 @@ namespace MarkdownManagerNew.Viewmodels
     {
         //private ApplicationDbContext dbContext;
 
-        public List<ApplicationUser> Users { get; set; }
-        public List<Group> Groups { get; set; }
+        //public List<ApplicationUser> Users { get; set; }
+        //public List<string> UsersToAdd {get; set;}
+        [Display(Name = "Beskrivning")]
+        public string Description { get; set; }
+        [Display(Name = "Titel")]
+        public string Name { get; set; }
 
+        public List<CheckBoxListItem> CheckBoxUsers { get; set; }
 
-        //public CreateGroupViewModel()
-        //{
-        //    List<ApplicationUser> Users = dbContext.Users.ToList();
-        //    List<Group> Groups = dbContext.Groups.ToList();
-        //}
+        public CreateGroupViewModel()
+        {
+            //Users = new List<ApplicationUser>();
+            //UsersToAdd = new List<string>();
+            CheckBoxUsers = new List<CheckBoxListItem>();
+        }
     }
 }

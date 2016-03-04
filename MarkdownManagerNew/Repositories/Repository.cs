@@ -64,36 +64,44 @@ namespace MarkdownManagerNew.Repositories
             return query;
         }
 
-        public void CreateGroup(ApplicationUser user, string name, string description)
+        //public CreateGroupViewModel CreateGroup(List<string> members, ApplicationUser user, string name, string description, CreateGroupViewModel viewmodel)
+        public void CreateGroup( CreateGroupViewModel viewmodel, ApplicationUser creator)
         {
-            // ändra parameters till: ApplicationUser user, List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
-            var newGroup = new Group();
-            //newGroup.CreatorID = user.Id;
-            //newGroup.Users = groupMembers;
-            //newGroup.Documents = documents;
-            newGroup.Creator = user;
-            newGroup.Name = name;
-            newGroup.Description = description;
+            //var groupToAdd = new Group { CreatorID = creator.Id };
+            //// ändra parameters till: ApplicationUser user, List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
+            //var users = userManager.Users;
 
-            dbContext.Groups.Add(newGroup);
-            dbContext.SaveChanges();
+            //foreach (ApplicationUser theUser in users)
+            //{
+            //    viewmodel.Users.Add(user);
+            //}
+
+            //var newGroup = new Group();
+            ////newGroup.CreatorID = user.Id;
+
+            //foreach (string member in members)
+            //{
+            //    if (dbContext.Users.Where(u => u.Id == member))
+            //    {
+            //        newGroup.Users.Add(member);
+            //    }
+                
+            //}
+            ////newGroup.Users = groupMembers;
+            ////newGroup.Documents = documents;
+            //newGroup.Creator = user;
+            //newGroup.Name = name;
+            //newGroup.Description = description;
+
+            //dbContext.Groups.Add(newGroup);
+            //dbContext.SaveChanges();
         }
 
-        public CreateGroupViewModel ListUsersToCreateGroup(CreateGroupViewModel viewmodel)
+        public List<ApplicationUser> ListUsersToCreateGroup()
         {
-            var users = userManager.Users;
+            var users = userManager.Users.ToList();
 
-            foreach (ApplicationUser user in users)
-            {
-                viewmodel.Users.Add(user);
-            }
-
-            foreach (Group group in dbContext.Groups)
-            {
-                viewmodel.Groups.Add(group);
-            }
-
-            return viewmodel;
+            return users;
         }
 
     }
