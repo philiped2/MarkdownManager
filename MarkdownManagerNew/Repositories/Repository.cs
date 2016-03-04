@@ -1,4 +1,5 @@
 ﻿using MarkdownManagerNew.Models;
+using MarkdownManagerNew.Viewmodels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
@@ -61,6 +62,38 @@ namespace MarkdownManagerNew.Repositories
                 .Where(x => x.Id == userId).Single();
 
             return query;
+        }
+
+        public void CreateGroup(ApplicationUser user, string name, string description)
+        {
+            // ändra parameters till: ApplicationUser user, List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
+            var newGroup = new Group();
+            //newGroup.CreatorID = user.Id;
+            //newGroup.Users = groupMembers;
+            //newGroup.Documents = documents;
+            newGroup.Creator = user;
+            newGroup.Name = name;
+            newGroup.Description = description;
+
+            dbContext.Groups.Add(newGroup);
+            dbContext.SaveChanges();
+        }
+
+        public CreateGroupViewModel ListUsersToCreateGroup(CreateGroupViewModel viewmodel)
+        {
+            var users = userManager.Users;
+
+            foreach (ApplicationUser user in users)
+            {
+                viewmodel.Users.Add(user);
+            }
+
+            foreach (Group group in dbContext.Groups)
+            {
+                viewmodel.Groups.Add(group);
+            }
+
+            return viewmodel;
         }
 
     }
