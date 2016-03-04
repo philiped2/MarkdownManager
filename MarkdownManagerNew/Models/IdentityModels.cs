@@ -65,18 +65,18 @@ namespace MarkdownManagerNew.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Document>()
-            .HasMany(t => t.Users)
-            .WithMany(u => u.Documents);
+                .HasMany(t => t.Users)
+                .WithMany(u => u.Documents);
 
             modelBuilder.Entity<Group>()
-            .HasMany(t => t.Users)
-            .WithMany(u => u.Groups);
+                .HasMany(t => t.Users)
+                .WithMany(u => u.Groups);
 
             modelBuilder.Entity<ApplicationUser>()
             .HasMany(t => t.Roles);
 
             var user = modelBuilder.Entity<ApplicationUser>()
-            .ToTable("AspNetUsers");
+                .ToTable("AspNetUsers");
             user.HasMany(u => u.Roles).WithRequired().HasForeignKey(ur => ur.UserId);
             user.HasMany(u => u.Claims).WithRequired().HasForeignKey(uc => uc.UserId);
             user.HasMany(u => u.Logins).WithRequired().HasForeignKey(ul => ul.UserId);
