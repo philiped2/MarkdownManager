@@ -31,6 +31,13 @@ namespace MarkdownManagerNew.Controllers
             //return View(repo.listAllDocuments());
         }
 
+        [HttpGet]
+        public ActionResult CreateDocument()
+        {
+            Document model = new Document();
+            return View(model);
+        }
+
         [HttpPost]
         public ActionResult CreateGroup(string title, string description)
         {
