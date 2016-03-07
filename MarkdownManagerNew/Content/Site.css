@@ -30,13 +30,11 @@ textarea {
 #CreateGroupWindow
 {
     height: 500px;
-    background-color: lightblue;
     font-size: 20px;
     height: 600px;
-    box-shadow: 5px 5px 15px grey;
 }
 
-#addUsersToGroup
+/*#addUsersToGroup
 {
     height: 400px;
     background-color: white;
@@ -46,7 +44,7 @@ textarea {
 #createGroupTable
 {
     height: 500px;
-}
+}*/
 
 .markdownResult {
     height:500px;
