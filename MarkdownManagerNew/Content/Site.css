@@ -1,4 +1,8 @@
-﻿body {
+﻿/*div {
+    outline: 1px solid red;
+}*/
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -40,5 +44,24 @@ textarea {
 
 #createGroupTable
 {
+    height: 500px;
+}
+
+.markdownResult {
+    height:500px;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.markdownEditorForm
+{
+    height: 500px;
+}
+
+.markdownEditor {
+    height: 500px !important;
+    min-width: 100%;
+}
+
+.markdownEditor .form-control {
     height: 400px;
 }

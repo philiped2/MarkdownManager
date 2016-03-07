@@ -25,13 +25,13 @@
                     <ul class="nav navbar-nav">
                         @if (User.IsInRole("Admin"))
                         {
-                            <li>@Html.ActionLink("Home", "Index", "Admin")</li>
+                            <li>@Html.ActionLink("Hem", "Index", "Admin")</li>
                         }
                         @if (User.IsInRole("User"))
                         {
-                            <li>@Html.ActionLink("Home", "Index", "User")</li>
-                            <li>@Html.ActionLink("Create document", "CreateDocument", "User")</li>
-                            <li>@Html.ActionLink("Create group", "CreateGroup", "User")</li>
+                            <li>@Html.ActionLink("Hem", "Index", "User")</li>
+                            <li>@Html.ActionLink("Nytt dokument", "CreateDocument", "User")</li>
+                            <li>@Html.ActionLink("Ny grupp", "CreateGroup", "User")</li>
                         }
                     </ul>
                     @Html.Partial("_LoginPartial")
