@@ -34,7 +34,7 @@ namespace MarkdownManagerNew.Controllers
         [HttpGet]
         public ActionResult CreateDocument()
         {
-            Document model = new Document();
+            CreateDocumentViewModel model = new CreateDocumentViewModel();
             return View(model);
         }
 
