@@ -25,7 +25,10 @@
                     <ul class="nav navbar-nav">
                         @if (User.IsInRole("Admin"))
                         {
-                            <li>@Html.ActionLink("Hem", "Index", "Admin")</li>
+                            <li>@Html.ActionLink("Hem", "ShowDocuments", "Admin")</li>
+                            <li>@Html.ActionLink("Dokument", "ShowDocuments", "Admin")</li>
+                            <li>@Html.ActionLink("Grupper", "ShowGroups", "Admin")</li>
+                            <li>@Html.ActionLink("Användare", "ShowUsers", "Admin")</li>
                         }
                         @if (User.IsInRole("User"))
                         {

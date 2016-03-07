@@ -18,10 +18,20 @@ namespace MarkdownManagerNew.Controllers
         private Repository repo = new Repository();
 
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult ShowDocuments()
         {
             return View(repo.GetAllDocuments());
             //return View(db.Documents.ToList());
+        }
+
+        public ActionResult ShowGroups()
+        {
+            return View(repo.GetAllGroups());
+        }
+
+        public ActionResult ShowUsers()
+        {
+            return View(repo.GetAllUsers());
         }
 
         // GET: Admin/Details/5

@@ -56,6 +56,20 @@ namespace MarkdownManagerNew.Repositories
             return documentList;
         }
 
+        public List<Group> GetAllGroups()
+        {
+            List<Group> groupList = dbContext.Groups.ToList();
+
+            return groupList;
+        }
+
+        public List<ApplicationUser> GetAllUsers()
+        {
+            List<ApplicationUser> userList = dbContext.Users.ToList();
+
+            return userList;
+        }
+
         public ApplicationUser GetUser (string userId)
         {
             ApplicationUser query = dbContext.Users
