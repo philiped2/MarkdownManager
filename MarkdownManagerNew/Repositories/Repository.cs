@@ -67,14 +67,18 @@ namespace MarkdownManagerNew.Repositories
         //public CreateGroupViewModel CreateGroup(List<string> members, ApplicationUser user, string name, string description, CreateGroupViewModel viewmodel)
         public void CreateGroup( CreateGroupViewModel viewmodel, ApplicationUser creator)
         {
-            //var groupToAdd = new Group { CreatorID = creator.Id };
+            var groupToAdd = new Group { CreatorID = creator.Id };
             //// ändra parameters till: ApplicationUser user, List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
             //var users = userManager.Users;
+            groupToAdd.Description = viewmodel.Description;
+            groupToAdd.Name = viewmodel.Name;
 
-            //foreach (ApplicationUser theUser in users)
-            //{
-            //    viewmodel.Users.Add(user);
-            //}
+            foreach (var user in viewmodel.CheckBoxUsers.Where(x => x.IsChecked == true))
+            {
+                ApplicationUser groupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
+                groupToAdd.Users.Add(groupUser);
+
+            }
 
             //var newGroup = new Group();
             ////newGroup.CreatorID = user.Id;
@@ -93,8 +97,8 @@ namespace MarkdownManagerNew.Repositories
             //newGroup.Name = name;
             //newGroup.Description = description;
 
-            //dbContext.Groups.Add(newGroup);
-            //dbContext.SaveChanges();
+            dbContext.Groups.Add(groupToAdd);
+            dbContext.SaveChanges();
         }
 
         public List<ApplicationUser> ListUsersToCreateGroup()

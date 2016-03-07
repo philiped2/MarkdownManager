@@ -47,7 +47,7 @@ namespace MarkdownManagerNew.Controllers
             //repo.CreateGroup(groupMembers, user, title, description, viewModel);
             repo.CreateGroup(viewModel, user);
             ViewBag.Test = "A new group has been created!";
-            return View(viewModel);
+            return View("Index");
         }
 
 
