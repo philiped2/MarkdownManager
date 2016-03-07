@@ -31,6 +31,7 @@ namespace MarkdownManagerNew.Models
         public string Description { get; set; }
         [Display(Name = "Titel")]
         public string Name { get; set; }
+        [DataType(DataType.MultilineText)]
         [Display(Name = "Markdown")]
         public string Markdown { get; set; }
 
