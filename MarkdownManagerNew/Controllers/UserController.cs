@@ -96,12 +96,9 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpPost]
-        //public ActionResult CreateGroup(List<string> groupMembers, string title, string description, CreateGroupViewModel viewModel)
         public ActionResult CreateGroup(CreateGroupViewModel viewModel)
         {
-            // ändra parameters till:  List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
             var user = GetCurrentUser();
-            //repo.CreateGroup(groupMembers, user, title, description, viewModel);
             repo.CreateGroup(viewModel, user);
             ViewBag.Test = "A new group has been created!";
             return View("Index");
@@ -127,6 +124,21 @@ namespace MarkdownManagerNew.Controllers
                 });
             }
             viewModel.CheckBoxUsers = checkBoxListItems;
+
+            List<Document> tempDocumentList = repo.GetUserDocuments(GetCurrentUser());
+            var checkBoxListDocuments = new List<CheckBoxListDocuments>();
+
+            foreach (var document in tempDocumentList)
+            {
+                checkBoxListDocuments.Add(new CheckBoxListDocuments()
+                {
+                    ID = document.ID,
+                    Display = document.Name,
+                    IsChecked = false
+                });
+            }
+
+            viewModel.CheckBoxDocuments = checkBoxListDocuments;
 
             return View(viewModel);
         }
