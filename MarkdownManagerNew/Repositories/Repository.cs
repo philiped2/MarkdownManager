@@ -94,6 +94,12 @@ namespace MarkdownManagerNew.Repositories
 
             }
 
+            foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
+            {
+                Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+                groupToAdd.Documents.Add(groupDocument);
+            }
+
             //var newGroup = new Group();
             ////newGroup.CreatorID = user.Id;
 

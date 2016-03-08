@@ -20,12 +20,14 @@ namespace MarkdownManagerNew.Viewmodels
         public string Name { get; set; }
 
         public List<CheckBoxListUser> CheckBoxUsers { get; set; }
+        public List<CheckBoxListDocuments> CheckBoxDocuments { get; set; }
 
         public CreateGroupViewModel()
         {
             //Users = new List<ApplicationUser>();
             //UsersToAdd = new List<string>();
             CheckBoxUsers = new List<CheckBoxListUser>();
+            CheckBoxDocuments = new List<CheckBoxListDocuments>();
         }
     }
 }

@@ -10,6 +10,9 @@
 <div id="CreateGroupWindow">
     @using (Html.BeginForm("CreateGroup", "User", FormMethod.Post))
     {
+        
+        @Html.AntiForgeryToken()
+        
         <table>
             <tr>
                 <td>
@@ -27,10 +30,10 @@
                     <td>
                         @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsChecked)
                     </td>
-                    @*<td>
+                    <td>
                         @Html.HiddenFor(x => x.CheckBoxUsers[i].ID)
-                        @Model.CheckBoxUsers[i].ID
-                    </td>*@
+                        @*@Model.CheckBoxUsers[i].ID*@
+                    </td>
                     <td>
                         @Html.HiddenFor(x => x.CheckBoxUsers[i].Display)
                         @Model.CheckBoxUsers[i].Display
@@ -38,6 +41,25 @@
                 </tr>
             }
         </table>
+
+    <table>
+        @for (int i = 0; i < Model.CheckBoxDocuments.Count; i++)
+        {
+            <tr>
+                <td>
+                    @Html.CheckBoxFor(x => x.CheckBoxDocuments[i].IsChecked)
+                </td>
+                <td>
+                        @Html.HiddenFor(x => x.CheckBoxUsers[i].ID)
+                        @*@Model.CheckBoxUsers[i].ID*@
+                    </td>
+                <td>
+                    @Html.HiddenFor(x => x.CheckBoxDocuments[i].Display)
+                    @Model.CheckBoxDocuments[i].Display
+                </td>
+            </tr>
+        }
+    </table>
 
         <button type="submit">OK</button>
     }
