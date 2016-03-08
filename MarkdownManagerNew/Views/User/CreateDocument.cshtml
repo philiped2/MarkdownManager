@@ -72,7 +72,25 @@
                         @Html.DisplayFor(x => x.CheckboxUsers[i].Display)
                     </dd>
                 }
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CheckboxTags)
+                </dt>
+
+                @for (int i = 0; i < Model.CheckboxTags.Count; i++)
+                {
+                    <dd>
+                        @Html.CheckBoxFor(x => x.CheckboxTags[i].IsChecked)
+                        @Html.HiddenFor(x => x.CheckboxTags[i].ID)
+                        @Html.HiddenFor(x => x.CheckboxTags[i].Display)
+
+                        @Html.DisplayFor(x => x.CheckboxTags[i].Display)
+                    </dd>
+                }
+
             </dl>
+
+
 
         </div>
         

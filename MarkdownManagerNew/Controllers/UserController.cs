@@ -71,6 +71,16 @@ namespace MarkdownManagerNew.Controllers
                 });
             }
 
+            foreach (var tag in repo.GetAllTags())
+            {
+                model.CheckboxTags.Add(new CheckBoxListTags()
+                {
+                    ID = tag.ID,
+                    Display = tag.Label,
+                    IsChecked = false
+                });
+            }
+
             return View(model);
         }
 

@@ -133,6 +133,13 @@ namespace MarkdownManagerNew.Repositories
 
             }
 
+            foreach (var tag in viewmodel.CheckboxTags.Where(x => x.IsChecked == true))
+            {
+                Tag documentTag = dbContext.Tags.Where(x => x.ID == tag.ID).Single();
+                documentToAdd.Tags.Add(documentTag);
+
+            }
+
             dbContext.Documents.Add(documentToAdd);
             dbContext.SaveChanges();
         }
@@ -150,6 +157,12 @@ namespace MarkdownManagerNew.Repositories
             var tagToAdd = new Tag { Label = model.Label };
             dbContext.Tags.Add(tagToAdd);
             dbContext.SaveChanges();
+        }
+
+        public List<Tag> GetAllTags()
+        {
+            List<Tag> tagList = dbContext.Tags.ToList();
+            return tagList;
         }
     }
 }

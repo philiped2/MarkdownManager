@@ -13,6 +13,7 @@ namespace MarkdownManagerNew.Viewmodels
         {
             CheckboxUsers = new List<CheckBoxListUser>();
             CheckboxGroups = new List<CheckBoxListGroup>();
+            CheckboxTags = new List<CheckBoxListTags>();
         }
 
         [Display(Name = "Beskrivning")]
@@ -27,5 +28,7 @@ namespace MarkdownManagerNew.Viewmodels
         public List<CheckBoxListUser> CheckboxUsers { get; set; }
         [Display(Name = "Grupper")]
         public List<CheckBoxListGroup> CheckboxGroups { get; set; }
+        [Display(Name = "Taggar")]
+        public List<CheckBoxListTags> CheckboxTags { get; set; }
     }
 }

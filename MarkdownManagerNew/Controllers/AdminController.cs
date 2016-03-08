@@ -104,7 +104,7 @@ namespace MarkdownManagerNew.Controllers
         }
 
         // GET: Admin/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult DeleteDocument(int? id)
         {
             if (id == null)
             {
@@ -119,14 +119,14 @@ namespace MarkdownManagerNew.Controllers
         }
 
         // POST: Admin/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("DeleteDocument")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
             Document document = db.Documents.Find(id);
             db.Documents.Remove(document);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ShowDocuments");
         }
 
         protected override void Dispose(bool disposing)
@@ -137,5 +137,39 @@ namespace MarkdownManagerNew.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult DeleteGroup(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Group group = db.Groups.Find(id);
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+            return View(group);
+        }
+
+        // POST: Admin/Delete/5
+        [HttpPost, ActionName("DeleteGroup")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteOfGroupConfirmed(int id)
+        {
+            Group group = db.Groups.Find(id);
+            db.Groups.Remove(group);
+            db.SaveChanges();
+            return RedirectToAction("ShowGroups");
+        }
+
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing)
+        //    {
+        //        db.Dispose();
+        //    }
+        //    base.Dispose(disposing);
+        //}
     }
 }
