@@ -34,8 +34,41 @@ namespace MarkdownManagerNew.Controllers
         [HttpGet]
         public ActionResult CreateDocument()
         {
-            Document model = new Document();
+            CreateDocumentViewModel model = new CreateDocumentViewModel();
+            var groups = repo.GetAllGroups();
+
+            foreach (var user in repo.GetAllUsers())
+            {
+                model.CheckboxUsers.Add(new CheckBoxListUser()
+                {
+                    ID = user.Id,
+                    Display = user.LastName + "," + user.FirstName,
+                    IsChecked = false
+                });
+            }
+
+            foreach (var group in repo.GetAllGroups())
+            {
+                model.CheckboxGroups.Add(new CheckBoxListGroup()
+                {
+                    ID = group.ID,
+                    Display = group.Name,
+                    IsChecked = false
+                });
+            }
+
             return View(model);
+        }
+
+        [HttpPost]
+        //public ActionResult CreateGroup(List<string> groupMembers, string title, string description, CreateGroupViewModel viewModel)
+        public ActionResult CreateDocument(CreateDocumentViewModel viewModel)
+        {
+            // ändra parameters till:  List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
+            var user = GetCurrentUser();
+            //repo.CreateGroup(groupMembers, user, title, description, viewModel);
+            repo.CreateDocument(viewModel, user);
+            return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
         }
 
         [HttpPost]
@@ -58,11 +91,11 @@ namespace MarkdownManagerNew.Controllers
             CreateGroupViewModel viewModel = new CreateGroupViewModel();
 
             List<ApplicationUser> tempUserList = repo.ListUsersToCreateGroup();
-            var checkBoxListItems = new List<CheckBoxListItem>();
+            var checkBoxListItems = new List<CheckBoxListUser>();
 
             foreach (var user in tempUserList)
             {
-                checkBoxListItems.Add(new CheckBoxListItem()
+                checkBoxListItems.Add(new CheckBoxListUser()
                 {
                     ID = user.Id,
                     Display = user.LastName + "," + user.FirstName,

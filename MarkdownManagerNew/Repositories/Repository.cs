@@ -115,6 +115,28 @@ namespace MarkdownManagerNew.Repositories
             dbContext.SaveChanges();
         }
 
+        public void CreateDocument(CreateDocumentViewModel viewmodel, ApplicationUser creator)
+        {
+            var documentToAdd = new Document { CreatorID = creator.Id, Name = viewmodel.Name, Description = viewmodel.Description, Markdown = viewmodel.Markdown};
+
+            foreach (var user in viewmodel.CheckboxUsers.Where(x => x.IsChecked == true))
+            {
+                ApplicationUser documentUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
+                documentToAdd.Users.Add(documentUser);
+
+            }
+
+            foreach (var group in viewmodel.CheckboxGroups.Where(x => x.IsChecked == true))
+            {
+                Group documentGroup = dbContext.Groups.Where(x => x.ID == group.ID).Single();
+                documentToAdd.Groups.Add(documentGroup);
+
+            }
+
+            dbContext.Documents.Add(documentToAdd);
+            dbContext.SaveChanges();
+        }
+
         public List<ApplicationUser> ListUsersToCreateGroup()
         {
             var users = userManager.Users.ToList();
