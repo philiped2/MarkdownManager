@@ -11,8 +11,8 @@ namespace MarkdownManagerNew.Viewmodels
     {
         public CreateDocumentViewModel()
         {
-            CheckboxUsers = new List<CheckBoxListItem>();
-            CheckboxGroups = new List<CheckBoxListItem>();
+            CheckboxUsers = new List<CheckBoxListUser>();
+            CheckboxGroups = new List<CheckBoxListGroup>();
         }
 
         [Display(Name = "Beskrivning")]
@@ -23,7 +23,9 @@ namespace MarkdownManagerNew.Viewmodels
         [Display(Name = "Markdown")]
         public string Markdown { get; set; }
 
-        public ICollection<CheckBoxListItem> CheckboxUsers { get; set; }
-        public ICollection<CheckBoxListItem> CheckboxGroups { get; set; }
+        [Display(Name="Användare")]
+        public List<CheckBoxListUser> CheckboxUsers { get; set; }
+        [Display(Name = "Grupper")]
+        public List<CheckBoxListGroup> CheckboxGroups { get; set; }
     }
 }

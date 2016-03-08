@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MarkdownManagerNew.Models
 {
-    public class CheckBoxListItem
+    public class CheckBoxListUser
     {
         public string ID { get; set; }
         public string Display { get; set; }
