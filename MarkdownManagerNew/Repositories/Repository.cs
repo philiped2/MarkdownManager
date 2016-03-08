@@ -144,5 +144,12 @@ namespace MarkdownManagerNew.Repositories
             return users;
         }
 
+
+        public void CreateTag(Tag model)
+        {
+            var tagToAdd = new Tag { Label = model.Label };
+            dbContext.Tags.Add(tagToAdd);
+            dbContext.SaveChanges();
+        }
     }
 }

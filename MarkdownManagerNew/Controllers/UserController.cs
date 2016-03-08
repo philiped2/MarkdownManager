@@ -32,6 +32,20 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpGet]
+        public ActionResult CreateTag()
+        {
+            Tag model = new Tag();
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CreateTag(Tag model)
+        {
+            repo.CreateTag(model);
+            return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
+        }
+
+        [HttpGet]
         public ActionResult CreateDocument()
         {
             CreateDocumentViewModel model = new CreateDocumentViewModel();
