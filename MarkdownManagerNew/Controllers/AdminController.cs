@@ -115,6 +115,7 @@ namespace MarkdownManagerNew.Controllers
                 db.Documents.Add(document);
                 db.SaveChanges();
                 return RedirectToAction("Index");
+                
             }
 
             return View(document);
@@ -147,7 +148,8 @@ namespace MarkdownManagerNew.Controllers
             {
                 db.Entry(document).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
+                return RedirectToAction("Index", new { message = "Document was changed!" });
             }
             return View(document);
         }
