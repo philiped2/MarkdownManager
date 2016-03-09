@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -123,7 +124,7 @@ namespace MarkdownManagerNew.Repositories
 
         public void CreateUser(CreateUserViewModel viewmodel, ApplicationUser creator)
         {
-            var userToAdd = new ApplicationUser { FirstName = viewmodel.FirstName, LastName = viewmodel.LastName, MailAdress = viewmodel.MailAdress};
+            var userToAdd = new ApplicationUser { UserName = viewmodel.UserName, FirstName = viewmodel.FirstName, LastName = viewmodel.LastName, MailAdress = viewmodel.MailAdress};
 
             foreach (var group in viewmodel.Groups.Where(x => x.IsChecked == true))
             {
@@ -141,7 +142,6 @@ namespace MarkdownManagerNew.Repositories
             if (viewmodel.admin)
             {
                 userManager.Create(userToAdd, "AdminAdmin123");
-                dbContext.SaveChanges();
                 userManager.AddToRole(userToAdd.Id, "Admin"); //När man sparar så får man "UserID not found"
             }
 
