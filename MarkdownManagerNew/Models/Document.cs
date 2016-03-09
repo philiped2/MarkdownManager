@@ -53,8 +53,8 @@ namespace MarkdownManagerNew.Models
 
         //public string CreatorId { get; set; }
         // En onödig kommentar
-        public string CreatorID { get; set; }
         [Required]
+        public string CreatorID { get; set; }
         [Display(Name = "Skapare")]
         //[ForeignKey("CreatorID")]
         public virtual ApplicationUser Creator { get; set; } //Lägg till virtual. Gör det på andra creators också
