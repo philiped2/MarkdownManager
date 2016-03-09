@@ -101,7 +101,7 @@ namespace MarkdownManagerNew.Controllers
             var user = GetCurrentUser();
             repo.CreateGroup(viewModel, user);
             ViewBag.Test = "A new group has been created!";
-            return View("Index");
+            return View("Index", repo.GetUserDocuments(GetCurrentUser()));
         }
 
 
@@ -201,7 +201,7 @@ namespace MarkdownManagerNew.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Description,Name,Markdown,DateCreated,LastChanged,CreatorId")] Document document)
+        public ActionResult Edit([Bind(Include = "Id,Description,Name,Markdown,DateCreated,LastChanged,CreatorID")] Document document)
         {
             if (ModelState.IsValid)
             {

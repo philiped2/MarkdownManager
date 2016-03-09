@@ -94,6 +94,7 @@ namespace MarkdownManagerNew.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Description,Name,Markdown,DateCreated,LastChanged,CreatorId")] Document document)
         {
+
             if (ModelState.IsValid)
             {
                 db.Entry(document).State = EntityState.Modified;
