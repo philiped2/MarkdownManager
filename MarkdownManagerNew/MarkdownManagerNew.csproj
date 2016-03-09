@@ -166,9 +166,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603031353223_syncedWithMaster2.cs" />
-    <Compile Include="Migrations\201603031353223_syncedWithMaster2.Designer.cs">
-      <DependentUpon>201603031353223_syncedWithMaster2.cs</DependentUpon>
+    <Compile Include="Migrations\201603090859526_initial.cs" />
+    <Compile Include="Migrations\201603090859526_initial.Designer.cs">
+      <DependentUpon>201603090859526_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1057,8 +1057,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603031353223_syncedWithMaster2.resx">
-      <DependentUpon>201603031353223_syncedWithMaster2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603090859526_initial.resx">
+      <DependentUpon>201603090859526_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -3,7 +3,7 @@ namespace MarkdownManagerNew.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class syncedWithMaster2 : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -28,7 +28,6 @@ namespace MarkdownManagerNew.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        MailAdress = c.String(),
                         FirstName = c.String(nullable: false),
                         LastName = c.String(nullable: false),
                         Email = c.String(),

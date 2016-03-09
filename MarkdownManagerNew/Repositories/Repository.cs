@@ -124,7 +124,7 @@ namespace MarkdownManagerNew.Repositories
 
         public void CreateUser(CreateUserViewModel viewmodel, ApplicationUser creator)
         {
-            var userToAdd = new ApplicationUser { UserName = viewmodel.UserName, FirstName = viewmodel.FirstName, LastName = viewmodel.LastName, MailAdress = viewmodel.MailAdress};
+            var userToAdd = new ApplicationUser { UserName = viewmodel.UserName, FirstName = viewmodel.FirstName, LastName = viewmodel.LastName, Email = viewmodel.MailAdress};
 
             foreach (var group in viewmodel.Groups.Where(x => x.IsChecked == true))
             {
@@ -142,13 +142,13 @@ namespace MarkdownManagerNew.Repositories
             if (viewmodel.admin)
             {
                 userManager.Create(userToAdd, "AdminAdmin123");
-                userManager.AddToRole(userToAdd.Id, "Admin"); //När man sparar så får man "UserID not found"
+                userManager.AddToRole(userToAdd.Id, "Admin"); 
             }
 
             else
             {
                 userManager.Create(userToAdd, "Password123");
-                userManager.AddToRole(userToAdd.Id, "User"); //När man sparar så får man "UserID not found"
+                userManager.AddToRole(userToAdd.Id, "User");
             }
         }
 
@@ -201,5 +201,35 @@ namespace MarkdownManagerNew.Repositories
             List<Tag> tagList = dbContext.Tags.ToList();
             return tagList;
         }
-    }
+
+    //    public File CreateFile(HttpPostedFileBase upload, ApplicationUser user)
+    //    {
+    //        if (upload != null && upload.ContentLength > 0)
+    //        {
+    //            var reader = new System.IO.BinaryReader(upload.InputStream);
+    //            var newFile = new File
+    //            {
+    //                Filename = System.IO.Path.GetFileName(upload.FileName),
+    //                Description = upload.Description
+    //                ContentType = upload.ContentType,
+    //                Data = reader.ReadBytes(upload.ContentLength),
+    //                Creator = user,
+    //                CreatorID = user.Id,
+    //                DocumentID = upload.DocumentID
+    //            };
+
+    //            //var count = dbContext.Files
+    //            //    .Where(f => f.FileURL == newFile.FileURL || (f.FileName == newFile.FileName && f.className == newFile.className));
+
+    //            if (count.Count() == 0) //Om det inte redan finns en fil med samma URL
+    //            {
+    //                return newFile;
+    //            }
+
+    //            else
+    //            {
+    //                return null;
+    //            }
+    //        }
+    //}
 }

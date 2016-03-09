@@ -238,6 +238,24 @@ namespace MarkdownManagerNew.Controllers
             return RedirectToAction("Index");
         }
 
+        //[HttpPost]
+        //public ActionResult UploadFile(HttpPostedFileBase upload)
+        //{
+        //    var file = repo.CreateFile(upload, GetCurrentUser());
+
+        //    if (file != null)
+        //    {
+        //        repo.AddFile(file);
+
+        //        return RedirectToAction("SharedFiles");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("SharedFiles", new { error = "File already exists, or file is empty!" });
+        //    }
+
+        //}
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
