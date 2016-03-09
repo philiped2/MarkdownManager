@@ -209,6 +209,7 @@ namespace MarkdownManagerNew.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
             return View(document);
         }
 

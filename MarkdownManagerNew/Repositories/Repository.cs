@@ -25,14 +25,14 @@ namespace MarkdownManagerNew.Repositories
             this.roleStore = new RoleStore<IdentityRole>(dbContext);
             this.roleManager = new RoleManager<IdentityRole>(roleStore);
             this.userStore = new UserStore<ApplicationUser>(dbContext);
-            this.userManager = new UserManager<ApplicationUser>(userStore);  
+            this.userManager = new UserManager<ApplicationUser>(userStore);
         }
 
         public List<Document> GetUserDocuments(ApplicationUser user) //Fixa denna med lamba-linq sedan
         {
             List<Document> query = new List<Document>();
             var documentsByUserRights = user.Documents.ToList();
-            
+
             foreach (var item in documentsByUserRights)
             {
                 query.Add(item);
@@ -71,7 +71,7 @@ namespace MarkdownManagerNew.Repositories
             return userList;
         }
 
-        public ApplicationUser GetUser (string userId)
+        public ApplicationUser GetUser(string userId)
         {
             ApplicationUser query = dbContext.Users
                 .Where(x => x.Id == userId).Single();
@@ -80,7 +80,7 @@ namespace MarkdownManagerNew.Repositories
         }
 
         //public CreateGroupViewModel CreateGroup(List<string> members, ApplicationUser user, string name, string description, CreateGroupViewModel viewmodel)
-        public void CreateGroup( CreateGroupViewModel viewmodel, ApplicationUser creator)
+        public void CreateGroup(CreateGroupViewModel viewmodel, ApplicationUser creator)
         {
             var groupToAdd = new Group { CreatorID = creator.Id };
             //// ändra parameters till: ApplicationUser user, List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
@@ -110,7 +110,7 @@ namespace MarkdownManagerNew.Repositories
             //    {
             //        newGroup.Users.Add(member);
             //    }
-                
+
             //}
             ////newGroup.Users = groupMembers;
             ////newGroup.Documents = documents;
@@ -124,7 +124,7 @@ namespace MarkdownManagerNew.Repositories
 
         public void CreateUser(CreateUserViewModel viewmodel, ApplicationUser creator)
         {
-            var userToAdd = new ApplicationUser { UserName = viewmodel.UserName, FirstName = viewmodel.FirstName, LastName = viewmodel.LastName, Email = viewmodel.MailAdress};
+            var userToAdd = new ApplicationUser { UserName = viewmodel.UserName, FirstName = viewmodel.FirstName, LastName = viewmodel.LastName, Email = viewmodel.MailAdress };
 
             foreach (var group in viewmodel.Groups.Where(x => x.IsChecked == true))
             {
@@ -142,7 +142,7 @@ namespace MarkdownManagerNew.Repositories
             if (viewmodel.admin)
             {
                 userManager.Create(userToAdd, "AdminAdmin123");
-                userManager.AddToRole(userToAdd.Id, "Admin"); 
+                userManager.AddToRole(userToAdd.Id, "Admin");
             }
 
             else
@@ -154,7 +154,7 @@ namespace MarkdownManagerNew.Repositories
 
         public void CreateDocument(CreateDocumentViewModel viewmodel, ApplicationUser creator)
         {
-            var documentToAdd = new Document { CreatorID = creator.Id, Name = viewmodel.Name, Description = viewmodel.Description, Markdown = viewmodel.Markdown};
+            var documentToAdd = new Document { CreatorID = creator.Id, Name = viewmodel.Name, Description = viewmodel.Description, Markdown = viewmodel.Markdown };
 
             foreach (var user in viewmodel.CheckboxUsers.Where(x => x.IsChecked == true))
             {
@@ -202,34 +202,36 @@ namespace MarkdownManagerNew.Repositories
             return tagList;
         }
 
-    //    public File CreateFile(HttpPostedFileBase upload, ApplicationUser user)
-    //    {
-    //        if (upload != null && upload.ContentLength > 0)
-    //        {
-    //            var reader = new System.IO.BinaryReader(upload.InputStream);
-    //            var newFile = new File
-    //            {
-    //                Filename = System.IO.Path.GetFileName(upload.FileName),
-    //                Description = upload.Description
-    //                ContentType = upload.ContentType,
-    //                Data = reader.ReadBytes(upload.ContentLength),
-    //                Creator = user,
-    //                CreatorID = user.Id,
-    //                DocumentID = upload.DocumentID
-    //            };
+        //    public File CreateFile(HttpPostedFileBase upload, ApplicationUser user)
+        //    {
+        //        if (upload != null && upload.ContentLength > 0)
+        //        {
+        //            var reader = new System.IO.BinaryReader(upload.InputStream);
+        //            var newFile = new File
+        //            {
+        //                Filename = System.IO.Path.GetFileName(upload.FileName),
+        //                Description = upload.Description
+        //                ContentType = upload.ContentType,
+        //                Data = reader.ReadBytes(upload.ContentLength),
+        //                Creator = user,
+        //                CreatorID = user.Id,
+        //                DocumentID = upload.DocumentID
+        //            };
 
-    //            //var count = dbContext.Files
-    //            //    .Where(f => f.FileURL == newFile.FileURL || (f.FileName == newFile.FileName && f.className == newFile.className));
+        //            //var count = dbContext.Files
+        //            //    .Where(f => f.FileURL == newFile.FileURL || (f.FileName == newFile.FileName && f.className == newFile.className));
 
-    //            if (count.Count() == 0) //Om det inte redan finns en fil med samma URL
-    //            {
-    //                return newFile;
-    //            }
+        //            if (count.Count() == 0) //Om det inte redan finns en fil med samma URL
+        //            {
+        //                return newFile;
+        //            }
 
-    //            else
-    //            {
-    //                return null;
-    //            }
-    //        }
-    //}
+        //            else
+        //            {
+        //                return null;
+        //            }
+        //        }
+        //}
+    }
+
 }
