@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Mvc;
 using MarkdownManagerNew.Models;
 using MarkdownManagerNew.Repositories;
+using MarkdownManagerNew.Viewmodels;
+using Microsoft.AspNet.Identity;
 
 namespace MarkdownManagerNew.Controllers
 {
@@ -17,11 +19,21 @@ namespace MarkdownManagerNew.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private Repository repo = new Repository();
 
+        private ApplicationUser GetCurrentUser()
+        {
+            return repo.GetUser(User.Identity.GetUserId());
+        }
+
+        public ActionResult Index(string message)
+        {
+            ViewBag.message = message;
+            return View(GetCurrentUser());
+        }
+
         // GET: Admin
         public ActionResult ShowDocuments()
         {
             return View(repo.GetAllDocuments());
-            //return View(db.Documents.ToList());
         }
 
         public ActionResult ShowGroups()
@@ -32,6 +44,42 @@ namespace MarkdownManagerNew.Controllers
         public ActionResult ShowUsers()
         {
             return View(repo.GetAllUsers());
+        }
+
+        [HttpGet]
+        public ActionResult CreateUser()
+        {
+            CreateUserViewModel model = new CreateUserViewModel();
+
+            foreach (var group in repo.GetAllGroups())
+            {
+                model.Groups.Add(new CheckBoxListGroup()
+                {
+                    ID = group.ID,
+                    Display = group.Name,
+                    IsChecked = false
+                });
+            }
+
+            foreach (var doc in repo.GetAllDocuments())
+            {
+                model.Documents.Add(new CheckBoxListDocuments()
+                {
+                    ID = doc.ID,
+                    Display = doc.Name,
+                    IsChecked = false
+                });
+            }
+
+            model.admin = false;
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CreateUser(CreateUserViewModel model)
+        {
+            repo.CreateUser(model, GetCurrentUser());
+            return RedirectToAction("Index", new { message = "User was created" });
         }
 
         // GET: Admin/Details/5

@@ -121,6 +121,37 @@ namespace MarkdownManagerNew.Repositories
             dbContext.SaveChanges();
         }
 
+        public void CreateUser(CreateUserViewModel viewmodel, ApplicationUser creator)
+        {
+            var userToAdd = new ApplicationUser { FirstName = viewmodel.FirstName, LastName = viewmodel.LastName, MailAdress = viewmodel.MailAdress};
+
+            foreach (var group in viewmodel.Groups.Where(x => x.IsChecked == true))
+            {
+                Group userGroup = dbContext.Groups.Where(x => x.ID == group.ID).Single();
+                userToAdd.Groups.Add(userGroup);
+
+            }
+
+            foreach (var document in viewmodel.Documents.Where(x => x.IsChecked == true))
+            {
+                Document userDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+                userToAdd.Documents.Add(userDocument);
+            }
+
+            if (viewmodel.admin)
+            {
+                userManager.Create(userToAdd, "AdminAdmin123");
+                dbContext.SaveChanges();
+                userManager.AddToRole(userToAdd.Id, "Admin"); //När man sparar så får man "UserID not found"
+            }
+
+            else
+            {
+                userManager.Create(userToAdd, "Password123");
+                userManager.AddToRole(userToAdd.Id, "User"); //När man sparar så får man "UserID not found"
+            }
+        }
+
         public void CreateDocument(CreateDocumentViewModel viewmodel, ApplicationUser creator)
         {
             var documentToAdd = new Document { CreatorID = creator.Id, Name = viewmodel.Name, Description = viewmodel.Description, Markdown = viewmodel.Markdown};
