@@ -166,9 +166,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603031353223_syncedWithMaster2.cs" />
-    <Compile Include="Migrations\201603031353223_syncedWithMaster2.Designer.cs">
-      <DependentUpon>201603031353223_syncedWithMaster2.cs</DependentUpon>
+    <Compile Include="Migrations\201603090859526_initial.cs" />
+    <Compile Include="Migrations\201603090859526_initial.Designer.cs">
+      <DependentUpon>201603090859526_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -187,6 +187,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Viewmodels\CreateDocumentViewModel.cs" />
     <Compile Include="Viewmodels\CreateGroupViewModel.cs" />
+    <Compile Include="Viewmodels\CreateUserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -1042,6 +1043,8 @@
     <Content Include="Views\Admin\ShowUsers.cshtml" />
     <Content Include="Views\Admin\DeleteGroup.cshtml" />
     <Content Include="Views\User\CreateTag.cshtml" />
+    <Content Include="Views\Admin\CreateUser.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1054,8 +1057,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603031353223_syncedWithMaster2.resx">
-      <DependentUpon>201603031353223_syncedWithMaster2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603090859526_initial.resx">
+      <DependentUpon>201603090859526_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

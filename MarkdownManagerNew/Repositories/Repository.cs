@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -121,6 +122,36 @@ namespace MarkdownManagerNew.Repositories
             dbContext.SaveChanges();
         }
 
+        public void CreateUser(CreateUserViewModel viewmodel, ApplicationUser creator)
+        {
+            var userToAdd = new ApplicationUser { UserName = viewmodel.UserName, FirstName = viewmodel.FirstName, LastName = viewmodel.LastName, Email = viewmodel.MailAdress};
+
+            foreach (var group in viewmodel.Groups.Where(x => x.IsChecked == true))
+            {
+                Group userGroup = dbContext.Groups.Where(x => x.ID == group.ID).Single();
+                userToAdd.Groups.Add(userGroup);
+
+            }
+
+            foreach (var document in viewmodel.Documents.Where(x => x.IsChecked == true))
+            {
+                Document userDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+                userToAdd.Documents.Add(userDocument);
+            }
+
+            if (viewmodel.admin)
+            {
+                userManager.Create(userToAdd, "AdminAdmin123");
+                userManager.AddToRole(userToAdd.Id, "Admin"); 
+            }
+
+            else
+            {
+                userManager.Create(userToAdd, "Password123");
+                userManager.AddToRole(userToAdd.Id, "User");
+            }
+        }
+
         public void CreateDocument(CreateDocumentViewModel viewmodel, ApplicationUser creator)
         {
             var documentToAdd = new Document { CreatorID = creator.Id, Name = viewmodel.Name, Description = viewmodel.Description, Markdown = viewmodel.Markdown};
@@ -170,5 +201,35 @@ namespace MarkdownManagerNew.Repositories
             List<Tag> tagList = dbContext.Tags.ToList();
             return tagList;
         }
-    }
+
+    //    public File CreateFile(HttpPostedFileBase upload, ApplicationUser user)
+    //    {
+    //        if (upload != null && upload.ContentLength > 0)
+    //        {
+    //            var reader = new System.IO.BinaryReader(upload.InputStream);
+    //            var newFile = new File
+    //            {
+    //                Filename = System.IO.Path.GetFileName(upload.FileName),
+    //                Description = upload.Description
+    //                ContentType = upload.ContentType,
+    //                Data = reader.ReadBytes(upload.ContentLength),
+    //                Creator = user,
+    //                CreatorID = user.Id,
+    //                DocumentID = upload.DocumentID
+    //            };
+
+    //            //var count = dbContext.Files
+    //            //    .Where(f => f.FileURL == newFile.FileURL || (f.FileName == newFile.FileName && f.className == newFile.className));
+
+    //            if (count.Count() == 0) //Om det inte redan finns en fil med samma URL
+    //            {
+    //                return newFile;
+    //            }
+
+    //            else
+    //            {
+    //                return null;
+    //            }
+    //        }
+    //}
 }

@@ -20,9 +20,8 @@ namespace MarkdownManagerNew.Models
             Files = new List<File>();
         }
 
-        //[Required]
-        [Display(Name = "Epost")]
-        public string MailAdress { get; set; }
+        //[Display(Name = "Epost")]
+        //public string MailAdress { get; set; }
 
         [Required]
         [Display(Name = "Förnamn")]
@@ -136,6 +135,8 @@ namespace MarkdownManagerNew.Models
         {
             return new ApplicationDbContext();
         }
+
+
 
         //public System.Data.Entity.DbSet<MarkdownManagerNew.Models.ApplicationUser> ApplicationUsers { get; set; }
     }
