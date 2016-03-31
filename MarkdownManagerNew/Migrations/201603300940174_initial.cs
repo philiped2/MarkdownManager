@@ -63,9 +63,9 @@ namespace MarkdownManagerNew.Migrations
                     {
                         ID = c.Int(nullable: false, identity: true),
                         Filename = c.String(),
-                        Description = c.String(),
                         ContentType = c.String(),
-                        Data = c.Byte(nullable: false),
+                        Data = c.Binary(),
+                        Size = c.Int(nullable: false),
                         CreatorID = c.String(nullable: false, maxLength: 128),
                         DocumentID = c.Int(nullable: false),
                     })

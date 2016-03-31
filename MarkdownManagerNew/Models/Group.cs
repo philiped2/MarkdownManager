@@ -36,8 +36,8 @@ namespace MarkdownManagerNew.Models
         public string Name { get; set; }
 
         //public string CreatorId { get; set; }
-        public string CreatorID { get; set; }
         [Required]
+        public string CreatorID { get; set; }
         [Display(Name = "Skapare")]
         //[ForeignKey("CreatorID")]
         public ApplicationUser Creator { get; set; }

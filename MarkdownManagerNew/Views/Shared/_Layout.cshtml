@@ -4,11 +4,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:light,regular,medium,thin,italic,mediumitalic,bold" title="roboto">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
+    @Scripts.Render("~/bundles/angular")
+    <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/Controllers/FileController.js"></script>
 </head>
-<body>
+<body ng-app="app">
     @if (User.Identity.IsAuthenticated)
     {
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,7 +28,7 @@
                     <ul class="nav navbar-nav">
                         @if (User.IsInRole("Admin"))
                         {
-                            <li>@Html.ActionLink("Hem", "ShowDocuments", "Admin")</li>
+                            <li>@Html.ActionLink("Hem", "Index", "Admin")</li>
                             <li>@Html.ActionLink("Dokument", "ShowDocuments", "Admin")</li>
                             <li>@Html.ActionLink("Grupper", "ShowGroups", "Admin")</li>
                             <li>@Html.ActionLink("Användare", "ShowUsers", "Admin")</li>
@@ -53,7 +56,7 @@
                 <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
             </footer>
         }
-        
+
     </div>
 
     @Scripts.Render("~/bundles/jquery")

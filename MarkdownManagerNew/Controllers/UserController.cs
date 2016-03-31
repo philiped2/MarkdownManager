@@ -10,21 +10,23 @@ using MarkdownManagerNew.Models;
 using MarkdownManagerNew.Repositories;
 using Microsoft.AspNet.Identity;
 using MarkdownManagerNew.Viewmodels;
+using System.Web.Helpers;
+using Newtonsoft.Json;
 
 namespace MarkdownManagerNew.Controllers
 {
-    [Authorize(Roles="User")]
+    [Authorize(Roles = "User")]
     public class UserController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext(); //Ta bort sen
         Repository repo = new Repository();
-        
+
         private ApplicationUser GetCurrentUser()
         {
             return repo.GetUser(User.Identity.GetUserId());
         }
         // GET: User
-        
+
         public ActionResult Index()
         {
             return View(repo.GetUserDocuments(GetCurrentUser()));
@@ -46,9 +48,21 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateDocument()
+        public ActionResult CreateDocument(List<File> files)
         {
+            CreateDocumentViewModel viewModel = (CreateDocumentViewModel)TempData["viewModel"];
+            HttpPostedFileBase file = (HttpPostedFileBase)TempData["fileToAdd"];
+
             CreateDocumentViewModel model = new CreateDocumentViewModel();
+
+            if (viewModel != null)
+            {
+                model = viewModel;
+                TempData["viewModel"] = null;
+                return View(model);
+            }
+            
+
             var groups = repo.GetAllGroups();
 
             foreach (var user in repo.GetAllUsers())
@@ -85,15 +99,41 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpPost]
-        //public ActionResult CreateGroup(List<string> groupMembers, string title, string description, CreateGroupViewModel viewModel)
-        public ActionResult CreateDocument(CreateDocumentViewModel viewModel)
+        public ActionResult CreateDocument(CreateDocumentViewModel viewModel, HttpPostedFileBase upload)
         {
-            // ändra parameters till:  List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
-            var user = GetCurrentUser();
-            //repo.CreateGroup(groupMembers, user, title, description, viewModel);
-            repo.CreateDocument(viewModel, user);
-            return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
+            //dynamic fileArray = JsonConvert.DeserializeObject(viewModel.FilesJson);
+
+            //foreach (var file in fileArray)
+            //{
+            //    Console.WriteLine(file.Filename); 
+            //}
+
+            if (Request.Form["CreateFile"] != null)
+            {
+                var file = repo.CreateFile(upload, GetCurrentUser());
+                viewModel.Files.Add(file);
+                TempData["viewModel"] = viewModel;
+
+                //return RedirectToAction("CreateDocument", file);
+                return RedirectToAction("CreateDocument", new { files = viewModel.Files });
+            }
+            else if (Request.Form["CreateDocument"] != null)
+            {
+                //List<File> fileList = repo.CreateFileListFromJson(viewModel.FilesJson, GetCurrentUser());
+
+                var user = GetCurrentUser();
+                repo.CreateDocument(viewModel, user);
+                return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
+            }
+
+            else
+            {
+                return View("Index");
+            }
+
+            
         }
+
 
         [HttpPost]
         public ActionResult CreateGroup(CreateGroupViewModel viewModel)
@@ -238,23 +278,17 @@ namespace MarkdownManagerNew.Controllers
             return RedirectToAction("Index");
         }
 
-        //[HttpPost]
-        //public ActionResult UploadFile(HttpPostedFileBase upload)
-        //{
-        //    var file = repo.CreateFile(upload, GetCurrentUser());
+        [HttpPost]
+        public ActionResult CreateFile(CreateDocumentViewModel viewModel, HttpPostedFileBase upload)
+        {
+            var file = repo.CreateFile(upload, GetCurrentUser());
+            viewModel.Files.Add(file);
+            TempData["viewModel"] = viewModel;
 
-        //    if (file != null)
-        //    {
-        //        repo.AddFile(file);
-
-        //        return RedirectToAction("SharedFiles");
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("SharedFiles", new { error = "File already exists, or file is empty!" });
-        //    }
-
-        //}
+            //return RedirectToAction("CreateDocument", file);
+            return RedirectToAction("CreateDocument", new { files = viewModel.Files });
+            
+        }
 
         protected override void Dispose(bool disposing)
         {
