@@ -2,6 +2,7 @@
 using MarkdownManagerNew.Viewmodels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -205,6 +206,12 @@ namespace MarkdownManagerNew.Repositories
 
             }
 
+            foreach (var file in viewmodel.Files)
+            {
+                documentToAdd.Files.Add(file);
+
+            }
+
             dbContext.Documents.Add(documentToAdd);
             dbContext.SaveChanges();
         }
@@ -283,35 +290,48 @@ namespace MarkdownManagerNew.Repositories
             return tagList;
         }
 
-        //    public File CreateFile(HttpPostedFileBase upload, ApplicationUser user)
-        //    {
-        //        if (upload != null && upload.ContentLength > 0)
-        //        {
-        //            var reader = new System.IO.BinaryReader(upload.InputStream);
-        //            var newFile = new File
-        //            {
-        //                Filename = System.IO.Path.GetFileName(upload.FileName),
-        //                Description = upload.Description
-        //                ContentType = upload.ContentType,
-        //                Data = reader.ReadBytes(upload.ContentLength),
-        //                Creator = user,
-        //                CreatorID = user.Id,
-        //                DocumentID = upload.DocumentID
-        //            };
+        public File CreateFile(HttpPostedFileBase upload, ApplicationUser user)
+        {
+            var reader = new System.IO.BinaryReader(upload.InputStream);
+            var newFile = new File
+            {
+                Filename = System.IO.Path.GetFileName(upload.FileName),
+                ContentType = upload.ContentType,
+                Data = reader.ReadBytes(upload.ContentLength),
+                CreatorID = user.Id,
+                Size = upload.ContentLength
+            };
+            return newFile;
+        }
 
-        //            //var count = dbContext.Files
-        //            //    .Where(f => f.FileURL == newFile.FileURL || (f.FileName == newFile.FileName && f.className == newFile.className));
+        public List<File> CreateFileListFromJson(string json, ApplicationUser user)
+        {
+            dynamic fileArray = JsonConvert.DeserializeObject(json);
 
-        //            if (count.Count() == 0) //Om det inte redan finns en fil med samma URL
-        //            {
-        //                return newFile;
-        //            }
+            List<File> fileList = new List<File>();
+            //var binaryReader = new System.IO.BinaryReader(upload.InputStream);
 
-        //            else
-        //            {
-        //                return null;
-        //            }
-        //        }
-        //}
+            foreach(var file in fileArray)
+            {
+                //var newFile = new File
+                //{
+                //    Filename = file.Filename,
+                //    ContentType = file.ContentType,
+                //    Data = file.Data,
+                //    CreatorID = user.Id
+                //};
+                //fileList.Add(newFile);
+                string Filename = file.Filename;
+                string ContentType = file.ContentType;
+                byte[] Data = System.Text.Encoding.UTF8.GetBytes(file.Data);
+                //byte[] Data = file.Data;
+                string CreatorID = user.Id;
+
+            }
+
+
+            return fileList;
+        }
+
     }
 }

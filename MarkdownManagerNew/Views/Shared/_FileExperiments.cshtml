@@ -1,0 +1,27 @@
+﻿
+<div class="form-group">
+    @Html.Label("File", new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+        <input type="file" id="file" name="upload" />
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="button" value="Ladda upp fil" class="btn btn-default" ng-click="add()" />
+    </div>
+</div>
+
+<table ng-show="showFileTable" class="table table-striped table-bordered">
+    <tr>
+        <th>Filename</th>
+        <th>Filetype</th>
+    </tr>
+
+    <tr ng-repeat="file in selectedFiles">
+        
+        <td>{{file.filename}}</td>
+        <td>{{file.contentType}}</td>
+    </tr>
+</table>

@@ -68,6 +68,30 @@
         </dd>
 
     </dl>
+    <div>
+        @if (Model.Files.Count > 0)
+        {
+            <h3>@Html.DisplayNameFor(model => model.Files)</h3>
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <th>Filename</th>
+                    <th>Filetype</th>
+                    <th>Size(bytes)</th>
+                </tr>
+
+                @foreach (var file in Model.Files)
+                {
+                    <tr>
+                        <td>@file.Filename</td>
+                        <td>@file.ContentType</td>
+                        <td>@file.Size</td>
+                    </tr>
+                }
+
+            </table>
+        }
+    </div>
+    
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model. }) |*@

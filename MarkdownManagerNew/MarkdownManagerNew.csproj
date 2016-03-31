@@ -166,9 +166,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603310945296_Initial.cs" />
-    <Compile Include="Migrations\201603310945296_Initial.Designer.cs">
-      <DependentUpon>201603310945296_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201603300940174_initial.cs" />
+    <Compile Include="Migrations\201603300940174_initial.Designer.cs">
+      <DependentUpon>201603300940174_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -177,11 +177,8 @@
     <Compile Include="Models\CheckBoxListTags.cs" />
     <Compile Include="Models\CheckBoxListUser.cs" />
     <Compile Include="Models\Document.cs" />
-    <Compile Include="Models\DocumentRight.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Group.cs" />
-    <Compile Include="Models\GroupRight.cs" />
-    <Compile Include="Models\GroupUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tag.cs" />
@@ -195,7 +192,6 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\Loginpage.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -227,6 +223,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Controllers\FileController.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -991,6 +988,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\app.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -1049,10 +1047,9 @@
     <Content Include="Views\User\CreateTag.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\EditGroup.cshtml" />
-    <Content Include="Views\Admin\GroupDetails.cshtml" />
-    <Content Include="Views\User\MyGroups.cshtml" />
-    <Content Include="Views\User\EditGroup.cshtml" />
+    <Content Include="Views\Shared\_FileUpload.cshtml" />
+    <Content Include="Views\Shared\_FileExperiments.cshtml" />
+    <Content Include="Views\Shared\_FileExperiments2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1065,8 +1062,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603310945296_Initial.resx">
-      <DependentUpon>201603310945296_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603300940174_initial.resx">
+      <DependentUpon>201603300940174_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
