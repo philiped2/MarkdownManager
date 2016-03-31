@@ -18,6 +18,10 @@ namespace MarkdownManagerNew.Models
             Documents = new List<Document>();
 
             Files = new List<File>();
+
+            GroupRights = new List<GroupRight>();
+
+            DocumentRights = new List<DocumentRight>();
         }
 
         //[Display(Name = "Epost")]
@@ -40,6 +44,10 @@ namespace MarkdownManagerNew.Models
         [Display(Name = "Filer")]
         public virtual ICollection<File> Files { get; set; }
 
+        public virtual List<GroupRight> GroupRights { get; set; }
+
+        public virtual List<DocumentRight> DocumentRights { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -60,6 +68,9 @@ namespace MarkdownManagerNew.Models
         public DbSet<File> Files { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Document> Documents { get; set; }
+        //public DbSet<GroupUser> GroupUsers { get; set; }
+        public DbSet<GroupRight> GroupRights { get; set; }
+        public DbSet<DocumentRight> DocumentRights { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -70,6 +81,10 @@ namespace MarkdownManagerNew.Models
             modelBuilder.Entity<Group>()
                 .HasMany(t => t.Users)
                 .WithMany(u => u.Groups);
+
+            //modelBuilder.Entity<GroupUser>()
+            //    .HasRequired(x => x.group)
+            //    .WithMany(x => x.GroupUsers);
 
             modelBuilder.Entity<ApplicationUser>()
             .HasMany(t => t.Roles);

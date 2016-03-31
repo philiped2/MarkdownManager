@@ -97,11 +97,29 @@ namespace MarkdownManagerNew.Controllers
             return View(document);
         }
 
+        public ActionResult GroupDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Group group = db.Groups.Find(id);
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            //group.ChangeLog.Add("hejsan");
+            return View(group);
+        }
+
         // GET: Admin/Create
         public ActionResult Create()
         {
             return View();
         }
+
+
 
         // POST: Admin/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -152,6 +170,46 @@ namespace MarkdownManagerNew.Controllers
                 return RedirectToAction("Index", new { message = "Document was changed!" });
             }
             return View(document);
+        }
+
+        public ActionResult EditGroup(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Group group = db.Groups.Find(id);
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+            return View(group);
+        }
+
+        // POST: Admin/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditGroup([Bind(Include = "Id,Description,Name,ChangeLog,DateCreated,LastChanged,CreatorID")] Group group)
+        {
+            //DateTime timeChanged = DateTime.Now;
+            ApplicationUser currentUser = GetCurrentUser();
+
+
+            if (ModelState.IsValid)
+            {
+                
+                db.Entry(group).State = EntityState.Modified;
+                db.SaveChanges();
+                //db.Entry(group).State = EntityState.Modified;
+                //db.SaveChanges();
+                //return RedirectToAction("Index");
+                repo.LogChanges(group, currentUser);
+                
+                return RedirectToAction("Index", new { message = "Group was changed!" });
+            }
+            return View(group);
         }
 
         // GET: Admin/Delete/5

@@ -166,9 +166,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603090859526_initial.cs" />
-    <Compile Include="Migrations\201603090859526_initial.Designer.cs">
-      <DependentUpon>201603090859526_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201603310945296_Initial.cs" />
+    <Compile Include="Migrations\201603310945296_Initial.Designer.cs">
+      <DependentUpon>201603310945296_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -177,8 +177,11 @@
     <Compile Include="Models\CheckBoxListTags.cs" />
     <Compile Include="Models\CheckBoxListUser.cs" />
     <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\DocumentRight.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupRight.cs" />
+    <Compile Include="Models\GroupUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tag.cs" />
@@ -192,6 +195,7 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Loginpage.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1045,6 +1049,10 @@
     <Content Include="Views\User\CreateTag.cshtml" />
     <Content Include="Views\Admin\CreateUser.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\EditGroup.cshtml" />
+    <Content Include="Views\Admin\GroupDetails.cshtml" />
+    <Content Include="Views\User\MyGroups.cshtml" />
+    <Content Include="Views\User\EditGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1057,8 +1065,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603090859526_initial.resx">
-      <DependentUpon>201603090859526_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603310945296_Initial.resx">
+      <DependentUpon>201603310945296_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -13,7 +13,6 @@ namespace MarkdownManagerNew.Models
         {
             DateCreated = DateTime.Now;
             ChangeLog = new List<string>();
-            ChangeLog.Add(DateCreated + " - Dokument skapat");
 
             Users = new List<ApplicationUser>();
 

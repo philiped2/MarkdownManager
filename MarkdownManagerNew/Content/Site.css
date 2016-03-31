@@ -13,6 +13,20 @@ body {
     padding-right: 15px;
 }
 
+.navbar-brand { background-color: #3399CC; color: white; }
+.navbar-brand:visited { background-color: #3399CC; color: white; }
+.navbar-default-color { background-color: #3399CC; color: white; }
+.navbar-brand { background-color: #3399CC !important; color: white; }
+.navbar-brand:visited { background-color: #3399CC !important; color: white; }
+.navbar-default-color { background-color: #3399CC !important; color: white; }
+.navbar-inverse { background-color : #3399CC !important; color: white; }
+.nav.navbar-nav li a { 
+   color: white;
+ }
+.nav.navbar-nav li a:hover { 
+   background-color: #3399FF;
+ }
+
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -29,9 +43,12 @@ textarea {
 
 #CreateGroupWindow
 {
+    margin-top: 50px;
     height: 500px;
     font-size: 20px;
     height: 600px;
+    box-shadow: 15px 15px 25px grey;
+    /*background-color: green;*/
 }
 
 /*#addUsersToGroup
@@ -63,4 +80,70 @@ textarea {
 
 .markdownEditor .form-control {
     height: 400px;
+}
+
+#loginWallaper
+{
+    background: lightblue;
+    background: linear-gradient(to bottom right, lightblue, yellow);
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+.createGroupTextBoxes
+{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    height: 50px;
+}
+
+#createGroupWindow2
+{
+    margin-top: 50px;
+    height: 400px;
+    /*background-color: lightgrey;*/
+    border: solid 1px grey;
+}
+
+#createGroupTitle
+{
+    height: 80px;
+    background-color: #3399CC;
+    color: white;
+}
+
+.addGroupOrUser
+{
+    height: 80px;
+    background-color: #3399CC;
+    padding-top: 25px;
+    padding-left: 30px;
+}
+
+#groupTitle
+{
+    height: 100px;
+    /*background-color: orange;*/
+}
+
+#groupDescription
+{
+    height: 140px;
+    /*background-color: blue;*/
+}
+
+#groupConfirm
+{
+    height: 80px;
+    /*background-color: pink;*/
+}
+
+#groupConfirmButton
+{
+    /*background-color: brown;*/
+    height: 80px;
+    padding-top: 25px;
+    padding-left: 100px;
 }

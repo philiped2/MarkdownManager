@@ -5,15 +5,56 @@
     ViewBag.Title = "Create Group";
 }
 
-<h1>Create group</h1>
+
 
 <div id="CreateGroupWindow">
+    @*<div class="col-md-4">
+        <h1>
+            Skapa grupp
+        </h1>
+    </div>
+    <div class="dropdown col-md-4">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Användare
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            @for (int i = 0; i < Model.CheckBoxUsers.Count; i++)
+            {
+                <li>
+                    <a href="#">
+                        <span>@Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsChecked)</span>
+                        @Html.HiddenFor(x => x.CheckBoxUsers[i].ID) @Html.HiddenFor(x => x.CheckBoxUsers[i].Display)
+                        @Model.CheckBoxUsers[i].Display
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>*@
+    @*<div class="dropdown col-md-4">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Dokument
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+            @for (int i = 0; i < Model.CheckBoxDocuments.Count; i++)
+            {
+                <li>
+                    <a href="#">
+                        <span>@Html.CheckBoxFor(x => x.CheckBoxDocuments[i].IsChecked)</span>
+                        @Html.HiddenFor(x => x.CheckBoxDocuments[i].ID) @Html.HiddenFor(x => x.CheckBoxDocuments[i].Display)
+                        @Model.CheckBoxDocuments[i].Display
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>*@
     @using (Html.BeginForm("CreateGroup", "User", FormMethod.Post))
     {
         
         @Html.AntiForgeryToken()
         
-        <table>
+        @*<table>
             <tr>
                 <td>
                     Titel: @Html.TextBoxFor(x => x.Name)
@@ -22,7 +63,13 @@
                     Description: @Html.TextBoxFor(x => x.Description)
                 </td>
             </tr>
-        </table>
+        </table>*@
+    <div class="row createGroupTextBoxes">
+        Namn: @Html.TextBoxFor(x => x.Name)
+    </div>
+    <div class="row createGroupTextBoxes">
+        Beskrivning: @Html.TextBoxFor(x => x.Description)
+    </div>
         <table>
             @for (int i = 0; i < Model.CheckBoxUsers.Count; i++)
             {
@@ -30,6 +77,12 @@
                     <td>
                         @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsChecked)
                     </td>
+                    @*<td>
+                        Is admin: @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsGroupAdmin)
+                    </td>
+                    <td>
+                        Can Edit: @Html.CheckBoxFor(x => x.CheckBoxUsers[i].CanEdit)
+                    </td>*@
                     <td>
                         @Html.HiddenFor(x => x.CheckBoxUsers[i].ID)
                         @*@Model.CheckBoxUsers[i].ID*@
@@ -37,6 +90,16 @@
                     <td>
                         @Html.HiddenFor(x => x.CheckBoxUsers[i].Display)
                         @Model.CheckBoxUsers[i].Display
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Is admin: @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsGroupAdmin)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Can Edit: @Html.CheckBoxFor(x => x.CheckBoxUsers[i].CanEdit)
                     </td>
                 </tr>
             }
@@ -61,85 +124,98 @@
         }
     </table>
 
+    
+        <hr />
+    
+
         <button type="submit">OK</button>
     }
-</div>
-
-
-    @*@using (Html.BeginForm("CreateGroup", "User", FormMethod.Post))
-    {
-        <table>
-            <tr>
-                <td>
-                    Titel: @Html.TextBoxFor(x => x.Name)
-                </td>
-                <td>
-                    Description: @Html.TextBoxFor(x => x.Description)
-                </td>
-            </tr>
-        </table>
-        <table>
-            @for (int i = 0; i < Model.CheckBoxUsers.Count; i++)
-            {
-                <tr>
-                    <td>
-                        @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsChecked)
-                    </td>
-                    <td>
-                        @Html.HiddenFor(x => x.CheckBoxUsers[i].ID)
-                        @Model.CheckBoxUsers[i].ID
-                    </td>
-                    <td>
-                        @Html.HiddenFor(x => x.CheckBoxUsers[i].Display)
-                        @Model.CheckBoxUsers[i].Display
-                    </td>
-                </tr>
-            }
-        </table>
-        
-        <button type="submit">OK</button>
-    }*@
-    @*@using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.CheckBoxUsers, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CheckBoxUsers, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.CheckBoxUsers, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default noRounded" />
-                </div>
-            </div>
-        </div>
-    }*@
-@*</div>*@
+</div>   
 
 
 <div>
     @Html.ActionLink("Back", "Index")
 </div>
+
+@*@using (Html.BeginForm("CreateGroup", "User", FormMethod.Post)) <<<<<<<<<<  NYASTE KODEN SOM HAR ETT OKEJ USER INTERFACE >>>>>>>>>>>
+{
+    @Html.AntiForgeryToken()
+
+    <div class="col-md-12" id="createGroupWindow2">
+        <div class="row">
+            <div class="col-md-8" id="createGroupTitle">
+                <h1>Skapa grupp</h1>
+            </div>
+            <div class="col-md-2 addGroupOrUser">
+                <div class="dropdown col-md-4">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Användare
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                        @for (int i = 0; i < Model.CheckBoxUsers.Count; i++)
+                        {
+                            <li>
+                                <a href="#">
+                                    <span>@Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsChecked)</span>
+                                    @Html.HiddenFor(x => x.CheckBoxUsers[i].ID) @Html.HiddenFor(x => x.CheckBoxUsers[i].Display)
+                                    @Model.CheckBoxUsers[i].Display
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2 addGroupOrUser">
+                <div class="dropdown col-md-4">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Dokument
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        @for (int i = 0; i < Model.CheckBoxDocuments.Count; i++)
+                        {
+                            <li>
+                                <a href="#">
+                                    <span>@Html.CheckBoxFor(x => x.CheckBoxDocuments[i].IsChecked)</span>
+                                    @Html.HiddenFor(x => x.CheckBoxDocuments[i].ID) @Html.HiddenFor(x => x.CheckBoxDocuments[i].Display)
+                                    @Model.CheckBoxDocuments[i].Display
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="groupTitle">
+            <div class="container">
+                <h4>Gruppnamn</h4>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="comment">@Model.Name</label>
+                        <textarea class="form-control" rows="1" id="comment"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row" id="groupDescription">
+            <div class="container">
+                <h4>Beskrivning</h4>
+                <form role="form">
+                    <div class="form-group">
+                        <label for="comment">@Model.Description</label>
+                        <textarea class="form-control" rows="1" id="comment"></textarea>
+                        @Html.TextBoxFor(x => x.Description)
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row" id="groupConfirm">
+            <div class="col-md-3 col-md-offset-9" id="groupConfirmButton">
+                <button class="btn-group-lg" type="submit">Bekräfta</button>
+            </div>
+        </div>
+    </div>
+}*@
+
+

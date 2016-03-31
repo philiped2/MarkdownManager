@@ -1,0 +1,60 @@
+﻿body {
+    background: #3399CC;
+    /*background: linear-gradient(to bottom right, lightblue, yellow);*/
+    height: 950px;
+    width: 100%;
+    /*background: linear-gradient(120deg, #155799, #159957);*/
+    background: linear-gradient(to top left, #3399CC, white);
+    color: white;
+    text-shadow: 5px 5px 25px lightblue;
+}
+
+h1
+{
+    color: white;
+    /*text-decoration: double;*/
+    font-size: 45px;
+}
+
+/*#usernameTextbox
+{
+    opacity: 0.4;
+    color: white;
+    font-size: 50px;
+    border: solid white 2px;
+}*/
+
+/*#usernameTextbox
+{
+    align-content: center;
+}*/
+
+
+#UserName.form-control
+{
+    background-color: rgba(255,255,255,0.08);
+    align-content: center;
+    border: rgba(255,255,255,0.8) solid 1px;
+}
+
+#Password.form-control
+{
+    background-color: rgba(255,255,255,0.08);
+    border: rgba(255,255,255,0.8) solid 1px;
+}
+
+input::-webkit-input-placeholder {
+color: white !important;
+}
+ 
+input:-moz-placeholder { /* Firefox 18- */
+color: white !important;  
+}
+ 
+input::-moz-placeholder {  /* Firefox 19+ */
+color: white !important;  
+}
+ 
+input:-ms-input-placeholder {  
+color: white !important;  
+}

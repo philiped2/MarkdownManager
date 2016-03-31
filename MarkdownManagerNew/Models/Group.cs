@@ -13,7 +13,6 @@ namespace MarkdownManagerNew.Models
         {
             DateCreated = DateTime.Now;
             ChangeLog = new List<string>();
-            ChangeLog.Add(DateCreated + " - Grupp skapad");
 
             Users = new List<ApplicationUser>();
 
@@ -26,6 +25,9 @@ namespace MarkdownManagerNew.Models
         [Display(Name = "Medlemmar")] //FKEY
         public virtual ICollection<ApplicationUser> Users { get; set; }
 
+        //[Display(Name = "Gruppmedlemmar")]
+        //public virtual ICollection<GroupUser> GroupUsers { get; set; }
+
         [Display(Name = "Dokument")] //FKEY
         public virtual ICollection<Document> Documents { get; set; }
 
@@ -36,8 +38,8 @@ namespace MarkdownManagerNew.Models
         public string Name { get; set; }
 
         //public string CreatorId { get; set; }
-        public string CreatorID { get; set; }
         [Required]
+        public string CreatorID { get; set; }
         [Display(Name = "Skapare")]
         //[ForeignKey("CreatorID")]
         public ApplicationUser Creator { get; set; }

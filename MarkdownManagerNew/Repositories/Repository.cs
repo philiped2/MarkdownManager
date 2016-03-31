@@ -64,6 +64,18 @@ namespace MarkdownManagerNew.Repositories
             return groupList;
         }
 
+        public List<Group> GetUserGroups(ApplicationUser user)
+        {
+            List<Group> userGroups = new List<Group>();
+
+            foreach (Group group in user.Groups)
+            {
+                userGroups.Add(group);
+            }
+
+            return userGroups;
+        }
+
         public List<ApplicationUser> GetAllUsers()
         {
             List<ApplicationUser> userList = dbContext.Users.ToList();
@@ -87,12 +99,28 @@ namespace MarkdownManagerNew.Repositories
             //var users = userManager.Users;
             groupToAdd.Description = viewmodel.Description;
             groupToAdd.Name = viewmodel.Name;
+            
 
             foreach (var user in viewmodel.CheckBoxUsers.Where(x => x.IsChecked == true))
             {
+                GroupRight userGroupRights = new GroupRight();
+                //userGroupRights.group = groupToAdd;
                 ApplicationUser groupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
                 groupToAdd.Users.Add(groupUser);
 
+                if (user.IsGroupAdmin == true)
+                {
+                    userGroupRights.IsGroupAdmin = true;
+                }
+
+                if (user.CanEdit == true)
+                {
+                    userGroupRights.CanEdit = true;
+                }
+
+                userGroupRights.GroupId = groupToAdd.ID;
+                groupUser.GroupRights.Add(userGroupRights);
+                //dbContext.SaveChanges();
             }
 
             foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
@@ -193,6 +221,59 @@ namespace MarkdownManagerNew.Repositories
         {
             var tagToAdd = new Tag { Label = model.Label };
             dbContext.Tags.Add(tagToAdd);
+            dbContext.SaveChanges();
+        }
+
+        public void LogChanges(Group group, ApplicationUser user)
+        {
+            DateTime timeChanged = DateTime.Now;
+            //ApplicationUser currentUser = GetUser();
+            //Group dbGroup = dbContext.Groups.Find(group.ID);
+            Group dbGroup = dbContext.Groups.Where(x => x.ID == group.ID).Single();
+            group = dbGroup;
+            //string newChangelog = "Användare: " + user.UserName + ", " + "Time: " + group.LastChanged;
+
+            group.LastChanged = timeChanged;
+            //group.ChangeLog.Add("Användare: " + user.UserName + ", " + "Time: " + group.LastChanged);
+            //dbContext.Groups.Where(x => x.ID == dbGroup.ID).Single().ChangeLog.Add(newChangelog);
+
+            //group.ChangeLog.Add("Användare: " + user.UserName + ", " + "Time: " + group.LastChanged);
+            //dbContext.Entry(group.ChangeLog).State = EntityState.Modified;
+            //dbContext.SaveChanges();
+
+            //dbContext.Groups.Attach(group);
+            string newLog = "Användare: " + user.UserName + ", " + "Time: " + group.LastChanged;
+            group.ChangeLog.Add(newLog);
+
+            dbContext.Entry(dbGroup).CurrentValues.SetValues(group);
+            dbContext.SaveChanges();
+        }
+
+        public void LogDocumentChanges(Document document, ApplicationUser user)
+        {
+            DateTime timeChanged = DateTime.Now;
+            //ApplicationUser currentUser = GetUser();
+            //Group dbGroup = dbContext.Groups.Find(group.ID);
+            Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+            document = dbDocument;
+            //string newChangelog = "Användare: " + user.UserName + ", " + "Time: " + group.LastChanged;
+
+            document.LastChanged = timeChanged;
+            //group.ChangeLog.Add("Användare: " + user.UserName + ", " + "Time: " + group.LastChanged);
+            //dbContext.Groups.Where(x => x.ID == dbGroup.ID).Single().ChangeLog.Add(newChangelog);
+
+            //group.ChangeLog.Add("Användare: " + user.UserName + ", " + "Time: " + group.LastChanged);
+            //dbContext.Entry(group.ChangeLog).State = EntityState.Modified;
+            //dbContext.SaveChanges();
+
+            //dbContext.Groups.Attach(group);
+            string newLog = "Användare: " + user.UserName + ", " + "Time: " + document.LastChanged;
+            document.ChangeLog.Add(newLog);
+
+            //dbContext.Entry(document).State = EntityState.Added;
+
+            dbContext.Entry(dbDocument).CurrentValues.SetValues(document);
+
             dbContext.SaveChanges();
         }
 

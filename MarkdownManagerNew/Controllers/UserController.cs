@@ -120,7 +120,10 @@ namespace MarkdownManagerNew.Controllers
                 {
                     ID = user.Id,
                     Display = user.LastName + "," + user.FirstName,
-                    IsChecked = false
+                    IsChecked = false,
+
+                    CanEdit = false,
+                    IsGroupAdmin = false
                 });
             }
             viewModel.CheckBoxUsers = checkBoxListItems;
@@ -184,17 +187,25 @@ namespace MarkdownManagerNew.Controllers
         // GET: User/Edit/5
         public ActionResult Edit(int? id)
         {
+            var currentUser = GetCurrentUser();
+            Document document = db.Documents.Find(id);
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Document document = db.Documents.Find(id);
+            //Document document = db.Documents.Find(id);
             if (document == null)
             {
                 return HttpNotFound();
             }
-            return View(document);
+            else if (currentUser.DocumentRights.Any(x => x.document.ID == document.ID))
+            {
+                return View(document);
+            }
+            return HttpNotFound();
+            //return View(document);
         }
+
 
         // POST: User/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -203,8 +214,11 @@ namespace MarkdownManagerNew.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "Id,Description,Name,Markdown,DateCreated,LastChanged,CreatorID")] Document document)
         {
+            ApplicationUser currentUser = GetCurrentUser();
+
             if (ModelState.IsValid)
             {
+                repo.LogDocumentChanges(document, currentUser);
                 db.Entry(document).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -212,6 +226,31 @@ namespace MarkdownManagerNew.Controllers
             
             return View(document);
         }
+
+        public ActionResult EditGroup(int? id)
+        {
+            var currentUser = GetCurrentUser();
+            Group group = db.Groups.Find(id);
+            GroupRight usersGroupRights = currentUser.GroupRights.Where(x => x.GroupId == group.ID).Single();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //Group group = db.Groups.Find(id);
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+            else if (currentUser.GroupRights.Any(x => x.group.ID == group.ID || x.CanEdit == true))
+            {
+                return View(group);
+            }
+            return HttpNotFound();
+            //return View(group);
+        }
+
+
+
 
         // GET: User/Delete/5
         public ActionResult Delete(int? id)
@@ -226,6 +265,11 @@ namespace MarkdownManagerNew.Controllers
                 return HttpNotFound();
             }
             return View(document);
+        }
+
+        public ActionResult MyGroups()
+        {
+            return View(repo.GetUserGroups(GetCurrentUser()));
         }
 
         // POST: User/Delete/5

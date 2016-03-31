@@ -92,6 +92,7 @@ namespace MarkdownManagerNew.Migrations
                 var group1 = new Group { Name = "Grupp1", Description = "Den första gruppen", CreatorID = philip.Id };
                 var group2 = new Group { Name = "Grupp2", Description = "Den andra gruppen", CreatorID = william.Id };
 
+
                 var tag1a = new Tag { Label = "tag1a" };
                 var tag1b = new Tag { Label = "tag1b" };
                 var tagGeneral = new Tag { Label = "General" };
@@ -109,6 +110,16 @@ namespace MarkdownManagerNew.Migrations
                 var document2 = new Document { Name = "Document2", CreatorID = alexander.Id, Description = "Andra dokumentet" };
                 var document3 = new Document { Name = "Document3", CreatorID = william.Id, Description = "Tredje dokumentet" };
                 var document4 = new Document { Name = "Document4", CreatorID = olle.Id, Description = "Fjärde dokumentet" };
+
+                var GroupRightTest = new GroupRight { ID = group1.ID, CanEdit = true, group = group1, IsGroupAdmin = true };
+                var DocumentRightTest = new DocumentRight { ID = document2.ID, CanDelete = true, CanWrite = true, document = document2 };
+
+                //var groupTest = new Group { Name = "Testgrupp", Description = "Testing read and write rights", CreatorID = william.Id };
+                //var groupUser1 = new GroupUser { User = alexander, CanWrite = true, group = groupTest};
+                //var groupUser2 = new GroupUser { User = philip, CanWrite = false, group = groupTest};
+
+                //groupTest.GroupUsers.Add(groupUser1);
+                //groupTest.GroupUsers.Add(groupUser2);
 
                 group1.Users.Add(philip);  // GROUP --> USERS
                 group1.Users.Add(alexander);
@@ -178,6 +189,9 @@ namespace MarkdownManagerNew.Migrations
                 william.Documents.Add(document1);
                 olle.Documents.Add(document2);
 
+                alexander.GroupRights.Add(GroupRightTest);                                  // USER --> GROUPRIGHTS                // GROUPRIGHTS
+                alexander.DocumentRights.Add(DocumentRightTest);
+
                 // ------------   CONTEXT ADD OR UPDATE -------------
 
                 context.Documents.AddOrUpdate(document1);  // // DOCUMENTS
@@ -207,6 +221,14 @@ namespace MarkdownManagerNew.Migrations
                 context.Users.AddOrUpdate(william);
                 context.Users.AddOrUpdate(olle);
 
+                context.GroupRights.AddOrUpdate(GroupRightTest);
+                context.DocumentRights.AddOrUpdate(DocumentRightTest);
+
+
+
+                //context.GroupUsers.AddOrUpdate(groupUser1);
+                //context.GroupUsers.AddOrUpdate(groupUser2);
+
                 context.SaveChanges();
 
 
@@ -233,3 +255,4 @@ namespace MarkdownManagerNew.Migrations
         }
     }
 }
+
