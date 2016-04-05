@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module("app", ["ngAnimate"])
+    angular.module("app", [])
 
 
     //$http.get("/Teacher/AllTeachersJson").success(function (data) {

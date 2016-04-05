@@ -28,15 +28,17 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-controller="MarkdownController">
         <div class="col-sm-12">
             <div class="form-group col-md-6 markdownEditorForm">
                 <div class="col-md-12">
-                    @Html.EditorFor(model => model.Markdown, new { htmlAttributes = new { @class = "form-control markdownEditor" } })
+                    @Html.EditorFor(model => model.Markdown, new { htmlAttributes = new { @class = "form-control markdownEditor", @ng_model = "mdText" } })
                     @Html.ValidationMessageFor(model => model.Markdown, "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="col-sm-6 markdownResult"></div>
+            @*<div class="col-sm-6 markdownResult"></div>*@
+            <md class="col-sm-6 @*markdownResult*@" ng-model="mdText">
+            </md>
         </div>
     </div>
 
@@ -176,6 +178,7 @@
     }
 
 
+
     <div class="form-group">
         <div class="col-md-offset-1 col-md-10">
             <input type="submit" value="Skapa" class="btn btn-default" name="CreateDocument" />
@@ -183,7 +186,6 @@
     </div>
 </div>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>

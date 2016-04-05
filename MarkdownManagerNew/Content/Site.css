@@ -70,8 +70,10 @@ textarea {
 }*/
 
 .markdownResult {
-    height:500px;
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0,0,0,0.02);
+    border:1px solid rgba(0,0,0,0.04);
+    margin-top:15px;
+    margin-bottom:15px;
 }
 
 .markdownEditorForm
