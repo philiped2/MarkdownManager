@@ -74,7 +74,7 @@ textarea {
     border:1px solid rgba(0,0,0,0.04);
     margin-top:15px;
     margin-bottom:15px;
-    padding: 15px;
+    padding: 0px, 15px, 15px, 15px;
 }
 
 .markdownEditorForm
@@ -90,6 +90,7 @@ textarea {
 .markdownEditor {
     height: 500px !important;
     min-width: 100%;
+    resize: none;
 }
 
 .markdownEditor .form-control {

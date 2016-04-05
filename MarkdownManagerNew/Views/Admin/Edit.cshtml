@@ -39,8 +39,8 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Markdown, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Markdown, new { htmlAttributes = new { @class = "form-control", @ng_model = "mdText" } })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.Markdown, new { htmlAttributes = new { @class = "form-control markdownEditor", @ng_model = "mdText" } })
                 @Html.ValidationMessageFor(model => model.Markdown, "", new { @class = "text-danger" })
             </div>
         </div>
