@@ -27,14 +27,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Markdown)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Markdown)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.DateCreated)
         </dt>
 
@@ -55,7 +47,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Creator)
+            @Html.DisplayFor(model => model.Creator.UserName)
         </dd>
 
         <dt>
@@ -66,7 +58,17 @@
             <dd>@tag.Label</dd>
         }
     </dl>
+    <div class="markdownResult" ng-init="initTest='@Model.Markdown'; mdText=initTest;">
+        <md ng-model="mdText">
+        </md>
+    </div>
+    <div>
+        <h3>Raw Markdown</h3>
+        <span>@Html.DisplayFor(model => model.Markdown)</span>
+    </div>
 </div>
+
+
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
     @Html.ActionLink("Back to List", "Index")

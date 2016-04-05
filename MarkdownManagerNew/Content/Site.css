@@ -30,7 +30,7 @@ body {
    color: white;
  }
 .nav.navbar-nav li a:hover { 
-   background-color: #3399FF;
+   background-color: #5da7cc;
  }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -74,11 +74,17 @@ textarea {
     border:1px solid rgba(0,0,0,0.04);
     margin-top:15px;
     margin-bottom:15px;
+    padding: 15px;
 }
 
 .markdownEditorForm
 {
     height: 500px;
+}
+
+.navbar-inverse
+{
+    border: none;
 }
 
 .markdownEditor {
