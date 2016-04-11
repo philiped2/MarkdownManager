@@ -1,0 +1,75 @@
+﻿@model MarkdownManagerNew.Models.Group
+
+@{
+    ViewBag.Title = "GroupDetails";
+}
+
+<h2>GroupDetails</h2>
+
+<div>
+    <h4>Group</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Creator.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Creator.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastChanged)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastChanged)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(x => x.Users)
+        </dt>
+        <dd>
+            @foreach (var user in Model.Users)
+            {
+                @user.UserName
+            }
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(x => x.Documents)
+        </dt>
+        <dd>
+            @foreach (var document in Model.Documents)
+            {
+                @document.Name
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

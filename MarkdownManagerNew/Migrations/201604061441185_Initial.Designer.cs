@@ -13,7 +13,7 @@ namespace MarkdownManagerNew.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201603311405032_initial"; }
+            get { return "201604061441185_Initial"; }
         }
         
         string IMigrationMetadata.Source

@@ -10,6 +10,7 @@ namespace MarkdownManagerNew.Models
         public string ID { get; set; }
         public string Display { get; set; }
         public bool IsChecked { get; set; }
+        public bool UserToDelete { get; set; }
 
         public bool CanEdit { get; set; }
         public bool IsGroupAdmin { get; set; }

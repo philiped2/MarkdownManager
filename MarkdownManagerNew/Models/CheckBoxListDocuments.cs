@@ -10,5 +10,6 @@ namespace MarkdownManagerNew.Models
         public int ID { get; set; }
         public string Display { get; set; }
         public bool IsChecked { get; set; }
+        public bool DocumentToDelete { get; set; }
     }
 }

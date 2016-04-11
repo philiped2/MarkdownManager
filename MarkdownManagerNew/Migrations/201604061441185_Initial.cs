@@ -14,6 +14,7 @@ namespace MarkdownManagerNew.Migrations
                         ID = c.Int(nullable: false),
                         CanWrite = c.Boolean(nullable: false),
                         CanDelete = c.Boolean(nullable: false),
+                        DocumentName = c.String(),
                         ApplicationUser_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.ID)
@@ -98,12 +99,11 @@ namespace MarkdownManagerNew.Migrations
                         CanEdit = c.Boolean(nullable: false),
                         IsGroupAdmin = c.Boolean(nullable: false),
                         GroupId = c.Int(nullable: false),
+                        GroupName = c.String(),
                         ApplicationUser_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Groups", t => t.GroupId, cascadeDelete: true)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id)
-                .Index(t => t.GroupId)
                 .Index(t => t.ApplicationUser_Id);
             
             CreateTable(
@@ -229,13 +229,12 @@ namespace MarkdownManagerNew.Migrations
             DropForeignKey("dbo.Documents", "CreatorID", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.GroupRights", "ApplicationUser_Id", "dbo.AspNetUsers");
-            DropForeignKey("dbo.GroupRights", "GroupId", "dbo.Groups");
             DropForeignKey("dbo.GroupApplicationUsers", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.GroupApplicationUsers", "Group_ID", "dbo.Groups");
             DropForeignKey("dbo.GroupDocuments", "Document_ID", "dbo.Documents");
             DropForeignKey("dbo.GroupDocuments", "Group_ID", "dbo.Groups");
             DropForeignKey("dbo.Groups", "CreatorID", "dbo.AspNetUsers");
+            DropForeignKey("dbo.GroupRights", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.Files", "DocumentID", "dbo.Documents");
             DropForeignKey("dbo.Files", "CreatorID", "dbo.AspNetUsers");
             DropForeignKey("dbo.DocumentRights", "ApplicationUser_Id", "dbo.AspNetUsers");
@@ -253,7 +252,6 @@ namespace MarkdownManagerNew.Migrations
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.Groups", new[] { "CreatorID" });
             DropIndex("dbo.GroupRights", new[] { "ApplicationUser_Id" });
-            DropIndex("dbo.GroupRights", new[] { "GroupId" });
             DropIndex("dbo.Files", new[] { "DocumentID" });
             DropIndex("dbo.Files", new[] { "CreatorID" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });

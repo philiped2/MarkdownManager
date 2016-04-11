@@ -166,6 +166,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604061441185_Initial.cs" />
+    <Compile Include="Migrations\201604061441185_Initial.Designer.cs">
+      <DependentUpon>201604061441185_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201603311405032_initial.cs" />
     <Compile Include="Migrations\201603311405032_initial.Designer.cs">
       <DependentUpon>201603311405032_initial.cs</DependentUpon>
@@ -191,6 +195,7 @@
     <Compile Include="Viewmodels\CreateDocumentViewModel.cs" />
     <Compile Include="Viewmodels\CreateGroupViewModel.cs" />
     <Compile Include="Viewmodels\CreateUserViewModel.cs" />
+    <Compile Include="Viewmodels\EditGroupViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\autocomplete.css" />
@@ -1074,6 +1079,13 @@
     <Content Include="Views\User\EditGroup.cshtml" />
     <Content Include="Views\User\MyGroups.cshtml" />
     <Content Include="Scripts\lib\highlight.js" />
+    <Content Include="Views\Admin\GroupDetails.cshtml" />
+    <Content Include="Views\Admin\EditGroup.cshtml" />
+    <Content Include="Views\User\EditGroup.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\User\MyGroups.cshtml" />
+    <Content Include="Views\User\GroupDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1086,6 +1098,9 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604061441185_Initial.resx">
+      <DependentUpon>201604061441185_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603311405032_initial.resx">
       <DependentUpon>201603311405032_initial.cs</DependentUpon>
     </EmbeddedResource>
