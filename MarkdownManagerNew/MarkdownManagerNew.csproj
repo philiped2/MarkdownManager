@@ -169,6 +169,7 @@
     <Compile Include="Migrations\201604061441185_Initial.cs" />
     <Compile Include="Migrations\201604061441185_Initial.Designer.cs">
       <DependentUpon>201604061441185_Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201603311405032_initial.cs" />
     <Compile Include="Migrations\201603311405032_initial.Designer.cs">
       <DependentUpon>201603311405032_initial.cs</DependentUpon>
@@ -1094,6 +1095,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201604061441185_Initial.resx">
       <DependentUpon>201604061441185_Initial.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201603311405032_initial.resx">
       <DependentUpon>201603311405032_initial.cs</DependentUpon>
     </EmbeddedResource>
