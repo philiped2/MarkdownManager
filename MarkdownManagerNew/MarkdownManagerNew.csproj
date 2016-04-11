@@ -169,6 +169,9 @@
     <Compile Include="Migrations\201604061441185_Initial.cs" />
     <Compile Include="Migrations\201604061441185_Initial.Designer.cs">
       <DependentUpon>201604061441185_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201603311405032_initial.cs" />
+    <Compile Include="Migrations\201603311405032_initial.Designer.cs">
+      <DependentUpon>201603311405032_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -194,8 +197,10 @@
     <Compile Include="Viewmodels\EditGroupViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\autocomplete.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Loginpage.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -227,7 +232,13 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Controllers\TagController.js" />
+    <Content Include="Scripts\Directives\Autocomplete.js" />
+    <Content Include="Scripts\Directives\CustomOnChange.js" />
     <Content Include="Scripts\Controllers\FileController.js" />
+    <Content Include="Scripts\Controllers\MarkdownController.js" />
+    <Content Include="Scripts\Directives\Markdown.js" />
+    <Content Include="Scripts\Directives\Modal.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular-touch.min.js.map" />
     <Content Include="Scripts\angular-sanitize.min.js.map" />
@@ -993,11 +1004,16 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\lib\highlightBC.js" />
+    <Content Include="Scripts\lib\marked.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Providers\MarkdownConverter.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -1054,6 +1070,9 @@
     <Content Include="Views\Shared\_FileUpload.cshtml" />
     <Content Include="Views\Shared\_FileExperiments.cshtml" />
     <Content Include="Views\Shared\_FileExperiments2.cshtml" />
+    <Content Include="Views\User\EditGroup.cshtml" />
+    <Content Include="Views\User\MyGroups.cshtml" />
+    <Content Include="Scripts\lib\highlight.js" />
     <Content Include="Views\Admin\GroupDetails.cshtml" />
     <Content Include="Views\Admin\EditGroup.cshtml" />
     <Content Include="Views\User\EditGroup.cshtml">
@@ -1075,6 +1094,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201604061441185_Initial.resx">
       <DependentUpon>201604061441185_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201603311405032_initial.resx">
+      <DependentUpon>201603311405032_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

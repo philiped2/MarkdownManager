@@ -27,6 +27,7 @@ namespace MarkdownManagerNew.Models
         public int ID { get; set; }
 
         [Display(Name = "Beskrivning")]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         [Display(Name = "Titel")]
         public string Name { get; set; }

@@ -99,6 +99,7 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult CreateDocument(CreateDocumentViewModel viewModel, HttpPostedFileBase upload)
         {
             //dynamic fileArray = JsonConvert.DeserializeObject(viewModel.FilesJson);

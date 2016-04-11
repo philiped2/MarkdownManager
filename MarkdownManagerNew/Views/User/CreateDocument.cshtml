@@ -4,190 +4,207 @@
     ViewBag.Title = "CreateDocument";
 }
 
-<h2>Nytt dokument</h2>
+<h3>Nytt dokument</h3>
 
 
-@Html.BeginForm("CreateDocument", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("CreateDocument", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-@Html.AntiForgeryToken()
+    @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Titel" } })
-            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Titel" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Beskrivning" } })
-            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Beskrivning" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="form-group col-md-6 markdownEditorForm">
-                <div class="col-md-12">
-                    @Html.EditorFor(model => model.Markdown, new { htmlAttributes = new { @class = "form-control markdownEditor" } })
-                    @Html.ValidationMessageFor(model => model.Markdown, "", new { @class = "text-danger" })
+        <div class="row mdDivWrapper" ng-controller="MarkdownController">
+            <div class="col-sm-12">
+                <button ng-click="toggleModal()" class="btn btn-default" type="button">Text från markdown-fil</button>
+            </div>
+            <modal title="Text från fil" visib="showModal">
+                <div class="form-group">
+                    <input type="file" accept=".md,.txt" name="mdFile" id="mdFile" ng-model="mdFile" onchange="angular.element(this).scope().fileInputChange(this)" />
+                    <button ng-click="mdFileToMd()" type="button" ng-disabled="!fileIsSelected">Ladda upp text</button>
+                </div>
+            </modal>
+            <div class="col-sm-12">
+                <div class="form-group col-md-6 markdownEditorForm">
+                    <div class="col-md-12">
+                        @Html.EditorFor(model => model.Markdown, new { htmlAttributes = new { @class = "form-control markdownEditor", @ng_model = "mdText", @id = "mdEditor" } })
+                        @Html.ValidationMessageFor(model => model.Markdown, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*<div class="col-sm-6 markdownResult"></div>*@
+                @*<div ng-init="initTest='@Model.Markdown'; mdText=initTest;">*@
+                <div ng-init="initTest='@Html.Encode(Model.Markdown)'; mdText=initTest;">
+                    <md class="col-sm-6 markdownResult" ng-model="mdText" id="mdResult">
+                    </md>
                 </div>
             </div>
-            <div class="col-sm-6 markdownResult"></div>
         </div>
-    </div>
-
-    <div class="row">
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.CheckboxGroups)
-            </dt>
-
-            @for (int i = 0; i < Model.CheckboxGroups.Count; i++)
-            {
-                <dd>
-                    @Html.CheckBoxFor(x => x.CheckboxGroups[i].IsChecked)
-                    @Html.HiddenFor(x => x.CheckboxGroups[i].ID)
-                    @Html.HiddenFor(x => x.CheckboxGroups[i].Display)
-
-                    @Html.DisplayFor(x => x.CheckboxGroups[i].Display)
-                </dd>
-            }
-
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CheckboxUsers)
-            </dt>
-
-            @for (int i = 0; i < Model.CheckboxUsers.Count; i++)
-            {
-                <dd>
-                    @Html.CheckBoxFor(x => x.CheckboxUsers[i].IsChecked)
-                    @Html.HiddenFor(x => x.CheckboxUsers[i].ID)
-                    @Html.HiddenFor(x => x.CheckboxUsers[i].Display)
-
-                    @Html.DisplayFor(x => x.CheckboxUsers[i].Display)
-                </dd>
-            }
-
-            <dt>
-                @Html.DisplayNameFor(model => model.CheckboxTags)
-            </dt>
-
-            @for (int i = 0; i < Model.CheckboxTags.Count; i++)
-            {
-                <dd>
-                    @Html.CheckBoxFor(x => x.CheckboxTags[i].IsChecked)
-                    @Html.HiddenFor(x => x.CheckboxTags[i].ID)
-                    @Html.HiddenFor(x => x.CheckboxTags[i].Display)
-
-                    @Html.DisplayFor(x => x.CheckboxTags[i].Display)
-                </dd>
-            }
-
-        </dl>
-    </div>
-
-    <div class="form-group">
-        @Html.Label("File", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            <input type="file" id="File" name="upload" />
+        <div ng-controller="FileController" class="col-sm-12">
+            <button ng-click="toggleModal()" class="btn btn-default" type="button">Bifoga fil</button>
+            <modal title="Filuppladdning" visib="showModal">
+                <div class="form-group">
+                    @Html.Label("File", new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <input type="file" id="File" name="upload" onchange="angular.element(this).scope().fileInputChange(this)" />
+                        <input type="submit" value="Ladda upp fil" class="btn btn-default" name="CreateFile" ng-disabled="!fileIsSelected" />
+                    </div>
+                </div>
+            </modal>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Ladda upp fil" class="btn btn-default" name="CreateFile" />
-        </div>
-    </div>
+        @for (int i = 0; i < Model.Files.Count; i++)
+        {
+            <div>
 
-    @*<div class="form-group">
-        <div class="col-md-10">
-            @if (Model.Files.Count > 0)
-            {
-                <h3>@Html.DisplayNameFor(model => model.Files)</h3>
-                <table class="table table-striped table-bordered">
-                    <tr>
-                        <th>Filename</th>
-                        <th>Filetype</th>
-                        <th>Size(bytes)</th>
-                    </tr>
+                @Html.HiddenFor(x => x.Files[i].DocumentID)
 
-                    @foreach (var file in Model.Files)
-                    {
-                        <tr>
-                            <td>@file.Filename</td>
-                            <td>@file.ContentType</td>
-                            <td>@file.Size</td>
-                        </tr>
-                    }
+                @Html.HiddenFor(x => x.Files[i].CreatorID)
 
-                </table>
-            }
-        </div>
-    </div>*@
+                @Html.HiddenFor(x => x.Files[i].ID)
 
-    @for (int i = 0; i < Model.Files.Count; i++)
-    {
-        <div>
-            
-            @Html.HiddenFor(x => x.Files[i].DocumentID)
+                @Html.HiddenFor(x => x.Files[i].ContentType)
 
-            @Html.HiddenFor(x => x.Files[i].CreatorID)
+                @Html.HiddenFor(x => x.Files[i].CreatorID)
 
-            @Html.HiddenFor(x => x.Files[i].ID)
+                @Html.HiddenFor(x => x.Files[i].Data)
 
-            @Html.HiddenFor(x => x.Files[i].ContentType)
+                @Html.HiddenFor(x => x.Files[i].Filename)
 
-            @Html.HiddenFor(x => x.Files[i].CreatorID)
+                @Html.HiddenFor(x => x.Files[i].Size)
 
-            @Html.HiddenFor(x => x.Files[i].Data)
+            </div>
+        }
 
-            @Html.HiddenFor(x => x.Files[i].Filename)
-
-            @Html.HiddenFor(x => x.Files[i].Size)
-
-        </div>
-    }
-
-    @if (Model.Files.Count > 0)
-    {
-        <h3>@Html.DisplayNameFor(model => model.Files)</h3>
-        <table class="table table-striped table-bordered">
-            <tr>
-                <th>Filename</th>
-                <th>Filetype</th>
-                <th>Size(bytes)</th>
-            </tr>
-
-            @foreach (var file in Model.Files)
-            {
+        @if (Model.Files.Count > 0)
+        {
+            <h3>@Html.DisplayNameFor(model => model.Files)</h3>
+            <table class="table table-striped table-bordered">
                 <tr>
-                    <td>@file.Filename</td>
-                    <td>@file.ContentType</td>
-                    <td>@file.Size</td>
+                    <th>Filename</th>
+                    <th>Filetype</th>
+                    <th>Size(bytes)</th>
                 </tr>
-            }
 
-        </table>
-    }
+                @foreach (var file in Model.Files)
+                {
+                    <tr>
+                        <td>@file.Filename</td>
+                        <td>@file.ContentType</td>
+                        <td>@file.Size</td>
+                    </tr>
+                }
+
+            </table>
+        }
+
+        <div class="row" ng-controller="TagController">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.CheckboxGroups)
+                </dt>
+
+                @for (int i = 0; i < Model.CheckboxGroups.Count; i++)
+                {
+                    <dd>
+                        @Html.CheckBoxFor(x => x.CheckboxGroups[i].IsChecked)
+                        @Html.HiddenFor(x => x.CheckboxGroups[i].ID)
+                        @Html.HiddenFor(x => x.CheckboxGroups[i].Display)
+
+                        @Html.DisplayFor(x => x.CheckboxGroups[i].Display)
+                    </dd>
+                }
 
 
-    <div class="form-group">
-        <div class="col-md-offset-1 col-md-10">
-            <input type="submit" value="Skapa" class="btn btn-default" name="CreateDocument" />
+                <dt>
+                    @Html.DisplayNameFor(model => model.CheckboxUsers)
+                </dt>
+
+                @for (int i = 0; i < Model.CheckboxUsers.Count; i++)
+                {
+                    <dd>
+                        @Html.CheckBoxFor(x => x.CheckboxUsers[i].IsChecked)
+                        @Html.HiddenFor(x => x.CheckboxUsers[i].ID)
+                        @Html.HiddenFor(x => x.CheckboxUsers[i].Display)
+
+                        @Html.DisplayFor(x => x.CheckboxUsers[i].Display)
+                    </dd>
+                }
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CheckboxTags)
+                </dt>
+
+                @for (int i = 0; i < Model.CheckboxTags.Count; i++)
+                {
+                    <dd>
+                        @Html.CheckBoxFor(x => x.CheckboxTags[i].IsChecked)
+                        @Html.HiddenFor(x => x.CheckboxTags[i].ID)
+                        @Html.HiddenFor(x => x.CheckboxTags[i].Display)
+
+                        @Html.DisplayFor(x => x.CheckboxTags[i].Display)
+                    </dd>
+                }
+
+            </dl>
+            <h3>{{yourchoice}}</h3>
+            <autocomplete ng-model="yourchoice" data="movies" on-type="updateMovies" ng-cloak></autocomplete>
+        </div>
+
+
+        @*<div class="form-group">
+                <div class="col-md-10">
+                    @if (Model.Files.Count > 0)
+                    {
+                        <h3>@Html.DisplayNameFor(model => model.Files)</h3>
+                        <table class="table table-striped table-bordered">
+                            <tr>
+                                <th>Filename</th>
+                                <th>Filetype</th>
+                                <th>Size(bytes)</th>
+                            </tr>
+
+                            @foreach (var file in Model.Files)
+                            {
+                                <tr>
+                                    <td>@file.Filename</td>
+                                    <td>@file.ContentType</td>
+                                    <td>@file.Size</td>
+                                </tr>
+                            }
+
+                        </table>
+                    }
+                </div>
+            </div>*@
+
+        
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-1 col-md-10">
+                <input type="submit" value="Skapa" class="btn btn-default" name="CreateDocument" />
+            </div>
         </div>
     </div>
-</div>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }

@@ -4,10 +4,10 @@
     ViewBag.Title = "MyGroups";
 }
 
-<h2>MyGroups</h2>
+<h3>Mina grupper</h3>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Ny grupp", "Create", null, new { @Class = "btn btn-default"})
 </p>
 <table class="table">
     <tr>
@@ -47,9 +47,9 @@
             @Html.DisplayFor(modelItem => item.LastChanged)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditGroup", new { id=item.ID }) |
-            @Html.ActionLink("Details", "GroupDetails", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
+            @Html.ActionLink("Edit", "EditGroup", new { id=item.ID }, new { @Class = "btn btn-default"})
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
         </td>
     </tr>
 }
