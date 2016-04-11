@@ -166,9 +166,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201603300940174_initial.cs" />
-    <Compile Include="Migrations\201603300940174_initial.Designer.cs">
-      <DependentUpon>201603300940174_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201604061441185_Initial.cs" />
+    <Compile Include="Migrations\201604061441185_Initial.Designer.cs">
+      <DependentUpon>201604061441185_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -177,8 +177,11 @@
     <Compile Include="Models\CheckBoxListTags.cs" />
     <Compile Include="Models\CheckBoxListUser.cs" />
     <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\DocumentRight.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupRight.cs" />
+    <Compile Include="Models\GroupUser.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Tag.cs" />
@@ -188,6 +191,7 @@
     <Compile Include="Viewmodels\CreateDocumentViewModel.cs" />
     <Compile Include="Viewmodels\CreateGroupViewModel.cs" />
     <Compile Include="Viewmodels\CreateUserViewModel.cs" />
+    <Compile Include="Viewmodels\EditGroupViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
@@ -1050,6 +1054,13 @@
     <Content Include="Views\Shared\_FileUpload.cshtml" />
     <Content Include="Views\Shared\_FileExperiments.cshtml" />
     <Content Include="Views\Shared\_FileExperiments2.cshtml" />
+    <Content Include="Views\Admin\GroupDetails.cshtml" />
+    <Content Include="Views\Admin\EditGroup.cshtml" />
+    <Content Include="Views\User\EditGroup.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\User\MyGroups.cshtml" />
+    <Content Include="Views\User\GroupDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1062,8 +1073,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201603300940174_initial.resx">
-      <DependentUpon>201603300940174_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604061441185_Initial.resx">
+      <DependentUpon>201604061441185_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

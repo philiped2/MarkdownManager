@@ -201,6 +201,22 @@ namespace MarkdownManagerNew.Controllers
             return View(document);
         }
 
+        public ActionResult GroupDetails(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Group group = db.Groups.Find(id);
+            if (group == null)
+            {
+                return HttpNotFound();
+            }
+
+            //group.ChangeLog.Add("hejsan");
+            return View(group);
+        }
+
         // GET: User/Create
         public ActionResult Create()
         {
@@ -238,11 +254,12 @@ namespace MarkdownManagerNew.Controllers
             {
                 return HttpNotFound();
             }
-            else if (currentUser.DocumentRights.Any(x => x.document.ID == document.ID))
+            //else if (currentUser.DocumentRights.Any(x => x.document.ID == document.ID))
+            else
             {
                 return View(document);
             }
-            return HttpNotFound();
+            //return HttpNotFound();
             //return View(document);
         }
 
@@ -267,26 +284,89 @@ namespace MarkdownManagerNew.Controllers
             return View(document);
         }
 
+        [HttpPost]
+        public ActionResult EditGroup(EditGroupViewModel viewModel)
+        {
+            //var user = GetCurrentUser();
+            repo.EditGroup2(viewModel);
+            //return View("Index", repo.GetUserDocuments(GetCurrentUser()));
+            return View("Index");
+        }
+
         public ActionResult EditGroup(int? id)
         {
-            var currentUser = GetCurrentUser();
-            Group group = db.Groups.Find(id);
-            GroupRight usersGroupRights = currentUser.GroupRights.Where(x => x.GroupId == group.ID).Single();
-            if (id == null)
+            EditGroupViewModel viewModel = new EditGroupViewModel();
+            List<ApplicationUser> tempUserList = repo.ListUsersToCreateGroup();
+            var checkBoxListItems = new List<CheckBoxListUser>();
+            Group groupToEdit = db.Groups.Where(x => x.ID == id).Single();
+            viewModel.GroupToEdit = groupToEdit;
+            foreach (var user in tempUserList)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                checkBoxListItems.Add(new CheckBoxListUser()
+                {
+                    ID = user.Id,
+                    Display = user.LastName + "," + user.FirstName,
+                    IsChecked = false,
+                    UserToDelete = false,
+
+                    CanEdit = false,
+                    IsGroupAdmin = false
+                });
             }
+            viewModel.CheckBoxUsers = checkBoxListItems;
+
+            List<Document> tempDocumentList = repo.GetUserDocuments(GetCurrentUser());
+            var checkBoxListDocuments = new List<CheckBoxListDocuments>();
+
+            foreach (var document in tempDocumentList)
+            {
+                checkBoxListDocuments.Add(new CheckBoxListDocuments()
+                {
+                    ID = document.ID,
+                    Display = document.Name,
+                    IsChecked = false,
+                    DocumentToDelete = false
+                });
+            }
+
+            viewModel.CheckBoxDocuments = checkBoxListDocuments;
+
+            var currentUser = GetCurrentUser();
+            GroupRight usersGroupRights;
+            Group group = db.Groups.Find(id);
+            if (currentUser.GroupRights.Any(x => x.GroupName == group.Name))
+            {
+                usersGroupRights = currentUser.GroupRights.Where(x => x.GroupName == group.Name).Single();
+            }
+            else
+            {
+                usersGroupRights = new GroupRight();
+            }
+            //GroupRight usersGroupRights = currentUser.GroupRights.Where(x => x.GroupName == group.Name).Single();
+            //if (id == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //}
             //Group group = db.Groups.Find(id);
-            if (group == null)
+            //if (group == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            //if (currentUser.GroupRights.Any(x => x.GroupName == group.Name || x.CanEdit == true))
+            //{
+            //    return View(viewModel);
+            //}
+
+            if (usersGroupRights.CanEdit == true)
+            {
+                return View(viewModel);
+            }
+            else
             {
                 return HttpNotFound();
             }
-            else if (currentUser.GroupRights.Any(x => x.group.ID == group.ID || x.CanEdit == true))
-            {
-                return View(group);
-            }
-            return HttpNotFound();
-            //return View(group);
+
+            //return View(viewModel);
         }
 
 

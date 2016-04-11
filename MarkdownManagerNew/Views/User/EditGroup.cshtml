@@ -1,20 +1,30 @@
-﻿@model MarkdownManagerNew.Models.Group
+﻿@model MarkdownManagerNew.Viewmodels.EditGroupViewModel
 
 @{
     ViewBag.Title = "EditGroup";
 }
 
-<h2>EditGroup</h2>
+<h2>Edit group</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditGroup", "User", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     
+    @Html.HiddenFor(model => model.GroupToEdit.ID)
+    @Html.HiddenFor(model => model.GroupToEdit.ChangeLog)
+    @Html.HiddenFor(model => model.GroupToEdit.Creator)
+    @Html.HiddenFor(model => model.GroupToEdit.CreatorID)
+    @Html.HiddenFor(model => model.GroupToEdit.DateCreated)
+    @Html.HiddenFor(model => model.GroupToEdit.Description)
+    @Html.HiddenFor(model => model.GroupToEdit.Documents)
+    @Html.HiddenFor(model => model.GroupToEdit.LastChanged)
+    @Html.HiddenFor(model => model.GroupToEdit.Name)
+    @Html.HiddenFor(model => model.GroupToEdit.Users)
+
     <div class="form-horizontal">
-        <h4>Group</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ID)
+        @*@Html.HiddenFor(model => model.)*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -32,42 +42,80 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.CreatorID, "CreatorID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CreatorID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CreatorID, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.DateCreated, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCreated, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateCreated, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.LastChanged, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.LastChanged, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LastChanged, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
         <div>
             <h1>Groupmembers:</h1>
-            @foreach (var member in Model.Users)
-            {
-                <p>@member.UserName</p>
-            }
+            <table>
+                @for (int i = 0; i < Model.CheckBoxUsers.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsChecked)
+                        </td>
+                        @*<td>
+                        Is admin: @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsGroupAdmin)
+                    </td>
+                    <td>
+                        Can Edit: @Html.CheckBoxFor(x => x.CheckBoxUsers[i].CanEdit)
+                    </td>*@
+                        <td>
+                            @Html.HiddenFor(x => x.CheckBoxUsers[i].ID)
+                            @*@Html.EditorFor(Model.GroupToEdit.Users[i] .Where(x => x.UserName == Model.CheckBoxUsers[i].Display.Single()))*@
+                            @*@Model.CheckBoxUsers[i].ID*@
+                        </td>
+                        <td>
+                            @Html.HiddenFor(x => x.CheckBoxUsers[i].Display)
+                            @Model.CheckBoxUsers[i].Display
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Is admin: @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsGroupAdmin)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Can Edit: @Html.CheckBoxFor(x => x.CheckBoxUsers[i].CanEdit)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Remove user: @Html.CheckBoxFor(x => x.CheckBoxUsers[i].UserToDelete)
+                        </td>
+                    </tr>
+                }
+            </table>
+
+            <table>
+                @for (int i = 0; i < Model.CheckBoxDocuments.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            @Html.CheckBoxFor(x => x.CheckBoxDocuments[i].IsChecked)
+                        </td>
+                        <td>
+                            @Html.HiddenFor(x => x.CheckBoxDocuments[i].ID)
+                            @*@Model.CheckBoxUsers[i].ID*@
+                        </td>
+                        <td>
+                            @Html.HiddenFor(x => x.CheckBoxDocuments[i].Display)
+                            @Model.CheckBoxDocuments[i].Display
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Remove document: @Html.CheckBoxFor(x => x.CheckBoxDocuments[i].DocumentToDelete)
+                        </td>
+                    </tr>
+                }
+            </table>
         </div>
 
+        <button type="submit">OK</button>
+
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            @*<div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
-            </div>
+            </div>*@
         </div>
     </div>
 }
