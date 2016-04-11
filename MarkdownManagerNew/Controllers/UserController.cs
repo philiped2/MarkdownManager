@@ -47,6 +47,13 @@ namespace MarkdownManagerNew.Controllers
             return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
         }
 
+        public ActionResult GetTagsJson (string tagLabel)
+        {
+            var result = repo.GetTagsByName(tagLabel);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpGet]
         public ActionResult CreateDocument(List<File> files)
         {
