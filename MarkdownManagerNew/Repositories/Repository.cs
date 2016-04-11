@@ -519,5 +519,13 @@ namespace MarkdownManagerNew.Repositories
             return fileList;
         }
 
+
+        public List<string> GetTagsByName(string tagLabel)
+        {
+            var query = dbContext.Tags
+                .Where(t => t.Label.Contains(tagLabel))
+                .Select(t=>t.Label).ToList();
+            return query;
+        }
     }
 }

@@ -28,6 +28,12 @@ namespace MarkdownManagerNew
                         "~/Scripts/angular-animate.js",
                         "~/Scripts/angular-aria.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angularUI").Include(
+                        "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
+                        "~/Scripts/angular-ui/ui-bootstrap-tpls.min.js",
+                        "~/Scripts/angular-ui/ui-bootstrap",
+                        "~/Scripts/angular-ui/ui-bootstrap.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

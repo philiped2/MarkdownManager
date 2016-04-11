@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module("app", ['autocomplete'])
+    angular.module("app", ['autocomplete', 'ui.bootstrap'])
 
 
     //$http.get("/Teacher/AllTeachersJson").success(function (data) {
