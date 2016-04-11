@@ -1,17 +1,4 @@
 ﻿(function () {
-    //var app = angular.module("app");
-
-    //var markdown = function () {
-    //    return {
-    //        restrict: 'E',
-    //        link: function (element) {
-    //                var html = $sanitize(markdownConverter.makeHtml("#Test"()));
-    //                element.html(html);
-    //        }
-    //    };
-    //}
-
-    //app.directive("markdown", markdown);
 
     var app = angular.module("app");
 

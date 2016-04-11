@@ -1,71 +1,75 @@
 ﻿@model MarkdownManagerNew.Models.Document
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = @Model.Name;
 }
+<div class="container">
+    <h3>@Model.Name - Details</h3>
 
-<h2>Details</h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-<div>
-    <h4>Document</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.LastChanged)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastChanged)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.LastChanged)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastChanged)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Creator)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Creator)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Creator.UserName)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Creator.UserName)
-        </dd>
-
-        <dt>
-            Tags
-        </dt>
-        @foreach (var tag in Model.Tags)
-        {
-            <dd>@tag.Label</dd>
-        }
-    </dl>
-    <div class="markdownResult" ng-init="initTest='@Model.Markdown'; mdText=initTest;">
-        <md ng-model="mdText">
-        </md>
+            <dt>
+                Tags
+            </dt>
+            @foreach (var tag in Model.Tags)
+            {
+                <dd>@tag.Label</dd>
+            }
+        </dl>
+        <div class="row">
+            <div class="markdown col-sm-8 col-sm-offset-2" ng-init="initTest='@Model.Markdown'; mdText=initTest;">
+                <md ng-model="mdText">
+                </md>
+            </div>
+        </div>
     </div>
+
+    <div class="row">
+        <p>
+            @Html.ActionLink("Back to List", "Index")
+        </p>
+    </div>
+    
+
 </div>
-
-
-<p>
-    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-    @Html.ActionLink("Back to List", "Index")
-</p>
