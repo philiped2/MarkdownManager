@@ -17,18 +17,18 @@
             });
         };
 
-        $scope.getLocation = function (val) {
-            return $http.get('//maps.googleapis.com/maps/api/geocode/json', {
-                params: {
-                    address: val,
-                    sensor: false
-                }
-            }).then(function (response) {
-                return response.data.results.map(function (item) {
-                    return item.formatted_address;
-                });
+        $scope.selectedTags = [];
+
+        $scope.getTags = function (val) {
+            return $http.get("/User/GetTagsJson", { params: { tagLabel: val } }).then(function (response) {
+                return response.data;
             });
         };
+
+        $scope.addSelectedTag = function(tag)
+        {
+            $scope.selectedTags.push(tag);
+        }
 
         var OnTagsComplete = function (response) {
             $scope.tags = response.data;
@@ -47,6 +47,12 @@
             //});
                 $http.get("/User/GetTagsJson", { params: { tagLabel: typed } })
             .then(OnTagsComplete, OnError);
+        }
+
+        $scope.testPost = function () {
+            $http.post("/User/TestPost", { tagList: $scope.selectedTags }).error(function (responseData) {
+                console.log("Error !" + responseData);
+            });
         }
 
     }

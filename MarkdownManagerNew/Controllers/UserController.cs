@@ -54,6 +54,12 @@ namespace MarkdownManagerNew.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public ActionResult TestPost(CreateDocumentViewModel viewModel, string[] tagList)
+        {
+            return View("Index");
+        }
+
         [HttpGet]
         public ActionResult CreateDocument(List<File> files)
         {
@@ -107,7 +113,7 @@ namespace MarkdownManagerNew.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
-        public ActionResult CreateDocument(CreateDocumentViewModel viewModel, HttpPostedFileBase upload)
+        public ActionResult CreateDocument(CreateDocumentViewModel viewModel, HttpPostedFileBase upload, string[] selectedFiles)
         {
             //dynamic fileArray = JsonConvert.DeserializeObject(viewModel.FilesJson);
 
