@@ -3,7 +3,7 @@ namespace MarkdownManagerNew.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -33,6 +33,8 @@ namespace MarkdownManagerNew.Migrations
                         Markdown = c.String(),
                         DateCreated = c.DateTime(),
                         LastChanged = c.DateTime(),
+                        IsArchived = c.Boolean(nullable: false),
+                        TimeArchived = c.DateTime(),
                         CreatorID = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.ID)
@@ -86,7 +88,7 @@ namespace MarkdownManagerNew.Migrations
                         DocumentID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AspNetUsers", t => t.CreatorID, cascadeDelete: true)
+                .ForeignKey("dbo.AspNetUsers", t => t.CreatorID, cascadeDelete: false)
                 .ForeignKey("dbo.Documents", t => t.DocumentID, cascadeDelete: false)
                 .Index(t => t.CreatorID)
                 .Index(t => t.DocumentID);

@@ -166,9 +166,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604061441185_Initial.cs" />
-    <Compile Include="Migrations\201604061441185_Initial.Designer.cs">
-      <DependentUpon>201604061441185_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201604130936357_Initial.cs" />
+    <Compile Include="Migrations\201604130936357_Initial.Designer.cs">
+      <DependentUpon>201604130936357_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1082,6 +1082,7 @@
     </Content>
     <Content Include="Views\User\MyGroups.cshtml" />
     <Content Include="Views\User\GroupDetails.cshtml" />
+    <Content Include="Views\User\NewCreateGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1094,8 +1095,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604061441185_Initial.resx">
-      <DependentUpon>201604061441185_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604130936357_Initial.resx">
+      <DependentUpon>201604130936357_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

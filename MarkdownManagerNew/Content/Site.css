@@ -53,7 +53,7 @@ textarea {
     height: 500px;
     font-size: 20px;
     height: 600px;
-    box-shadow: 15px 15px 25px grey;
+    /*box-shadow: 15px 15px 25px grey;*/
     /*background-color: green;*/
 }
 
@@ -177,4 +177,63 @@ textarea {
     height: 80px;
     padding-top: 25px;
     padding-left: 100px;
+}
+
+#SkapaGruppTitel
+{
+    /*background-color: #F8F8F8;*/
+    height: 250px;
+    font-size: 70px;
+    padding-top: 120px;
+    /*padding-left: 50px;*/
+    color: #909090; 
+}
+
+#addDocumentToGroup
+{
+    height: 250px;
+    /*background-color: pink;*/
+    border-left: lightgray 1px solid;
+}
+
+#addUserToGroup
+{
+    height: 250px;
+    /*background-color: yellow;*/
+    overflow:auto;
+}
+
+#nameGroup
+{
+    /*background-color: green;*/
+    height: 250px;
+    padding-top: 30px;
+}
+
+input[type="text"]{
+background-color:#F8F8F8 !important
+}
+
+#checkboxName
+{
+    height: 30px;
+    /*background-color: yellow;*/
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#checkboxAdmin
+{
+    height: 30px;
+    /*background-color: green;*/
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#checkboxEdit
+{
+    height: 30px;
+    /*background-color: blue;*/
+    margin-top: 5px;
+    margin-bottom: 5px;
 }

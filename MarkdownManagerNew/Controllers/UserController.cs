@@ -194,6 +194,56 @@ namespace MarkdownManagerNew.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public ActionResult NewCreateGroup(CreateGroupViewModel viewModel)
+        {
+            var user = GetCurrentUser();
+            repo.CreateGroup(viewModel, user);
+            ViewBag.Test = "A new group has been created!";
+            return View("Index", repo.GetUserDocuments(GetCurrentUser()));
+        }
+
+        [HttpGet]
+        public ActionResult NewCreateGroup()
+        {
+            ViewBag.Test = "No group has been created";
+            CreateGroupViewModel viewModel = new CreateGroupViewModel();
+
+            List<ApplicationUser> tempUserList = repo.ListUsersToCreateGroup();
+            var checkBoxListItems = new List<CheckBoxListUser>();
+
+            foreach (var user in tempUserList)
+            {
+                checkBoxListItems.Add(new CheckBoxListUser()
+                {
+                    ID = user.Id,
+                    Display = user.LastName + "," + user.FirstName,
+                    IsChecked = false,
+
+                    CanEdit = false,
+                    IsGroupAdmin = false
+                });
+            }
+            viewModel.CheckBoxUsers = checkBoxListItems;
+
+            List<Document> tempDocumentList = repo.GetUserDocuments(GetCurrentUser());
+            var checkBoxListDocuments = new List<CheckBoxListDocuments>();
+
+            foreach (var document in tempDocumentList)
+            {
+                checkBoxListDocuments.Add(new CheckBoxListDocuments()
+                {
+                    ID = document.ID,
+                    Display = document.Name,
+                    IsChecked = false
+                });
+            }
+
+            viewModel.CheckBoxDocuments = checkBoxListDocuments;
+
+            return View(viewModel);
+        }
+
         // GET: User/Details/5
         public ActionResult Details(int? id)
         {
@@ -392,6 +442,7 @@ namespace MarkdownManagerNew.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(document);
         }
 
@@ -406,8 +457,9 @@ namespace MarkdownManagerNew.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Document document = db.Documents.Find(id);
-            db.Documents.Remove(document);
-            db.SaveChanges();
+            repo.ArchiveDocument(document);
+            //db.Documents.Remove(document);
+            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 

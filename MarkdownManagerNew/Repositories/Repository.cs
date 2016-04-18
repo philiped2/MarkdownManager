@@ -36,14 +36,20 @@ namespace MarkdownManagerNew.Repositories
 
             foreach (var item in documentsByUserRights)
             {
-                query.Add(item);
+                if (item.IsArchived == false)
+                {
+                    query.Add(item);
+                }
             }
 
             foreach (var group in user.Groups)
             {
                 foreach (var document in group.Documents)
                 {
-                    query.Add(document);
+                    if (document.IsArchived == false)
+                    {
+                        query.Add(document);
+                    }
                 }
             }
 
@@ -526,6 +532,14 @@ namespace MarkdownManagerNew.Repositories
                 .Where(t => t.Label.Contains(tagLabel))
                 .Select(t=>t.Label).ToList();
             return query;
+        }
+
+        public void ArchiveDocument(Document document)
+        {
+            Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+            document.IsArchived = true;
+            dbContext.Entry(dbDocument).CurrentValues.SetValues(document);
+            dbContext.SaveChanges();
         }
     }
 }

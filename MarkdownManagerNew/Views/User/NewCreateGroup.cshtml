@@ -1,0 +1,83 @@
+﻿@model MarkdownManagerNew.Viewmodels.CreateGroupViewModel
+
+
+@using (Html.BeginForm("NewCreateGroup", "User", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div id="SkapaGruppTitel">
+        Skapa grupp
+    </div>
+    <div class="col-md-4" id="nameGroup">
+        <form>
+            <div class="form-group">
+                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", placeholder = "Titel" })
+            </div>
+            <div class="form-group">
+                @Html.TextBoxFor(x => x.Description, new { @class = "form-control", placeholder = "Beskrivning" })
+            </div>
+        </form>
+    </div>
+    <div class="col-md-4" id="addUserToGroup">
+        <div class="col-md-1" id="checkboxName">
+            
+        </div>
+        <div class="col-md-6" id="checkboxName">
+            Users
+        </div>
+        <div class="col-md-2" id="checkboxAdmin">
+            Admin
+        </div>
+        <div class="col-md-2" id="checkboxEdit">
+            Edit
+        </div>
+        @for (int i = 0; i < Model.CheckBoxUsers.Count; i++)
+        {
+            @Html.HiddenFor(x => x.CheckBoxUsers[i].ID)
+            <div class="col-md-1">
+                @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsChecked)
+            </div>
+            <div class="col-md-6" id="checkboxName">
+                @Html.HiddenFor(x => x.CheckBoxUsers[i].Display)
+                @Model.CheckBoxUsers[i].Display
+            </div>
+            <div class="col-md-2" id="checkboxAdmin">
+                @Html.CheckBoxFor(x => x.CheckBoxUsers[i].IsGroupAdmin)
+            </div>
+            <div class="col-md-2" id="checkboxEdit">
+                @Html.CheckBoxFor(x => x.CheckBoxUsers[i].CanEdit)
+            </div>
+        }
+    </div>
+    <div class="col-md-4" id="addDocumentToGroup">
+        <div class="col-md-1" id="checkboxName">
+
+        </div>
+        <div class="col-md-10" id="checkboxName">
+            Document
+        </div>
+        @for (int i = 0; i < Model.CheckBoxDocuments.Count; i++)
+        {
+            @Html.HiddenFor(x => x.CheckBoxDocuments[i].ID)
+            <div class="col-md-1">
+                @Html.CheckBoxFor(x => x.CheckBoxDocuments[i].IsChecked)
+            </div>
+            <div class="col-md-10" id="checkboxName">
+                @Html.HiddenFor(x => x.CheckBoxDocuments[i].Display)
+                @Model.CheckBoxDocuments[i].Display
+            </div>
+        }
+    </div>
+    <div class="col-md-10">
+
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary">
+            Bekräfta
+        </button>
+    </div>
+
+}
+
+

@@ -21,6 +21,8 @@ namespace MarkdownManagerNew.Models
             Tags = new List<Tag>();
 
             Files = new List<File>();
+
+            IsArchived = false;
         }
 
         [Key]
@@ -41,6 +43,9 @@ namespace MarkdownManagerNew.Models
         public Nullable<DateTime> LastChanged { get; set; }
         [Display(Name = "Ändringslogg")]
         public List<string> ChangeLog { get; set; }
+
+        public bool IsArchived { get; set; }
+        public Nullable<DateTime> TimeArchived { get; set; }
 
         [Display(Name = "Grupper")]
         public virtual ICollection<Group> Groups { get; set; }
