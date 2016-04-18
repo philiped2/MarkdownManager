@@ -166,9 +166,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604130936357_Initial.cs" />
-    <Compile Include="Migrations\201604130936357_Initial.Designer.cs">
-      <DependentUpon>201604130936357_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201604180726054_initial.cs" />
+    <Compile Include="Migrations\201604180726054_initial.Designer.cs">
+      <DependentUpon>201604180726054_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -189,6 +189,7 @@
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Viewmodels\CreateDocumentViewModel.cs" />
+    <Compile Include="Viewmodels\CreateDocumentViewModel2.cs" />
     <Compile Include="Viewmodels\CreateGroupViewModel.cs" />
     <Compile Include="Viewmodels\CreateUserViewModel.cs" />
     <Compile Include="Viewmodels\EditGroupViewModel.cs" />
@@ -234,6 +235,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Controllers\NewDocumentController.js" />
     <Content Include="Scripts\Controllers\TagController.js" />
     <Content Include="Scripts\Directives\Autocomplete.js" />
     <Content Include="Scripts\Directives\CustomOnChange.js" />
@@ -1012,6 +1014,10 @@
     <Content Include="Scripts\Providers\MarkdownConverter.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\Services\DocumentService.js" />
+    <Content Include="Scripts\Services\GroupService.js" />
+    <Content Include="Scripts\Services\TagService.js" />
+    <Content Include="Scripts\Services\UserService.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -1083,6 +1089,7 @@
     <Content Include="Views\User\MyGroups.cshtml" />
     <Content Include="Views\User\GroupDetails.cshtml" />
     <Content Include="Views\User\NewCreateGroup.cshtml" />
+    <Content Include="Views\User\CreateDocument2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1095,8 +1102,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604130936357_Initial.resx">
-      <DependentUpon>201604130936357_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604180726054_initial.resx">
+      <DependentUpon>201604180726054_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -27,7 +27,7 @@
 
         $scope.addSelectedTag = function(tag)
         {
-            $scope.selectedTags.push(tag);
+            $scope.document.tags.push(tag);
         }
 
         var OnTagsComplete = function (response) {
@@ -49,11 +49,11 @@
             .then(OnTagsComplete, OnError);
         }
 
-        $scope.testPost = function () {
-            $http.post("/User/TestPost", { tagList: $scope.selectedTags }).error(function (responseData) {
-                console.log("Error !" + responseData);
-            });
-        }
+        //$scope.testPost = function () {
+        //    $http.post("/User/TestPost", { tagList: $scope.selectedTags }).error(function (responseData) {
+        //        console.log("Error !" + responseData);
+        //    });
+        //
 
     }
     app.controller("TagController", TagController);
