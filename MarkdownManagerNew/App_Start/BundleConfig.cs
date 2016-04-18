@@ -30,9 +30,7 @@ namespace MarkdownManagerNew
 
             bundles.Add(new ScriptBundle("~/bundles/angularUI").Include(
                         "~/Scripts/angular-ui/ui-bootstrap-tpls.js",
-                        "~/Scripts/angular-ui/ui-bootstrap-tpls.min.js",
-                        "~/Scripts/angular-ui/ui-bootstrap",
-                        "~/Scripts/angular-ui/ui-bootstrap.min.js"));
+                        "~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

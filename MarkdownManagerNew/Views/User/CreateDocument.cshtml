@@ -160,24 +160,34 @@
                 }
 
             </dl>
-            <div class="text-center">
-                <autocomplete ng-model="yourchoice" data="tags" on-type="updateMovies" ng-cloak></autocomplete>
+            @*<div class="text-center">
+                    <autocomplete ng-model="yourchoice" data="tags" on-type="updateMovies" ng-cloak></autocomplete>
+                </div>
+                <input name="states" id="states" type="text" placeholder="Lägg till tagg" ng-model="selected" typeahead="tag for tag in getTags($viewValue) | limitTo:8" class="form-control" on-type="updateMovies">
+                <input type="text" ng-change="updateMovies" ng-model="typed" placeholder="Creates table with result" />*@
+            <input type="text" ng-model="asyncSelected" placeholder="Lägg till tagg" uib-typeahead="tags for tags in getTags($viewValue)" typeahead-loading="loadingTags" typeahead-no-results="noResults" class="form-control">
+            <button type="button" class="btn btn-primary" ng-click="testPost()">Lägg till</button>
+            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
+            <input type="hidden" name="{{selectedTags}}" />
+            <div>
+                <dl>
+                    <dt>Taggar</dt>
+                    <dd ng-repeat="tag in selectedTags">
+                        {{tag}}
+                    </dd>
+                </dl>
             </div>
-            <input name="states" id="states" type="text" placeholder="Lägg till tagg" ng-model="selected" typeahead="tag for tag in getTags($viewValue) | limitTo:8" class="form-control" on-type="updateMovies">
-            <input type="text" ng-change="updateMovies" ng-model="typed" placeholder="Creates table with result" />
-            <input type="text" ng-model="asyncSelected" placeholder="Locations loaded via $http" uib-typeahead="address for address in getLocation($viewValue)" typeahead-loading="loadingLocations" typeahead-no-results="noResults" class="form-control">
-            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"></i>
-            <table>
-                <tr>
-                    <th>Etikett</th>
-                    <th></th>
-                </tr>
-                <tr ng-repeat="tag in tags">
-                    <td>tag</td>
-                    <td><button class="btn btn-default"></button></td>
-                </tr>
-            </table>
-            <div>{{error}}</div>
+            @*<table>
+                    <tr>
+                        <th>Etikett</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="tag in tags">
+                        <td>tag</td>
+                        <td><button class="btn btn-default"></button></td>
+                    </tr>
+                </table>
+                <div>{{error}}</div>*@
         </div>
 
 
@@ -207,8 +217,12 @@
                 </div>
             </div>*@
 
-        
 
+        @Ajax.ActionLink("Link Text",
+    "DoSomething",
+    "AwesomeController",
+    new { foo = "foo1", bar = "bar1" },
+    new AjaxOptions { UpdateTargetId = "updateTargetId" })
 
 
         <div class="form-group">
