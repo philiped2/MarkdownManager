@@ -235,6 +235,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Controllers\CreateGroupController.js" />
     <Content Include="Scripts\Controllers\NewDocumentController.js" />
     <Content Include="Scripts\Controllers\TagController.js" />
     <Content Include="Scripts\Directives\Autocomplete.js" />

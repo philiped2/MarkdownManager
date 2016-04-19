@@ -534,6 +534,14 @@ namespace MarkdownManagerNew.Repositories
             return query;
         }
 
+        public List<string> GetUserByName(string userName)
+        {
+            var query = dbContext.Users
+                .Where(t => t.UserName.Contains(userName))
+                .Select(t => t.UserName).ToList();
+            return query;
+        }
+
         public void ArchiveDocument(Document document)
         {
             Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
