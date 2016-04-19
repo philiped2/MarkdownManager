@@ -61,13 +61,10 @@
             tags: [],
             checkboxUsers: [{
                 id: "",
-                username: "",
-                firstname: "",
-                lastname: "",
+                fullName: "",
                 canRead: false,
                 canWrite: false,
-                canDelete: false,
-                isAdmin: false,
+                canDelete: false
             }],
             checkboxGroups: [{
                 id: "",
@@ -91,7 +88,7 @@
         }
 
         $scope.addSelectedUser = function (user) {
-            $scope.document.users.push(user);
+            $scope.document.checkboxUsers.push(user);
         }
 
         var OnTagsComplete = function (response) {

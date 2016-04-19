@@ -554,7 +554,14 @@ namespace MarkdownManagerNew.Repositories
         {
             var query = dbContext.Users
                 .Where(u => u.FirstName.Contains(keyword) || u.LastName.Contains(keyword))
-                .Select(u => new ListUserViewModel { FullName = u.FirstName + " " + u.LastName, ID = u.Id, UserName = u.UserName }).ToList();
+                .Select(u => new ListUserViewModel {
+                    FullName = u.FirstName + " " + u.LastName,
+                    ID = u.Id,
+                    CanRead = false,
+                    CanDelete = false,
+                    CanWrite = false
+                })
+                .ToList();
             return query;
         }
     }
