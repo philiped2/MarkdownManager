@@ -48,6 +48,11 @@ namespace MarkdownManagerNew.Models
 
         public virtual List<DocumentRight> DocumentRights { get; set; }
 
+        public string FullName()
+        {
+            return FirstName + " " + LastName;
+        }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
