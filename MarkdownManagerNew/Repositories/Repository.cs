@@ -544,9 +544,8 @@ namespace MarkdownManagerNew.Repositories
 
         public List<ApplicationUser> GetUsersByName(string keyword)
         {
-            var x = roleStore.Roles;
             var query = dbContext.Users
-                .Where(u => u.FirstName.Contains(keyword) || u.LastName.Contains(keyword) && u.Roles.c)).ToList();
+                .Where(u => u.FirstName.Contains(keyword) || u.LastName.Contains(keyword)).ToList();
             return query;
         }
     }
