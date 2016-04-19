@@ -550,10 +550,11 @@ namespace MarkdownManagerNew.Repositories
             dbContext.SaveChanges();
         }
 
-        public List<ApplicationUser> GetUsersByName(string keyword)
+        public List<ListUserViewModel> GetUsersByName(string keyword)
         {
             var query = dbContext.Users
-                .Where(u => u.FirstName.Contains(keyword) || u.LastName.Contains(keyword)).ToList();
+                .Where(u => u.FirstName.Contains(keyword) || u.LastName.Contains(keyword))
+                .Select(u => new ListUserViewModel { FullName = u.FirstName + " " + u.LastName, ID = u.Id, UserName = u.UserName }).ToList();
             return query;
         }
     }

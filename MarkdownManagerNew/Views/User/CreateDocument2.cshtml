@@ -54,7 +54,7 @@
             </div>
 
             <div class="row">
-                <input type="text" ng-model="asyncSelectedUser" placeholder="Lägg till användare" uib-typeahead="users for users in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults" class="form-control">
+                <input type="text" ng-model="asyncSelectedUser" placeholder="Lägg till användare" uib-typeahead="users.FullName for users in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults" class="form-control">
                 <button type="button" class="btn btn-primary" ng-click="addSelectedUser(asyncSelectedUser)">Lägg till</button>
                 <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
                 <div>
