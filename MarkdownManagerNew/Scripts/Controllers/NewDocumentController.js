@@ -90,6 +90,10 @@
             $scope.document.tags.push(tag);
         }
 
+        $scope.addSelectedUser = function (user) {
+            $scope.document.users.push(user);
+        }
+
         var OnTagsComplete = function (response) {
             $scope.tags = response.data;
         }
