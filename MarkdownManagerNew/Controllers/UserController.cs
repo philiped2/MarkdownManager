@@ -61,9 +61,9 @@ namespace MarkdownManagerNew.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetUsersJson(string userName)
+        public ActionResult GetUsersNamesJson(string userName)
         {
-            var result = repo.GetUserByName(userName);
+            var result = repo.GetUserByUserName(userName);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }

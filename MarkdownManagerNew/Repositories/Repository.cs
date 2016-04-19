@@ -534,7 +534,7 @@ namespace MarkdownManagerNew.Repositories
             return query;
         }
 
-        public List<string> GetUserByName(string userName)
+        public List<string> GetUserByUserName(string userName)
         {
             var query = dbContext.Users
                 .Where(t => t.UserName.Contains(userName))

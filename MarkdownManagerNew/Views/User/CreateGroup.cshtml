@@ -123,7 +123,20 @@
             </tr>
         }
     </table>
-
+        <br />
+        <input type="text" ng-model="asyncSelected" placeholder="Lägg till tagg" uib-typeahead="tags for tags in getTags($viewValue)" typeahead-loading="loadingTags" typeahead-no-results="noResults" class="form-control">
+            <button type="button" class="btn btn-primary" ng-click="testPost()">Lägg till</button>
+            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
+            <input type="hidden" name="{{selectedTags}}" />
+            <div>
+                <dl>
+                    <dt>Taggar</dt>
+                    <dd ng-repeat="tag in selectedTags">
+                        {{tag}}
+                    </dd>
+                </dl>
+            </div>
+        <br />
     
         <hr />
     
@@ -133,9 +146,9 @@
 </div>   
 
 
-<div>
+@*<div>
     @Html.ActionLink("Back", "Index")
-</div>
+</div>*@
 
 @*@using (Html.BeginForm("CreateGroup", "User", FormMethod.Post)) <<<<<<<<<<  NYASTE KODEN SOM HAR ETT OKEJ USER INTERFACE >>>>>>>>>>>
 {
