@@ -124,18 +124,43 @@
         }
     </table>
         <br />
-        <input type="text" ng-model="asyncSelected" placeholder="Lägg till tagg" uib-typeahead="tags for tags in getTags($viewValue)" typeahead-loading="loadingTags" typeahead-no-results="noResults" class="form-control">
-            <button type="button" class="btn btn-primary" ng-click="testPost()">Lägg till</button>
-            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
-            <input type="hidden" name="{{selectedTags}}" />
-            <div>
-                <dl>
-                    <dt>Taggar</dt>
-                    <dd ng-repeat="tag in selectedTags">
-                        {{tag}}
-                    </dd>
-                </dl>
-            </div>
+    <div ng-controller="NewDocumentController">
+        <input type="text" ng-model="asyncSelectedUser" placeholder="Lägg till användare" uib-typeahead="users.FullName for users in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults" class="form-control">
+        <button type="button" class="btn btn-primary" ng-click="addSelectedUser(asyncSelectedUser)">Lägg till</button>
+        <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
+        <div>
+            <table class="table col-sm-12">
+                <tr>
+                    <th>
+                        Användare
+                    </th>
+                    <th>
+                        Läsa
+                    </th>
+                    <th>
+                        Skriva
+                    </th>
+                    <th>
+                        Ta bort
+                    </th>
+                </tr>
+                <tr ng-repeat="user in document.checkboxUsers">
+                    <td>
+                        {{user.firstname}} {{user.lastname}}
+                    </td>
+                    <td>
+                        <input type="radio" />
+                    </td>
+                    <td>
+                        <input type="radio" />
+                    </td>
+                    <td>
+                        <input type="radio" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
         <br />
     
         <hr />
