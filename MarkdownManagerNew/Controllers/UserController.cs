@@ -47,6 +47,13 @@ namespace MarkdownManagerNew.Controllers
             return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
         }
 
+        public ActionResult GetUsersJson(string keyword)
+        {
+            var result = repo.GetUsersByName(keyword);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetTagsJson (string tagLabel)
         {
             var result = repo.GetTagsByName(tagLabel);

@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var NewDocumentController = function ($scope, $http, $log) {
+    var NewDocumentController = function ($scope, $http, $log, TagService, UserService) {
 
         $scope.showModal = false;
         $scope.toggleModal = function () {
@@ -44,27 +44,46 @@
             r.readAsBinaryString(f);
         }
 
-        $scope.getTags = function (val) {
-            return $http.get("/User/GetTagsJson", { params: { tagLabel: typed } })
-                .then(function (response) {
-                    return response.data(function (item) {
-                        return item;
-                    });
-                });
-        };
+        //$scope.getTags = function (val) {
+        //    return $http.get("/User/GetTagsJson", { params: { tagLabel: typed } })
+        //        .then(function (response) {
+        //            return response.data(function (item) {
+        //                return item;
+        //            });
+        //        });
+        //};
 
 
         $scope.document = {
             name: "",
             description: "",
             markdown: "",
-            tags: []
+            tags: [],
+            checkboxUsers: [{
+                id: "",
+                username: "",
+                firstname: "",
+                lastname: "",
+                canRead: false,
+                canWrite: false,
+                canDelete: false,
+                isAdmin: false,
+            }],
+            checkboxGroups: [{
+                id: "",
+                name: "",
+                canRead: false,
+                canWrite: false,
+                canDelete: false,
+            }]
         }
 
+        $scope.getUsers = function (val) {
+            return UserService.getUsers(val);
+        };
+
         $scope.getTags = function (val) {
-            return $http.get("/User/GetTagsJson", { params: { tagLabel: val } }).then(function (response) {
-                return response.data;
-            });
+            return TagService.getTags(val);
         };
 
         $scope.addSelectedTag = function (tag) {
@@ -77,11 +96,6 @@
 
         var OnError = function (reason) {
             $scope.error = reason.data;
-        }
-
-        $scope.updateTags = function (typed) {
-            $http.get("/User/GetTagsJson", { params: { tagLabel: typed } })
-        .then(OnTagsComplete, OnError);
         }
 
 
