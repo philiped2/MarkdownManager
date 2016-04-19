@@ -1,9 +1,13 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var NewDocumentController = function ($scope, $log) {
+    var CreateGroupController = function ($scope, $http, $log, GroupService) {
 
+
+        $scope.getUsers = function (val) {
+            return UserService.getUsers(val);
+        };
 
     }
-    app.controller("NewDocumentController", NewDocumentController);
+    app.controller("CreateGroupController", CreateGroupController);
 }());
