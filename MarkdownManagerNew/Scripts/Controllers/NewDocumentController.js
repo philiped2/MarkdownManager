@@ -88,7 +88,7 @@
         }
 
         $scope.addSelectedUser = function (user) {
-            $scope.document.users.push(user);
+            $scope.document.checkboxUsers.push(user);
         }
 
         var OnTagsComplete = function (response) {
