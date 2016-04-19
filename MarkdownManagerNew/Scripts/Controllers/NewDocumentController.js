@@ -61,13 +61,10 @@
             tags: [],
             checkboxUsers: [{
                 id: "",
-                username: "",
-                firstname: "",
-                lastname: "",
+                fullName: "",
                 canRead: false,
                 canWrite: false,
-                canDelete: false,
-                isAdmin: false,
+                canDelete: false
             }],
             checkboxGroups: [{
                 id: "",
