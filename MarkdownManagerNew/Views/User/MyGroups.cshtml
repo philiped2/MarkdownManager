@@ -49,7 +49,15 @@
         <td>
             @Html.ActionLink("Edit", "EditGroup", new { id=item.ID }, new { @Class = "btn btn-default"})
             @Html.ActionLink("Details", "GroupDetails", new { id = item.ID }, new { @Class = "btn btn-default" })
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
+            @if (User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
+            }
+            else
+            {
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
+            }  
+           
         </td>
     </tr>
 }

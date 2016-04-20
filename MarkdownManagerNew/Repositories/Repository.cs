@@ -126,7 +126,7 @@ namespace MarkdownManagerNew.Repositories
 
                 if (user.CanEdit == true)
                 {
-                    userGroupRights.CanEdit = true;
+                    userGroupRights.IsGroupAdmin = true;
                 }
 
                 //userGroupRights.GroupId = groupToAdd.ID;
@@ -213,7 +213,7 @@ namespace MarkdownManagerNew.Repositories
 
                 if (user.CanEdit == true)
                 {
-                    userGroupRights.CanEdit = true;
+                    userGroupRights.IsGroupAdmin = true;
                 }
 
                 if (user.UserToDelete == true)
@@ -303,7 +303,7 @@ namespace MarkdownManagerNew.Repositories
 
                 if (user.CanEdit == true)
                 {
-                    userGroupRights.CanEdit = true;
+                    userGroupRights.IsGroupAdmin = true;
                 }
 
                 //userGroupRights.GroupId = groupToAdd.ID;

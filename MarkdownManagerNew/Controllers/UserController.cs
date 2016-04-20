@@ -436,7 +436,7 @@ namespace MarkdownManagerNew.Controllers
             //    return View(viewModel);
             //}
 
-            if (usersGroupRights.CanEdit == true)
+            if (usersGroupRights.IsGroupAdmin == true)
             {
                 return View(viewModel);
             }
@@ -469,6 +469,12 @@ namespace MarkdownManagerNew.Controllers
 
         public ActionResult MyGroups()
         {
+            //repo.GetUserGroups(GetCurrentUser());
+            //ViewGroupsViewModel ViewGroupViewModel = new ViewGroupsViewModel();
+            //ViewGroupViewModel.CurrentUser = GetCurrentUser();
+            //ViewGroupViewModel.UsersGroups = repo.GetUserGroups(GetCurrentUser());
+
+            //return View(ViewGroupViewModel);
             return View(repo.GetUserGroups(GetCurrentUser()));
         }
 
