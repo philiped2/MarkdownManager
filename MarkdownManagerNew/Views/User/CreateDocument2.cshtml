@@ -59,7 +59,7 @@
                 <button type="button" class="btn btn-primary" ng-click="addSelectedUser(asyncSelectedUser)">Lägg till</button>
                 <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
                 <div>
-                    <table class="table col-sm-12">
+                    <table class="table col-sm-12" ng-show="document.checkboxUsers">
                         <tr>
                             <th>
                                 Användare
@@ -68,7 +68,7 @@
                                 Läsa
                             </th>
                             <th>
-                                Skriva
+                                Läsa/Skriva
                             </th>
                             <th>
                                 Ta bort
@@ -79,13 +79,13 @@
                                 {{user.FullName}}
                             </td>
                             <td>
-                                <input type="checkbox" ng-model="user.canRead">
+                                <input type="radio" ng-model="user.Read">
                             </td>
                             <td>
-                                <input type="checkbox" ng-model="user.canWrite">
+                                <input type="radio" ng-model="user.ReadWrite">
                             </td>
                             <td>
-                                <input type="checkbox" ng-model="user.canDelete">
+                                <input type="checkbox" ng-model="user.Delete">
                             </td>
                         </tr>
                     </table>

@@ -11,8 +11,8 @@ namespace MarkdownManagerNew.Viewmodels
 
         public string FullName { get; set; }
 
-        public bool CanRead { get; set; }
-        public bool CanWrite { get; set; }
-        public bool CanDelete { get; set; }
+        public bool Read { get; set; }
+        public bool ReadWrite { get; set; }
+        public bool Delete { get; set; }
     }
 }

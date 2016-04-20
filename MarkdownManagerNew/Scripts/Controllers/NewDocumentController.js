@@ -59,20 +59,8 @@
             description: "",
             markdown: "",
             tags: [],
-            checkboxUsers: [{
-                id: "",
-                fullName: "",
-                canRead: false,
-                canWrite: false,
-                canDelete: false
-            }],
-            checkboxGroups: [{
-                id: "",
-                name: "",
-                canRead: false,
-                canWrite: false,
-                canDelete: false,
-            }]
+            checkboxUsers: [],
+            checkboxGroups: []
         }
 
         $scope.getUsers = function (val) {

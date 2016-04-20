@@ -557,9 +557,9 @@ namespace MarkdownManagerNew.Repositories
                 .Select(u => new ListUserViewModel {
                     FullName = u.FirstName + " " + u.LastName,
                     ID = u.Id,
-                    CanRead = false,
-                    CanDelete = false,
-                    CanWrite = false
+                    Read = false,
+                    Delete = false,
+                    ReadWrite = false
                 })
                 .ToList();
             return query;
