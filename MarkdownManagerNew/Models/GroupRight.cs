@@ -12,7 +12,7 @@ namespace MarkdownManagerNew.Models
         [Key]
         public int ID { get; set; }
 
-        public bool CanEdit { get; set; }
+        //public bool CanEdit { get; set; }
         public bool IsGroupAdmin { get; set; }
 
         public int GroupId { get; set; }

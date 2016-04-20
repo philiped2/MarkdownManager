@@ -194,6 +194,7 @@
     <Compile Include="Viewmodels\CreateUserViewModel.cs" />
     <Compile Include="Viewmodels\EditGroupViewModel.cs" />
     <Compile Include="Viewmodels\ListUserViewModel.cs" />
+    <Compile Include="Viewmodels\ViewGroupsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\autocomplete.css" />
