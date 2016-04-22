@@ -15,14 +15,14 @@
 
             <div class="form-group">
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Titel", @ng_model = "document.name" } })
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder = "Titel", @ng_model = "document.Name" } })
                     @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Beskrivning", @ng_model = "document.description" } })
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", placeholder = "Beskrivning", @ng_model = "document.Description" } })
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -40,14 +40,14 @@
                 <div class="col-sm-12">
                     <div class="form-group col-md-6 markdownEditorForm">
                         <div class="col-md-12">
-                            @Html.EditorFor(model => model.Markdown, new { htmlAttributes = new { @class = "form-control markdownEditor", @ng_model = "document.markdown", @id = "mdEditor" } })
+                            @Html.EditorFor(model => model.Markdown, new { htmlAttributes = new { @class = "form-control markdownEditor", @ng_model = "document.Markdown", @id = "mdEditor" } })
                             @Html.ValidationMessageFor(model => model.Markdown, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     @*<div class="col-sm-6 markdownResult"></div>*@
                     @*<div ng-init="initTest='@Model.Markdown'; mdText=initTest;">*@
                     <div ng-init="initTest='@Html.Encode(Model.Markdown)'; document.markdown=initTest;">
-                        <md class="col-sm-6 markdownResult" ng-model="document.markdown" id="mdResult">
+                        <md class="col-sm-6 markdownResult" ng-model="document.Markdown" id="mdResult">
                         </md>
                     </div>
                 </div>
@@ -101,8 +101,8 @@
                     </tr>
                 </table>
                 
-                <table class="table col-sm-12" ng-show="document.checkboxGroups">
-                    <tr ng-repeat="group in document.checkboxGroups">
+                <table class="table col-sm-12" ng-show="document.Groups">
+                    <tr ng-repeat="group in document.Groups">
                         <td>
                             {{group.Name}}
                         </td>
@@ -130,8 +130,8 @@
                     </tr>
                 </table>
                 
-                <table class="table col-sm-12" ng-show="document.checkboxUsers">
-                    <tr ng-repeat="user in document.checkboxUsers">
+                <table class="table col-sm-12" ng-show="document.Users">
+                    <tr ng-repeat="user in document.Users">
                         <td>
                             {{user.FullName}}
                         </td>
@@ -150,22 +150,31 @@
                 </table>
             </div>
             
-            <div class="row">
+            <div>
+                <h3>Taggar</h3>
+
                 <input type="text" ng-model="asyncSelected" placeholder="Lägg till tagg" uib-typeahead="tags for tags in getTags($viewValue)" typeahead-loading="loadingTags" typeahead-no-results="noResults" class="form-control">
                 <button type="button" class="btn btn-primary" ng-click="addSelectedTag(asyncSelected)">Lägg till</button>
                 <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
-                <div>
-                    <dl>
-                        <dt>Taggar</dt>
-                        <dd ng-repeat="tag in document.tags">
+
+                <table class="table col-sm-12" ng-show="document.Tags">
+                    <tr ng-repeat="tag in document.Tags">
+                        <td>
                             {{tag}}
-                        </dd>
-                    </dl>
-                </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger btn-sm" ng-click="removeTag(tag)">
+                                Ta bort
+                            </button>
+                        </td>
+                    </tr>
+                </table>
             </div>
             <div class="form-group">
                 <div class="col-md-offset-1 col-md-10">
-                    <input type="submit" value="Skapa" class="btn btn-default" name="CreateDocument" />
+                    @*<input type="submit" value="Skapa" class="btn btn-default" name="CreateDocument" />*@
+                    <button type="button" class="btn btn-primary" ng-click="CreateDocument(document)">Skapa dokument</button>
+                    <p class="label-default">{{statusMessage}}</p>
                 </div>
             </div>
         </div>

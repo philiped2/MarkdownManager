@@ -566,7 +566,7 @@ namespace MarkdownManagerNew.Repositories
         public List<ListGroupViewModel> GetAuthGroupsByName(string keyword, ApplicationUser currentUser)
         {
             var query = dbContext.Groups
-                .Where(g => g.Users.Any(u => u.Id == currentUser.Id) && g.Name.Contains(keyword) || g.Description.Contains(keyword))
+                .Where(g => g.Users.Any(u => u.Id == currentUser.Id) && g.Name.Contains(keyword) || g.Users.Any(u => u.Id == currentUser.Id) && g.Description.Contains(keyword))
                 .Select(g => new ListGroupViewModel
                 {
                     Name = g.Name,
