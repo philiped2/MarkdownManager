@@ -557,9 +557,23 @@ namespace MarkdownManagerNew.Repositories
                 .Select(u => new ListUserViewModel {
                     FullName = u.FirstName + " " + u.LastName,
                     ID = u.Id,
-                    CanRead = false,
-                    CanDelete = false,
-                    CanWrite = false
+                    Rights = "Read"
+                })
+                .ToList();
+            return query;
+        }
+
+        public List<ListGroupViewModel> GetAuthGroupsByName(string keyword, ApplicationUser currentUser)
+        {
+            var query = dbContext.Groups
+                .Where(g => g.Users.Any(u => u.Id == currentUser.Id) && g.Name.Contains(keyword) || g.Description.Contains(keyword))
+                .Select(g => new ListGroupViewModel
+                {
+                    Name = g.Name,
+                    ID = g.ID,
+                    Description = g.Description,
+                    Rights = "Read",
+                    Users = g.Users.Select(u => u.FirstName + " " + u.LastName).ToList()
                 })
                 .ToList();
             return query;

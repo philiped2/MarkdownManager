@@ -46,7 +46,8 @@
         <td>
             @if (Model.CurrentUser.DocumentRights.Any(x => x.document.Name == item.Name) || User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
+            <div class="btn-group btn-group-sm">
+            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
             }
             else
             {
@@ -61,6 +62,7 @@
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
             }
             @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
+            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
         </td>
     </tr>
 }
