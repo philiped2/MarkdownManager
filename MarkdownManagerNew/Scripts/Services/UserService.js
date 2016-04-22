@@ -10,6 +10,11 @@
             });
         };
 
+        fac.getUsers2 = function (val) {
+            return $http.get("/User/GetUsersJson", { params: { keyword: val } })
+            ;
+        };
+
         return fac;
     }
     app.factory("UserService", UserService);

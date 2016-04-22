@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var NewDocumentController = function ($scope, $http, $log, TagService, UserService) {
+    var NewDocumentController = function ($scope, $http, $log, $filter, TagService, UserService, GroupService) {
 
         $scope.showModal = false;
         $scope.toggleModal = function () {
@@ -67,6 +67,45 @@
             return UserService.getUsers(val);
         };
 
+        $scope.UserResult = [];
+
+        $scope.getUsers2 = function (val) {
+            if (val.length < 1)
+            {
+                $scope.UserResult = [];
+            }
+            else {
+                var promise = UserService.getUsers2(val);
+                promise.then(function (response) {
+                    $scope.UserResult = response.data;
+                    console.log("-----");
+                    console.log("UserResult Updated");
+                    console.log($scope.UserResult);
+                    console.log("-----");
+                })
+            }
+        };
+
+        $scope.getAuthGroups2 = function (val) {
+            if (val.length < 1) {
+                $scope.GroupResult = [];
+            }
+            else {
+                var promise = GroupService.getAuthGroups2(val);
+                promise.then(function (response) {
+                    $scope.GroupResult = response.data;
+                    console.log("-----");
+                    console.log("GroupResult Updated");
+                    console.log($scope.GroupResult);
+                    console.log("-----");
+                })
+            }
+        };
+
+        $scope.removeUser = function (user) {
+            $scope.document.checkboxUsers = $filter('filter')($scope.document.checkboxUsers, { ID: '!' + user.ID });
+        };
+
         $scope.getTags = function (val) {
             return TagService.getTags(val);
         };
@@ -79,6 +118,13 @@
             $scope.document.checkboxUsers.push(user);
         }
 
+        $scope.addSelectedGroup = function (group) {
+            $scope.document.checkboxGroups.push(group);
+        }
+
+        $scope.removeGroup = function (group) {
+            $scope.document.checkboxGroups = $filter('filter')($scope.document.checkboxGroups, { ID: '!' + group.ID });
+        };
         var OnTagsComplete = function (response) {
             $scope.tags = response.data;
         }

@@ -10,6 +10,11 @@
             });
         };
 
+        fac.getAuthGroups2 = function (val) {
+            return $http.get("/User/GetAuthGroupsJson", { params: { keyword: val } })
+            ;
+        };
+
         return fac;
     }
     app.factory("GroupService", GroupService);

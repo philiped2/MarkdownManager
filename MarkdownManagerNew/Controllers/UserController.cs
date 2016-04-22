@@ -54,6 +54,14 @@ namespace MarkdownManagerNew.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetAuthGroupsJson(string keyword)
+        {
+            var currentUser = GetCurrentUser();
+            var result = repo.GetAuthGroupsByName(keyword, currentUser);
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult GetTagsJson (string tagLabel)
         {
             var result = repo.GetTagsByName(tagLabel);

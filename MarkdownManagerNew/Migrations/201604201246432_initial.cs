@@ -13,7 +13,6 @@ namespace MarkdownManagerNew.Migrations
                     {
                         ID = c.Int(nullable: false),
                         CanWrite = c.Boolean(nullable: false),
-                        CanDelete = c.Boolean(nullable: false),
                         DocumentName = c.String(),
                         ApplicationUser_Id = c.String(maxLength: 128),
                     })
@@ -98,7 +97,6 @@ namespace MarkdownManagerNew.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        CanEdit = c.Boolean(nullable: false),
                         IsGroupAdmin = c.Boolean(nullable: false),
                         GroupId = c.Int(nullable: false),
                         GroupName = c.String(),
