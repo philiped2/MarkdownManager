@@ -29,7 +29,12 @@ namespace MarkdownManagerNew.Controllers
 
         public ActionResult Index()
         {
-            return View(repo.GetUserDocuments(GetCurrentUser()));
+            AllDocumentsViewModel documentViewmodel = new AllDocumentsViewModel();
+            documentViewmodel.CurrentUser = GetCurrentUser();
+            documentViewmodel.Documents = repo.GetUserDocuments(GetCurrentUser());
+
+            return View(documentViewmodel);
+            //return View(repo.GetUserDocuments(GetCurrentUser())); senaste använda
             //return View(repo.listAllDocuments());
         }
 
@@ -436,16 +441,16 @@ namespace MarkdownManagerNew.Controllers
             //    return View(viewModel);
             //}
 
-            if (usersGroupRights.IsGroupAdmin == true)
-            {
-                return View(viewModel);
-            }
-            else
-            {
-                return HttpNotFound();
-            }
+            //if (usersGroupRights.IsGroupAdmin == true) // senaste funktionen för att begränsa rättigheter innan disable button skapades i viewn
+            //{
+            //    return View(viewModel);
+            //}
+            //else
+            //{
+            //    return HttpNotFound();
+            //}
 
-            //return View(viewModel);
+            return View(viewModel);
         }
 
 
@@ -469,13 +474,13 @@ namespace MarkdownManagerNew.Controllers
 
         public ActionResult MyGroups()
         {
-            //repo.GetUserGroups(GetCurrentUser());
-            //ViewGroupsViewModel ViewGroupViewModel = new ViewGroupsViewModel();
-            //ViewGroupViewModel.CurrentUser = GetCurrentUser();
-            //ViewGroupViewModel.UsersGroups = repo.GetUserGroups(GetCurrentUser());
+            repo.GetUserGroups(GetCurrentUser());
+            ViewGroupsViewModel ViewGroupViewModel = new ViewGroupsViewModel();
+            ViewGroupViewModel.CurrentUser = GetCurrentUser();
+            ViewGroupViewModel.UsersGroups = repo.GetUserGroups(GetCurrentUser());
 
-            //return View(ViewGroupViewModel);
-            return View(repo.GetUserGroups(GetCurrentUser()));
+            return View(ViewGroupViewModel);
+            //return View(repo.GetUserGroups(GetCurrentUser()));
         }
 
         // POST: User/Delete/5
@@ -484,9 +489,9 @@ namespace MarkdownManagerNew.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Document document = db.Documents.Find(id);
-            repo.ArchiveDocument(document);
-            //db.Documents.Remove(document);
-            //db.SaveChanges();
+            //repo.ArchiveDocument(document); // arkiverar dokument
+            db.Documents.Remove(document);
+            db.SaveChanges();
             return RedirectToAction("Index");
         }
 

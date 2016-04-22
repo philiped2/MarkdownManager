@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MarkdownManagerNew.Models.Group>
+﻿@model MarkdownManagerNew.Viewmodels.ViewGroupsViewModel
 
 @{
     ViewBag.Title = "MyGroups";
@@ -12,24 +12,24 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Creator.FirstName)
+            @Html.DisplayNameFor(model => model.UsersGroups.First().Creator.FirstName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.UsersGroups.First().Description)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.UsersGroups.First().Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DateCreated)
+            @Html.DisplayNameFor(model => model.UsersGroups.First().DateCreated)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastChanged)
+            @Html.DisplayNameFor(model => model.UsersGroups.First().LastChanged)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.UsersGroups) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Creator.FirstName)
@@ -47,9 +47,16 @@
             @Html.DisplayFor(modelItem => item.LastChanged)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditGroup", new { id=item.ID }, new { @Class = "btn btn-default"})
+            @if (Model.CurrentUser.GroupRights.Any(x => x.GroupName == item.Name) || User.IsInRole("Admin"))
+            {
+                @Html.ActionLink("Edit", "EditGroup", new { id = item.ID }, new { @Class = "btn btn-default" })
+            }
+            else
+            {
+                @Html.ActionLink("Edit", "EditGroup", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
+            }
             @Html.ActionLink("Details", "GroupDetails", new { id = item.ID }, new { @Class = "btn btn-default" })
-            @if (User.IsInRole("Admin"))
+            @if (Model.CurrentUser.GroupRights.Any(x => x.GroupName == item.Name) || User.IsInRole("Admin"))
             {
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
             }
@@ -57,7 +64,7 @@
             {
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
             }  
-           
+
         </td>
     </tr>
 }

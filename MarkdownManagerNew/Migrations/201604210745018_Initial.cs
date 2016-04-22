@@ -3,7 +3,7 @@ namespace MarkdownManagerNew.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class initial : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -13,7 +13,6 @@ namespace MarkdownManagerNew.Migrations
                     {
                         ID = c.Int(nullable: false),
                         CanWrite = c.Boolean(nullable: false),
-                        CanDelete = c.Boolean(nullable: false),
                         DocumentName = c.String(),
                         ApplicationUser_Id = c.String(maxLength: 128),
                     })
@@ -98,7 +97,6 @@ namespace MarkdownManagerNew.Migrations
                 c => new
                     {
                         ID = c.Int(nullable: false, identity: true),
-                        CanEdit = c.Boolean(nullable: false),
                         IsGroupAdmin = c.Boolean(nullable: false),
                         GroupId = c.Int(nullable: false),
                         GroupName = c.String(),
@@ -174,7 +172,7 @@ namespace MarkdownManagerNew.Migrations
                         Document_ID = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => new { t.Group_ID, t.Document_ID })
-                .ForeignKey("dbo.Groups", t => t.Group_ID, cascadeDelete: true)
+                .ForeignKey("dbo.Groups", t => t.Group_ID, cascadeDelete: false)
                 .ForeignKey("dbo.Documents", t => t.Document_ID, cascadeDelete: false)
                 .Index(t => t.Group_ID)
                 .Index(t => t.Document_ID);
@@ -187,7 +185,7 @@ namespace MarkdownManagerNew.Migrations
                         ApplicationUser_Id = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => new { t.Group_ID, t.ApplicationUser_Id })
-                .ForeignKey("dbo.Groups", t => t.Group_ID, cascadeDelete: true)
+                .ForeignKey("dbo.Groups", t => t.Group_ID, cascadeDelete: false)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id, cascadeDelete: false)
                 .Index(t => t.Group_ID)
                 .Index(t => t.ApplicationUser_Id);
@@ -213,7 +211,7 @@ namespace MarkdownManagerNew.Migrations
                         ApplicationUser_Id = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => new { t.Document_ID, t.ApplicationUser_Id })
-                .ForeignKey("dbo.Documents", t => t.Document_ID, cascadeDelete: true)
+                .ForeignKey("dbo.Documents", t => t.Document_ID, cascadeDelete: false)
                 .ForeignKey("dbo.AspNetUsers", t => t.ApplicationUser_Id, cascadeDelete: false)
                 .Index(t => t.Document_ID)
                 .Index(t => t.ApplicationUser_Id);
