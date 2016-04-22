@@ -194,6 +194,7 @@
     <Compile Include="Viewmodels\CreateGroupViewModel.cs" />
     <Compile Include="Viewmodels\CreateUserViewModel.cs" />
     <Compile Include="Viewmodels\EditGroupViewModel.cs" />
+    <Compile Include="Viewmodels\ListGroupViewModel.cs" />
     <Compile Include="Viewmodels\ListUserViewModel.cs" />
     <Compile Include="Viewmodels\ViewGroupsViewModel.cs" />
   </ItemGroup>
