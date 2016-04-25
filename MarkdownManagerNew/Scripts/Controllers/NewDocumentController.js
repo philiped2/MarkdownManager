@@ -1,9 +1,10 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var NewDocumentController = function ($scope, $http, $log, $filter, TagService, UserService, GroupService, DocumentService) {
+    var NewDocumentController = function ($scope, $http, $log, $filter,$location, $anchorScroll, TagService, UserService, GroupService, DocumentService) {
 
         $scope.showModal = false;
+        $scope.showMessage = false;
         $scope.toggleModal = function () {
             $scope.showModal = !$scope.showModal;
         };
@@ -34,7 +35,7 @@
             var f = document.getElementById('mdFile').files[0],
                 r = new FileReader();
             r.onloadend = function (e) {
-                $scope.document.markdown = e.target.result;
+                $scope.document.Markdown = e.target.result;
                 console.log("Markdown-text was overwritten by markdown-file content");
                 document.getElementById("mdFile").value = "";
                 console.log("File input was reset");
@@ -90,6 +91,9 @@
             var returnPromise = DocumentService.CreateDocument(document);
             returnPromise.success(function (response) {
                 $scope.statusMessage = response.message;
+                $scope.showMessage = true;
+                $location.hash('statusMessage');
+                $anchorScroll();
             })
         };
 
@@ -110,7 +114,7 @@
         };
 
         $scope.removeUser = function (user) {
-            $scope.document.checkboxUsers = $filter('filter')($scope.document.checkboxUsers, { ID: '!' + user.ID });
+            $scope.document.Users = $filter('filter')($scope.document.checkboxUsers, { ID: '!' + user.ID });
         };
 
         $scope.getTags = function (val) {
@@ -118,23 +122,23 @@
         };
 
         $scope.addSelectedTag = function (tag) {
-            $scope.document.tags.push(tag);
+            $scope.document.Tags.push(tag);
         }
 
         $scope.removeTag = function (tag) {
-            $scope.document.tags = $filter('filter')($scope.document.tags, "!" + tag);
+            $scope.document.Tags = $filter('filter')($scope.document.tags, "!" + tag);
         };
 
         $scope.addSelectedUser = function (user) {
-            $scope.document.checkboxUsers.push(user);
+            $scope.document.Users.push(user);
         }
 
         $scope.addSelectedGroup = function (group) {
-            $scope.document.checkboxGroups.push(group);
+            $scope.document.Groups.push(group);
         }
 
         $scope.removeGroup = function (group) {
-            $scope.document.checkboxGroups = $filter('filter')($scope.document.checkboxGroups, { ID: '!' + group.ID });
+            $scope.document.Groups = $filter('filter')($scope.document.checkboxGroups, { ID: '!' + group.ID });
         };
         var OnTagsComplete = function (response) {
             $scope.tags = response.data;

@@ -54,7 +54,8 @@ namespace MarkdownManagerNew.Controllers
 
         public ActionResult GetUsersJson(string keyword)
         {
-            var result = repo.GetUsersByName(keyword);
+            var currentUserID = GetCurrentUser().Id;
+            var result = repo.GetUsersByName(keyword, currentUserID);
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
@@ -140,8 +141,48 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateDocumentJson(CreateDocumentPostModel document)
+        public ActionResult CreateDocumentJson(string name, string description, string markdown, List<string> tags, List<ListUserViewModel> users, List<ListGroupViewModel> groups)
         {
+            Document document = new Document() { Name = name, Description = description, Markdown = markdown, CreatorID = GetCurrentUser().Id };
+            List<ApplicationUser> documentUsers = new List<ApplicationUser>();
+            List<Group> documentGroups = new List<Group>();
+            List<Tag> documentTags = new List<Tag>();
+            foreach (var tag in tags)
+            {
+                //If tag exists (check label.lower)
+                    //get tag and add to document.tags
+                if (repo.TagExistCheck(tag))
+                {
+                    //just add the tag
+                    document.Tags.Add(repo.GetTagByLabel(tag));
+                }
+
+                //Else create new tag, get it and add to document.tags
+
+                else
+                {
+                    //create the tag and then add it
+
+                    //repo.CreateTagByLabel(tag);
+                    //document.Tags.Add(repo.GetTagByLabel(tag));
+                }
+                
+            }
+
+            foreach (var user in users)
+            {
+                var userToAdd = repo.GetUserByID(user.ID);
+                document.Users.Add(userToAdd);
+            }
+
+            foreach (var group in groups)
+            {
+                var groupToAdd = repo.GetGroupByID(group.ID);
+                document.Groups.Add(groupToAdd);
+            }
+
+            document.Users.Add(GetCurrentUser());
+
             return Json(new { message = "Action ran through"});
         }
 
