@@ -19,8 +19,8 @@ namespace MarkdownManagerNew.Viewmodels
         public string Name { get; set; }
         public string Description { get; set; }
         public string Markdown { get; set; }
-        public string[] Tags { get; set; }
-        public ListUserViewModel[] Users { get; set; }
-        public ListGroupViewModel[] Groups { get; set; }
+        public List<string> Tags { get; set; }
+        public List<ListUserViewModel> Users { get; set; }
+        public List<ListGroupViewModel> Groups { get; set; }
     }
 }

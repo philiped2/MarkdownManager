@@ -550,10 +550,13 @@ namespace MarkdownManagerNew.Repositories
             dbContext.SaveChanges();
         }
 
-        public List<ListUserViewModel> GetUsersByName(string keyword)
+        public List<ListUserViewModel> GetUsersByName(string keyword, string currentUserID)
         {
+            var userRole = dbContext.Roles
+                .Where(r => r.Name == "Admin").Single();
+
             var query = dbContext.Users
-                .Where(u => u.FirstName.Contains(keyword) || u.LastName.Contains(keyword))
+                .Where(u => u.FirstName.Contains(keyword) && u.Id != currentUserID && u.Roles.Any(r => r.RoleId != userRole.Id) || u.LastName.Contains(keyword) && u.Id != currentUserID && u.Roles.Any(r => r.RoleId != userRole.Id))
                 .Select(u => new ListUserViewModel {
                     FullName = u.FirstName + " " + u.LastName,
                     ID = u.Id,
@@ -576,6 +579,54 @@ namespace MarkdownManagerNew.Repositories
                     Users = g.Users.Select(u => u.FirstName + " " + u.LastName).ToList()
                 })
                 .ToList();
+            return query;
+        }
+
+        public bool TagExistCheck(string tag)
+        {
+            var check = dbContext.Tags
+                .Any(t => t.Label.ToLower() == tag.ToLower());
+
+            if (check)
+            {
+                return true;
+            }
+            
+            else
+            {
+                return false;
+            }
+            
+        }
+
+        public Tag GetTagByLabel(string tag)
+        {
+            var query = dbContext.Tags
+                .Where(t => t.Label.ToLower() == tag.ToLower()).Single();
+            return query;
+        }
+
+        public void CreateTagByLabel(string tag)
+        {
+            var tagToAdd = new Tag { Label = tag };
+            dbContext.Tags.Add(tagToAdd);
+            dbContext.SaveChanges();
+        }
+
+        public ApplicationUser GetUserByID(string id)
+        {
+            var query = userStore
+                .Users
+                .Where(u=>u.Id == id)
+                .Single();
+            return query;
+
+        }
+
+        public Group GetGroupByID(int id)
+        {
+            var query = dbContext.Groups
+                .Where(g => g.ID == id).Single();
             return query;
         }
     }

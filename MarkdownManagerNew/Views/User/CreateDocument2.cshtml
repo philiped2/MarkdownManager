@@ -4,9 +4,8 @@
     ViewBag.Title = "CreateDocument2";
 }
 
-<h3>Nytt dokument (Post via angular)</h3>
 <div ng-controller="NewDocumentController">
-    <div ng-show="statusMessage">{{statusMessage}}</div>
+    <h3>Nytt dokument (Post via angular)</h3>
     <form name="newDocumentForm" ng-submit="AddDocument()">
         @Html.AntiForgeryToken()
 
@@ -174,11 +173,10 @@
                 <div class="col-md-offset-1 col-md-10">
                     @*<input type="submit" value="Skapa" class="btn btn-default" name="CreateDocument" />*@
                     <button type="button" class="btn btn-primary" ng-click="CreateDocument(document)">Skapa dokument</button>
-                    <p class="label-default">{{statusMessage}}</p>
                 </div>
             </div>
         </div>
-
+        <div class="alert alert-info alert-dismissable" role="alert" ng-show="showMessage" id="statusMessage">{{statusMessage}}</div>
     </form>
 </div>
 
