@@ -12,9 +12,9 @@ namespace MarkdownManagerNew.Models
         //public bool CanDelete { get; set; }
 
         public int ID { get; set; }
-        public string DocumentName { get; set; }
 
-        [ForeignKey("ID")]
+        public int DocumentId { get; set; }
+        [ForeignKey("DocumentId")]
         public virtual Document document { get; set; }
     }
 }

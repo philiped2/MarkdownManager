@@ -113,8 +113,8 @@ namespace MarkdownManagerNew.Repositories
             foreach (var user in viewmodel.CheckBoxUsers.Where(x => x.IsChecked == true))
             {
                 GroupRight userGroupRights = new GroupRight();
-                userGroupRights.GroupId = groupToAdd.ID;  // group har inget ID förens denna sparas i databasen...!
-                userGroupRights.GroupName = groupToAdd.Name;
+                //userGroupRights.GroupId = groupToAdd.ID;  //bortkommenterad för att låsa FKEY som länk ist
+                //userGroupRights.GroupName = groupToAdd.Name; //bortkommenterad för att låsa FKEY som länk ist
                 //userGroupRights.group = groupToAdd;
                 ApplicationUser groupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
                 //groupToAdd.Users.Add(groupUser);
@@ -191,16 +191,16 @@ namespace MarkdownManagerNew.Repositories
 
                 //ApplicationUser NotUpdatedGroupUser = group.Users.Where(x => x.Id == updatedGroupUser.Id).Single();
 
-                if (updatedGroupUser.GroupRights.Any(x => x.GroupName == group.Name))
+                if (updatedGroupUser.GroupRights.Any(x => x.GroupId == group.ID)) //ändrat från GroupName för att låsa FKEY som länk ist
                 {
-                    userGroupRights = updatedGroupUser.GroupRights.Where(x => x.GroupName == group.Name).Single();
+                    userGroupRights = updatedGroupUser.GroupRights.Where(x => x.GroupId == group.ID).Single(); //ändrat från GroupName för att låsa FKEY som länk ist
                     //updatedGroupUser = group.Users.Where(x => x.Id == updatedGroupUser.Id).Single();
                 }
 
                 else
                 {
                     userGroupRights = new GroupRight();
-                    userGroupRights.GroupName = group.Name;
+                    userGroupRights.GroupId = group.ID; //ändrat från GroupName för att låsa FKEY som länk ist
                     updatedGroupUser.GroupRights.Add(userGroupRights);
                     group.Users.Add(updatedGroupUser);
                 }
@@ -293,7 +293,7 @@ namespace MarkdownManagerNew.Repositories
                 //userGroupRights.GroupName = groupToAdd.Name;
                 //userGroupRights.group = groupToAdd;
                 ApplicationUser groupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
-                GroupRight userGroupRights = groupUser.GroupRights.Where(x => x.GroupName == group.Name).Single();
+                GroupRight userGroupRights = groupUser.GroupRights.Where(x => x.GroupId == group.ID).Single();
                 //groupToAdd.Users.Add(groupUser);
 
                 if (user.IsGroupAdmin == true)
