@@ -102,7 +102,7 @@ namespace MarkdownManagerNew.Controllers
                 TempData["viewModel"] = null;
                 return View(model);
             }
-            
+
 
             var groups = repo.GetAllGroups();
 
@@ -137,6 +137,12 @@ namespace MarkdownManagerNew.Controllers
             }
 
             return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult CreateDocumentJson(CreateDocumentPostModel document)
+        {
+            return Json(new { message = "Action ran through"});
         }
 
         [HttpPost]

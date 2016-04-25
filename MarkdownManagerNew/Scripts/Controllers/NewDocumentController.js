@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var NewDocumentController = function ($scope, $http, $log, $filter, TagService, UserService, GroupService) {
+    var NewDocumentController = function ($scope, $http, $log, $filter, TagService, UserService, GroupService, DocumentService) {
 
         $scope.showModal = false;
         $scope.toggleModal = function () {
@@ -55,12 +55,12 @@
 
 
         $scope.document = {
-            name: "",
-            description: "",
-            markdown: "",
-            tags: [],
-            checkboxUsers: [],
-            checkboxGroups: []
+            Name: "",
+            Description: "",
+            Markdown: "",
+            Tags: [],
+            Users: [],
+            Groups: []
         }
 
         $scope.getUsers = function (val) {
@@ -84,6 +84,13 @@
                     console.log("-----");
                 })
             }
+        };
+
+        $scope.CreateDocument = function (document) {
+            var returnPromise = DocumentService.CreateDocument(document);
+            returnPromise.success(function (response) {
+                $scope.statusMessage = response.message;
+            })
         };
 
         $scope.getAuthGroups2 = function (val) {
@@ -113,6 +120,10 @@
         $scope.addSelectedTag = function (tag) {
             $scope.document.tags.push(tag);
         }
+
+        $scope.removeTag = function (tag) {
+            $scope.document.tags = $filter('filter')($scope.document.tags, "!" + tag);
+        };
 
         $scope.addSelectedUser = function (user) {
             $scope.document.checkboxUsers.push(user);
