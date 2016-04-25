@@ -426,9 +426,9 @@ namespace MarkdownManagerNew.Controllers
             var currentUser = GetCurrentUser();
             GroupRight usersGroupRights;
             Group group = db.Groups.Find(id);
-            if (currentUser.GroupRights.Any(x => x.GroupName == group.Name))
+            if (currentUser.GroupRights.Any(x => x.GroupId == group.ID))
             {
-                usersGroupRights = currentUser.GroupRights.Where(x => x.GroupName == group.Name).Single();
+                usersGroupRights = currentUser.GroupRights.Where(x => x.GroupId == group.ID).Single();
             }
             else
             {
@@ -497,9 +497,9 @@ namespace MarkdownManagerNew.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Document document = db.Documents.Find(id);
-            //repo.ArchiveDocument(document); // arkiverar dokument
-            db.Documents.Remove(document);
-            db.SaveChanges();
+            repo.ArchiveDocument(document); // arkiverar dokument
+            //db.Documents.Remove(document);
+            //db.SaveChanges();
             return RedirectToAction("Index");
         }
 

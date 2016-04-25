@@ -43,16 +43,16 @@
         <td>
             @Html.DisplayFor(modelItem => item.Creator.UserName)
         </td>
-        <td>
+        <td class="btn-group btn-group-sm">
             @if (Model.CurrentUser.DocumentRights.Any(x => x.document.Name == item.Name) || User.IsInRole("Admin"))
             {
-            <div class="btn-group btn-group-sm">
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
             }
             else
             {
                 @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
             }
+            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
             @if (Model.CurrentUser.DocumentRights.Any(x => x.document.Name == item.Name) || User.IsInRole("Admin"))
             {
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
@@ -61,8 +61,8 @@
             {
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
             }
-            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
-            @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
+
+            @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })*@
         </td>
     </tr>
 }

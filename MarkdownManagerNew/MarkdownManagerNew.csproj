@@ -166,9 +166,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604210745018_Initial.cs" />
-    <Compile Include="Migrations\201604210745018_Initial.Designer.cs">
-      <DependentUpon>201604210745018_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201604251244093_Initia.cs" />
+    <Compile Include="Migrations\201604251244093_Initia.Designer.cs">
+      <DependentUpon>201604251244093_Initia.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -260,6 +260,7 @@
     <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
@@ -1107,8 +1108,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604210745018_Initial.resx">
-      <DependentUpon>201604210745018_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604251244093_Initia.resx">
+      <DependentUpon>201604251244093_Initia.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

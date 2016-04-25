@@ -233,6 +233,17 @@ namespace MarkdownManagerNew.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Document document = db.Documents.Find(id);
+
+            //List<Document> documents = db.Groups.Where(x => x.Documents.Where(x => x.ID == document.ID).Single());
+
+            //List<Group> groups = db.Groups.Any(x => x.Documents.Where(x => x.ID == id).Single()));
+            
+            //foreach (Group group in db.Groups.Where(x => x.Documents.Where(x => x.ID == id).Single()))
+            //{
+                
+            //}
+
+
             db.Documents.Remove(document);
             db.SaveChanges();
             return RedirectToAction("ShowDocuments");

@@ -15,10 +15,11 @@ namespace MarkdownManagerNew.Models
         //public bool CanEdit { get; set; }
         public bool IsGroupAdmin { get; set; }
 
-        public int GroupId { get; set; }
-        public string GroupName { get; set; }
+        
+        //public string GroupName { get; set; }
 
-        //[ForeignKey("GroupId")]
-        //public virtual Group group { get; set; }
+        public int GroupId { get; set; }
+        [ForeignKey("GroupId")]
+        public virtual Group group { get; set; }
     }
 }

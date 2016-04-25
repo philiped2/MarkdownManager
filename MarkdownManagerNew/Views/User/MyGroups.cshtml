@@ -46,7 +46,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.LastChanged)
         </td>
-        <td>
+        <td class="btn-group btn-group-sm">
             @if (Model.CurrentUser.GroupRights.Any(x => x.GroupName == item.Name) || User.IsInRole("Admin"))
             {
                 @Html.ActionLink("Edit", "EditGroup", new { id = item.ID }, new { @Class = "btn btn-default" })
@@ -63,7 +63,7 @@
             else
             {
                 @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
-            }  
+            }
 
         </td>
     </tr>

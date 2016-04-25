@@ -52,5 +52,7 @@ namespace MarkdownManagerNew.Models
 
         [Display(Name = "Ändringslogg")]
         public ICollection<string> ChangeLog { get; set; }
+
+        public virtual List<DocumentRight> DocumentRights { get; set; }
     }
 }

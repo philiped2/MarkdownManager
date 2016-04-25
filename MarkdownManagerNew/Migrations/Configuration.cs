@@ -111,8 +111,8 @@ namespace MarkdownManagerNew.Migrations
                 var document3 = new Document { Name = "Document3", CreatorID = william.Id, Description = "Tredje dokumentet" };
                 var document4 = new Document { Name = "Document4", CreatorID = olle.Id, Description = "Fjärde dokumentet" };
 
-                var GroupRightTest = new GroupRight { ID = group1.ID, IsGroupAdmin = true, GroupId = group1.ID };
-                var DocumentRightTest = new DocumentRight { ID = document2.ID, CanWrite = true, document = document2 };
+                //var GroupRightTest = new GroupRight { ID = group1.ID, IsGroupAdmin = true, GroupId = group1.ID };
+                //var DocumentRightTest = new DocumentRight { ID = document2.ID, CanWrite = true, document = document2 };
 
                 //var groupTest = new Group { Name = "Testgrupp", Description = "Testing read and write rights", CreatorID = william.Id };
                 //var groupUser1 = new GroupUser { User = alexander, CanWrite = true, group = groupTest};
@@ -189,8 +189,8 @@ namespace MarkdownManagerNew.Migrations
                 william.Documents.Add(document1);
                 olle.Documents.Add(document2);
 
-                alexander.GroupRights.Add(GroupRightTest);                                  // USER --> GROUPRIGHTS                // GROUPRIGHTS
-                alexander.DocumentRights.Add(DocumentRightTest);
+                //alexander.GroupRights.Add(GroupRightTest);                                  // USER --> GROUPRIGHTS                // GROUPRIGHTS
+                //alexander.DocumentRights.Add(DocumentRightTest);
 
                 // ------------   CONTEXT ADD OR UPDATE -------------
 
@@ -221,8 +221,8 @@ namespace MarkdownManagerNew.Migrations
                 context.Users.AddOrUpdate(william);
                 context.Users.AddOrUpdate(olle);
 
-                context.GroupRights.AddOrUpdate(GroupRightTest);
-                context.DocumentRights.AddOrUpdate(DocumentRightTest);
+                //context.GroupRights.AddOrUpdate(GroupRightTest);
+                //context.DocumentRights.AddOrUpdate(DocumentRightTest);
 
 
 
@@ -255,6 +255,7 @@ namespace MarkdownManagerNew.Migrations
         }
     }
 }
+
 
 
 

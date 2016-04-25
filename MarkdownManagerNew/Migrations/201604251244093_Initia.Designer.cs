@@ -7,13 +7,13 @@ namespace MarkdownManagerNew.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.1-30610")]
-    public sealed partial class Initial : IMigrationMetadata
+    public sealed partial class Initia : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Initial));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initia));
         
         string IMigrationMetadata.Id
         {
-            get { return "201604210745018_Initial"; }
+            get { return "201604251244093_Initia"; }
         }
         
         string IMigrationMetadata.Source
