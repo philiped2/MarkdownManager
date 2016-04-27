@@ -164,7 +164,7 @@ namespace MarkdownManagerNew.Controllers
         //        var file = repo.CreateFile(upload, GetCurrentUser());
         //        viewModel.Files.Add(file);
         //        TempData["viewModel"] = viewModel;
-
+                
         //        //return RedirectToAction("CreateDocument", file);
         //        return RedirectToAction("CreateDocument", new { files = viewModel.Files });
         //    }
@@ -182,7 +182,7 @@ namespace MarkdownManagerNew.Controllers
         //        return View("Index");
         //    }
 
-            
+
         //}
 
 
@@ -193,7 +193,7 @@ namespace MarkdownManagerNew.Controllers
         //    repo.CreateGroup(viewModel, user);
         //    ViewBag.Test = "A new group has been created!";
         //    return View("Index", repo.GetUserDocuments(GetCurrentUser()));
-        //}
+            //}
 
 
         [HttpGet]
@@ -384,7 +384,7 @@ namespace MarkdownManagerNew.Controllers
             
         //    return View(document);
         //}
-
+            
         ////[HttpPost]
         ////public ActionResult EditGroup(EditGroupViewModel viewModel)
         ////{
@@ -467,8 +467,8 @@ namespace MarkdownManagerNew.Controllers
         //    //    return HttpNotFound();
         //    //}
 
-        //    return View(viewModel);
-        //}
+            //    return View(viewModel);
+            //}
 
 
 

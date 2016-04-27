@@ -243,9 +243,9 @@ namespace MarkdownManagerNew.Controllers
                 
             //}
 
-
-            db.Documents.Remove(document);
-            db.SaveChanges();
+            repo.ArchiveDocument(document);
+            //db.Documents.Remove(document);
+            //db.SaveChanges();
             return RedirectToAction("ShowDocuments");
         }
 

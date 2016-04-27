@@ -16,7 +16,8 @@ namespace MarkdownManagerNew.Models
 
             Users = new List<ApplicationUser>();
 
-            Documents = new List<Document>();
+            //Documents = new List<Document>();
+            
 
             GroupDocumentRights = new List<GroupDocumentRight>();
         }
@@ -30,8 +31,8 @@ namespace MarkdownManagerNew.Models
         //[Display(Name = "Gruppmedlemmar")]
         //public virtual ICollection<GroupUser> GroupUsers { get; set; }
 
-        [Display(Name = "Dokument")] //FKEY
-        public virtual ICollection<Document> Documents { get; set; }
+        //[Display(Name = "Dokument")] //FKEY
+        //public virtual ICollection<Document> Documents { get; set; }
 
         [Display(Name = "Beskrivning")]
         public string Description { get; set; }

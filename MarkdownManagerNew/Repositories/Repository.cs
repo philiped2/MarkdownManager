@@ -42,16 +42,16 @@ namespace MarkdownManagerNew.Repositories
                 }
             }
 
-            foreach (var group in user.Groups)
-            {
-                foreach (var document in group.Documents)
-                {
-                    if (document.IsArchived == false)
-                    {
-                        query.Add(document);
-                    }
-                }
-            }
+            //foreach (var group in user.Groups) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
+            //{
+            //    foreach (var document in group.Documents)
+            //    {
+            //        if (document.IsArchived == false)
+            //        {
+            //            query.Add(document);
+            //        }
+            //    }
+            //}
 
             return query;
 
@@ -137,10 +137,10 @@ namespace MarkdownManagerNew.Repositories
         //    }
 
         //    foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
-        //    {
+            //    {
         //        Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
         //        groupToAdd.Documents.Add(groupDocument);
-        //    }
+            //    }
 
         //    //var newGroup = new Group();
         //    ////newGroup.CreatorID = user.Id;
@@ -151,17 +151,17 @@ namespace MarkdownManagerNew.Repositories
         //    //    {
         //    //        newGroup.Users.Add(member);
         //    //    }
-
+            
         //    //}
         //    ////newGroup.Users = groupMembers;
         //    ////newGroup.Documents = documents;
         //    //newGroup.Creator = user;
         //    //newGroup.Name = name;
         //    //newGroup.Description = description;
-
+            
         //    //userGroupRights.GroupId = groupToAdd.ID;
-            
-            
+
+
         //    dbContext.Groups.Add(groupToAdd);
         //    dbContext.SaveChanges();
 

@@ -80,9 +80,15 @@ namespace MarkdownManagerNew.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Document>()
-                .HasMany(t => t.Users)
-                .WithMany(u => u.Documents);
+            //modelBuilder.Entity<Document>()
+            //    .HasMany(t => t.Users)
+            //    .WithMany(u => u.Documents);
+
+            //modelBuilder.Entity<Document>()
+            //    .HasMany(t => t.Users)
+            //    .WithOptional(t => t.Documents)
+            //    .HasForeignKey(t => t.Id)
+            //    .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Group>()
                 .HasMany(t => t.Users)
