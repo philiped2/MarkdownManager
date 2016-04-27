@@ -160,15 +160,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CreateDocumentPostModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604251244093_Initia.cs" />
-    <Compile Include="Migrations\201604251244093_Initia.Designer.cs">
-      <DependentUpon>201604251244093_Initia.cs</DependentUpon>
+    <Compile Include="Migrations\201604261213386_Initial.cs" />
+    <Compile Include="Migrations\201604261213386_Initial.Designer.cs">
+      <DependentUpon>201604261213386_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -1108,8 +1109,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604251244093_Initia.resx">
-      <DependentUpon>201604251244093_Initia.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201604261213386_Initial.resx">
+      <DependentUpon>201604261213386_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
