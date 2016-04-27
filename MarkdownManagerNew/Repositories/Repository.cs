@@ -99,73 +99,73 @@ namespace MarkdownManagerNew.Repositories
         }
 
         //public CreateGroupViewModel CreateGroup(List<string> members, ApplicationUser user, string name, string description, CreateGroupViewModel viewmodel)
-        public void CreateGroup(CreateGroupViewModel viewmodel, ApplicationUser creator)
-        {
-            var groupToAdd = new Group { CreatorID = creator.Id };
+        //public void CreateGroup(CreateGroupViewModel viewmodel, ApplicationUser creator)
+        //{
+        //    var groupToAdd = new Group { CreatorID = creator.Id };
 
-            //// ändra parameters till: ApplicationUser user, List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
-            //var users = userManager.Users;
-            groupToAdd.Description = viewmodel.Description;
-            groupToAdd.Name = viewmodel.Name;
-            //GroupRight userGroupRights = new GroupRight();
-            ApplicationUser theUser;
+        //    //// ändra parameters till: ApplicationUser user, List<ApplicationUser> groupMembers, List<Document> documents, string name, string description
+        //    //var users = userManager.Users;
+        //    groupToAdd.Description = viewmodel.Description;
+        //    groupToAdd.Name = viewmodel.Name;
+        //    //GroupRight userGroupRights = new GroupRight();
+        //    ApplicationUser theUser;
 
-            foreach (var user in viewmodel.CheckBoxUsers.Where(x => x.IsChecked == true))
-            {
-                GroupRight userGroupRights = new GroupRight();
-                //userGroupRights.GroupId = groupToAdd.ID;  //bortkommenterad för att låsa FKEY som länk ist
-                //userGroupRights.GroupName = groupToAdd.Name; //bortkommenterad för att låsa FKEY som länk ist
-                //userGroupRights.group = groupToAdd;
-                ApplicationUser groupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
-                //groupToAdd.Users.Add(groupUser);
+        //    foreach (var user in viewmodel.CheckBoxUsers.Where(x => x.IsChecked == true))
+        //    {
+        //        GroupRight userGroupRights = new GroupRight();
+        //        //userGroupRights.GroupId = groupToAdd.ID;  //bortkommenterad för att låsa FKEY som länk ist
+        //        //userGroupRights.GroupName = groupToAdd.Name; //bortkommenterad för att låsa FKEY som länk ist
+        //        //userGroupRights.group = groupToAdd;
+        //        ApplicationUser groupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
+        //        //groupToAdd.Users.Add(groupUser);
 
-                if (user.IsGroupAdmin == true)
-                {
-                    userGroupRights.IsGroupAdmin = true;
-                }
+        //        if (user.IsGroupAdmin == true)
+        //        {
+        //            userGroupRights.IsGroupAdmin = true;
+        //        }
 
-                if (user.CanEdit == true)
-                {
-                    userGroupRights.IsGroupAdmin = true;
-                }
+        //        if (user.CanEdit == true)
+        //        {
+        //            userGroupRights.IsGroupAdmin = true;
+        //        }
 
-                //userGroupRights.GroupId = groupToAdd.ID;
-                theUser = groupUser;
-                theUser.GroupRights.Add(userGroupRights);
-                groupToAdd.Users.Add(theUser);
-                //dbContext.SaveChanges();
-            }
+        //        //userGroupRights.GroupId = groupToAdd.ID;
+        //        theUser = groupUser;
+        //        theUser.GroupRights.Add(userGroupRights);
+        //        groupToAdd.Users.Add(theUser);
+        //        //dbContext.SaveChanges();
+        //    }
 
-            //foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true)) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
-            //{
-            //    Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
-            //    groupToAdd.Documents.Add(groupDocument);
-            //}
-
-            //var newGroup = new Group();
-            ////newGroup.CreatorID = user.Id;
-
-            //foreach (string member in members)
-            //{
-            //    if (dbContext.Users.Where(u => u.Id == member))
+        //    foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
             //    {
-            //        newGroup.Users.Add(member);
+        //        Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+        //        groupToAdd.Documents.Add(groupDocument);
             //    }
 
-            //}
-            ////newGroup.Users = groupMembers;
-            ////newGroup.Documents = documents;
-            //newGroup.Creator = user;
-            //newGroup.Name = name;
-            //newGroup.Description = description;
+        //    //var newGroup = new Group();
+        //    ////newGroup.CreatorID = user.Id;
 
-            //userGroupRights.GroupId = groupToAdd.ID;
+        //    //foreach (string member in members)
+        //    //{
+        //    //    if (dbContext.Users.Where(u => u.Id == member))
+        //    //    {
+        //    //        newGroup.Users.Add(member);
+        //    //    }
             
+        //    //}
+        //    ////newGroup.Users = groupMembers;
+        //    ////newGroup.Documents = documents;
+        //    //newGroup.Creator = user;
+        //    //newGroup.Name = name;
+        //    //newGroup.Description = description;
             
-            dbContext.Groups.Add(groupToAdd);
-            dbContext.SaveChanges();
+        //    //userGroupRights.GroupId = groupToAdd.ID;
 
-        }
+
+        //    dbContext.Groups.Add(groupToAdd);
+        //    dbContext.SaveChanges();
+
+        //}
 
         //public void GetGroupToEdit(Group group)
         //{
@@ -173,175 +173,175 @@ namespace MarkdownManagerNew.Repositories
 
         //}
 
-        public void EditGroup2(EditGroupViewModel viewmodel)
-        {
-            //Group group = viewmodel.GroupToEdit;
-            Group group = dbContext.Groups.Where(x => x.ID == viewmodel.GroupToEdit.ID).Single();
-            group.Description = viewmodel.Description;
-            group.Name = viewmodel.Name;
+        //public void EditGroup2(EditGroupViewModel viewmodel)
+        //{
+        //    //Group group = viewmodel.GroupToEdit;
+        //    Group group = dbContext.Groups.Where(x => x.ID == viewmodel.GroupToEdit.ID).Single();
+        //    group.Description = viewmodel.Description;
+        //    group.Name = viewmodel.Name;
 
-            //ApplicationUser theUser;
+        //    //ApplicationUser theUser;
 
-            foreach (var user in viewmodel.CheckBoxUsers.Where(x => x.IsChecked == true))
-            {
+        //    foreach (var user in viewmodel.CheckBoxUsers.Where(x => x.IsChecked == true))
+        //    {
 
-                ApplicationUser updatedGroupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
-                //ApplicationUser groupUser = group.Users.Where(x => x.Id == user.ID).Single();
-                GroupRight userGroupRights;
+        //        ApplicationUser updatedGroupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
+        //        //ApplicationUser groupUser = group.Users.Where(x => x.Id == user.ID).Single();
+        //        GroupRight userGroupRights;
 
-                //ApplicationUser NotUpdatedGroupUser = group.Users.Where(x => x.Id == updatedGroupUser.Id).Single();
+        //        //ApplicationUser NotUpdatedGroupUser = group.Users.Where(x => x.Id == updatedGroupUser.Id).Single();
 
-                if (updatedGroupUser.GroupRights.Any(x => x.GroupId == group.ID)) //ändrat från GroupName för att låsa FKEY som länk ist
-                {
-                    userGroupRights = updatedGroupUser.GroupRights.Where(x => x.GroupId == group.ID).Single(); //ändrat från GroupName för att låsa FKEY som länk ist
-                    //updatedGroupUser = group.Users.Where(x => x.Id == updatedGroupUser.Id).Single();
-                }
+        //        if (updatedGroupUser.GroupRights.Any(x => x.GroupId == group.ID)) //ändrat från GroupName för att låsa FKEY som länk ist
+        //        {
+        //            userGroupRights = updatedGroupUser.GroupRights.Where(x => x.GroupId == group.ID).Single(); //ändrat från GroupName för att låsa FKEY som länk ist
+        //            //updatedGroupUser = group.Users.Where(x => x.Id == updatedGroupUser.Id).Single();
+        //        }
 
-                else
-                {
-                    userGroupRights = new GroupRight();
-                    userGroupRights.GroupId = group.ID; //ändrat från GroupName för att låsa FKEY som länk ist
-                    updatedGroupUser.GroupRights.Add(userGroupRights);
-                    group.Users.Add(updatedGroupUser);
-                }
+        //        else
+        //        {
+        //            userGroupRights = new GroupRight();
+        //            userGroupRights.GroupId = group.ID; //ändrat från GroupName för att låsa FKEY som länk ist
+        //            updatedGroupUser.GroupRights.Add(userGroupRights);
+        //            group.Users.Add(updatedGroupUser);
+        //        }
                 
 
-                if (user.IsGroupAdmin == true)
-                {
-                    userGroupRights.IsGroupAdmin = true;
-                }
+        //        if (user.IsGroupAdmin == true)
+        //        {
+        //            userGroupRights.IsGroupAdmin = true;
+        //        }
 
-                if (user.CanEdit == true)
-                {
-                    userGroupRights.IsGroupAdmin = true;
-                }
+        //        if (user.CanEdit == true)
+        //        {
+        //            userGroupRights.IsGroupAdmin = true;
+        //        }
 
-                if (user.UserToDelete == true)
-                {
-                    //ApplicationUser theUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
-                    group.Users.Remove(updatedGroupUser);
-                    //for (int i = 0; i < group.Users.Count; i++)
-                    //{
-                    //    if (group.Users[i] == user)
-                    //}
-                }
+        //        if (user.UserToDelete == true)
+        //        {
+        //            //ApplicationUser theUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
+        //            group.Users.Remove(updatedGroupUser);
+        //            //for (int i = 0; i < group.Users.Count; i++)
+        //            //{
+        //            //    if (group.Users[i] == user)
+        //            //}
+        //        }
 
 
 
                 
  
 
-                //if (!group.Users.Any(x => x.Id == updatedGroupUser.Id))
-                //{
-                //    //NotUpdatedGroupUser = updatedGroupUser;
-                //    group.Users.Add(updatedGroupUser);
-                //}
+        //        //if (!group.Users.Any(x => x.Id == updatedGroupUser.Id))
+        //        //{
+        //        //    //NotUpdatedGroupUser = updatedGroupUser;
+        //        //    group.Users.Add(updatedGroupUser);
+        //        //}
 
-                //else
-                //{
-                //    NotUpdatedGroupUser = new ApplicationUser();
-                //}
+        //        //else
+        //        //{
+        //        //    NotUpdatedGroupUser = new ApplicationUser();
+        //        //}
 
                 
 
-                //theUser = groupUser;
+        //        //theUser = groupUser;
                 
-            }
+        //    }
 
-            //foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true)) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
-            //{
-            //    Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+        //    foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
+        //    {
+        //        Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
 
-            //    if (!group.Documents.Any(x => x.ID == groupDocument.ID))
-            //    {
-            //        group.Documents.Add(groupDocument);
-            //    }
+        //        if (!group.Documents.Any(x => x.ID == groupDocument.ID))
+        //        {
+        //            group.Documents.Add(groupDocument);
+        //        }
 
-            //    if (document.DocumentToDelete == true)
-            //    {
-            //        //ApplicationUser theUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
-            //        group.Documents.Remove(groupDocument);
-            //        //for (int i = 0; i < group.Users.Count; i++)
-            //        //{
-            //        //    if (group.Users[i] == user)
-            //        //}
-            //    }
+        //        if (document.DocumentToDelete == true)
+        //        {
+        //            //ApplicationUser theUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
+        //            group.Documents.Remove(groupDocument);
+        //            //for (int i = 0; i < group.Users.Count; i++)
+        //            //{
+        //            //    if (group.Users[i] == user)
+        //            //}
+        //        }
 
-            //}
-
-
-
-            //group.Description = viewmodel.Description;
-            //group.Name = viewmodel.Name;
-            dbContext.SaveChanges();
-        }
+        //    }
 
 
 
-        public void EditGroup(EditGroupViewModel viewmodel)
-        {
-            Group group = viewmodel.GroupToEdit;
-            group.Description = viewmodel.Description;
-            group.Name = viewmodel.Name;
-            //GroupRight userGroupRights = new GroupRight();
-            ApplicationUser theUser;
-
-            foreach (var user in viewmodel.CheckBoxUsers)
-            {
-                //GroupRight userGroupRights = new GroupRight();
-                //userGroupRights.GroupId = groupToAdd.ID;  // group har inget ID förens denna sparas i databasen...!
-                //userGroupRights.GroupName = groupToAdd.Name;
-                //userGroupRights.group = groupToAdd;
-                ApplicationUser groupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
-                GroupRight userGroupRights = groupUser.GroupRights.Where(x => x.GroupId == group.ID).Single();
-                //groupToAdd.Users.Add(groupUser);
-
-                if (user.IsGroupAdmin == true)
-                {
-                    userGroupRights.IsGroupAdmin = true;
-                }
-
-                if (user.CanEdit == true)
-                {
-                    userGroupRights.IsGroupAdmin = true;
-                }
-
-                //userGroupRights.GroupId = groupToAdd.ID;
-                theUser = groupUser;
-                //theUser.GroupRights.Add(userGroupRights);
-                //groupToAdd.Users.Add(theUser);
-                //dbContext.SaveChanges();
-            }
-
-            //foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
-            //{
-            //    Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
-            //    groupToAdd.Documents.Add(groupDocument);
-            //}
-
-            //var newGroup = new Group();
-            ////newGroup.CreatorID = user.Id;
-
-            //foreach (string member in members)
-            //{
-            //    if (dbContext.Users.Where(u => u.Id == member))
-            //    {
-            //        newGroup.Users.Add(member);
-            //    }
-
-            //}
-            ////newGroup.Users = groupMembers;
-            ////newGroup.Documents = documents;
-            //newGroup.Creator = user;
-            //newGroup.Name = name;
-            //newGroup.Description = description;
-
-            //userGroupRights.GroupId = groupToAdd.ID;
+        //    //group.Description = viewmodel.Description;
+        //    //group.Name = viewmodel.Name;
+        //    dbContext.SaveChanges();
+        //}
 
 
-            //dbContext.Groups.Add(groupToAdd);
-            dbContext.SaveChanges();
-        }
+
+        //public void EditGroup(EditGroupViewModel viewmodel)
+        //{
+        //    Group group = viewmodel.GroupToEdit;
+        //    group.Description = viewmodel.Description;
+        //    group.Name = viewmodel.Name;
+        //    //GroupRight userGroupRights = new GroupRight();
+        //    ApplicationUser theUser;
+
+        //    foreach (var user in viewmodel.CheckBoxUsers)
+        //    {
+        //        //GroupRight userGroupRights = new GroupRight();
+        //        //userGroupRights.GroupId = groupToAdd.ID;  // group har inget ID förens denna sparas i databasen...!
+        //        //userGroupRights.GroupName = groupToAdd.Name;
+        //        //userGroupRights.group = groupToAdd;
+        //        ApplicationUser groupUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
+        //        GroupRight userGroupRights = groupUser.GroupRights.Where(x => x.GroupId == group.ID).Single();
+        //        //groupToAdd.Users.Add(groupUser);
+
+        //        if (user.IsGroupAdmin == true)
+        //        {
+        //            userGroupRights.IsGroupAdmin = true;
+        //        }
+
+        //        if (user.CanEdit == true)
+        //        {
+        //            userGroupRights.IsGroupAdmin = true;
+        //        }
+
+        //        //userGroupRights.GroupId = groupToAdd.ID;
+        //        theUser = groupUser;
+        //        //theUser.GroupRights.Add(userGroupRights);
+        //        //groupToAdd.Users.Add(theUser);
+        //        //dbContext.SaveChanges();
+        //    }
+
+        //    //foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
+        //    //{
+        //    //    Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+        //    //    groupToAdd.Documents.Add(groupDocument);
+        //    //}
+
+        //    //var newGroup = new Group();
+        //    ////newGroup.CreatorID = user.Id;
+
+        //    //foreach (string member in members)
+        //    //{
+        //    //    if (dbContext.Users.Where(u => u.Id == member))
+        //    //    {
+        //    //        newGroup.Users.Add(member);
+        //    //    }
+
+        //    //}
+        //    ////newGroup.Users = groupMembers;
+        //    ////newGroup.Documents = documents;
+        //    //newGroup.Creator = user;
+        //    //newGroup.Name = name;
+        //    //newGroup.Description = description;
+
+        //    //userGroupRights.GroupId = groupToAdd.ID;
+
+
+        //    //dbContext.Groups.Add(groupToAdd);
+        //    dbContext.SaveChanges();
+        //}
 
         public void CreateUser(CreateUserViewModel viewmodel, ApplicationUser creator)
         {
@@ -407,6 +407,83 @@ namespace MarkdownManagerNew.Repositories
         //    dbContext.Documents.Add(documentToAdd);
         //    dbContext.SaveChanges();
         //}
+
+        public Document CreateDocument2(string name, string description, string markdown, List<string> tags, List<ListUserViewModel> users, List<ListGroupViewModel> groups, ApplicationUser currentUser)
+        {
+            Document document = new Document() { Name = name, Description = description, Markdown = markdown, CreatorID = currentUser.Id, };
+            foreach (var tag in tags)
+            {
+                //If tag exists (check label.lower)
+                //get tag and add to document.tags
+                if (TagExistCheck(tag))
+                {
+                    //just add the tag
+                    document.Tags.Add(GetTagByLabel(tag));
+                }
+
+                //Else create new tag, get it and add to document.tags
+
+                else
+                {
+                    //create the tag and then add it
+
+                    CreateTagByLabel(tag);
+                    document.Tags.Add(GetTagByLabel(tag));
+                }
+
+        //    }
+
+            document = AddDocumentToDb(document);
+
+            foreach (var user in users)
+            {
+                var userToAdd = GetUserByID(user.ID);
+                UserDocumentRight right = new UserDocumentRight();
+                if (user.Rights == "ReadWrite")
+                {
+                    right.CanWrite = true;
+                }
+                else if (user.Rights == "Read")
+                {
+                    right.CanWrite = false;
+                }
+                right.DocumentId = document.ID;
+                right.UserId = userToAdd.Id;
+                userToAdd.UserDocumentRights.Add(right);
+                dbContext.Entry(userToAdd).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
+
+            foreach (var group in groups)
+            {
+                var groupToAdd = GetGroupByID(group.ID);
+                GroupDocumentRight right = new GroupDocumentRight();
+                if (group.Rights == "ReadWrite")
+                {
+                    right.CanWrite = true;
+                }
+                else if (group.Rights == "Read")
+                {
+                    right.CanWrite = false;
+                }
+                right.DocumentId = document.ID;
+                right.GroupId = groupToAdd.ID;
+                groupToAdd.GroupDocumentRights.Add(right);
+                dbContext.Entry(groupToAdd).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
+
+            dbContext.Entry(document).State = EntityState.Modified;
+            //dbContext.SaveChanges();
+            return document;
+        }
+
+        private Document AddDocumentToDb(Document document)
+        {
+            dbContext.Documents.Add(document);
+            dbContext.SaveChanges();
+            return document;
+        }
 
         public List<ApplicationUser> ListUsersToCreateGroup()
         {
