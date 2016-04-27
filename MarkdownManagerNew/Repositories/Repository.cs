@@ -42,16 +42,16 @@ namespace MarkdownManagerNew.Repositories
                 }
             }
 
-            foreach (var group in user.Groups)
-            {
-                foreach (var document in group.Documents)
-                {
-                    if (document.IsArchived == false)
-                    {
-                        query.Add(document);
-                    }
-                }
-            }
+            //foreach (var group in user.Groups) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
+            //{
+            //    foreach (var document in group.Documents)
+            //    {
+            //        if (document.IsArchived == false)
+            //        {
+            //            query.Add(document);
+            //        }
+            //    }
+            //}
 
             return query;
 
@@ -136,11 +136,11 @@ namespace MarkdownManagerNew.Repositories
                 //dbContext.SaveChanges();
             }
 
-            foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
-            {
-                Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
-                groupToAdd.Documents.Add(groupDocument);
-            }
+            //foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true)) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
+            //{
+            //    Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+            //    groupToAdd.Documents.Add(groupDocument);
+            //}
 
             //var newGroup = new Group();
             ////newGroup.CreatorID = user.Id;
@@ -248,26 +248,26 @@ namespace MarkdownManagerNew.Repositories
                 
             }
 
-            foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
-            {
-                Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+            //foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true)) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
+            //{
+            //    Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
 
-                if (!group.Documents.Any(x => x.ID == groupDocument.ID))
-                {
-                    group.Documents.Add(groupDocument);
-                }
+            //    if (!group.Documents.Any(x => x.ID == groupDocument.ID))
+            //    {
+            //        group.Documents.Add(groupDocument);
+            //    }
 
-                if (document.DocumentToDelete == true)
-                {
-                    //ApplicationUser theUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
-                    group.Documents.Remove(groupDocument);
-                    //for (int i = 0; i < group.Users.Count; i++)
-                    //{
-                    //    if (group.Users[i] == user)
-                    //}
-                }
+            //    if (document.DocumentToDelete == true)
+            //    {
+            //        //ApplicationUser theUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
+            //        group.Documents.Remove(groupDocument);
+            //        //for (int i = 0; i < group.Users.Count; i++)
+            //        //{
+            //        //    if (group.Users[i] == user)
+            //        //}
+            //    }
 
-            }
+            //}
 
 
 
@@ -373,40 +373,40 @@ namespace MarkdownManagerNew.Repositories
             }
         }
 
-        public void CreateDocument(CreateDocumentViewModel viewmodel, ApplicationUser creator)
-        {
-            var documentToAdd = new Document { CreatorID = creator.Id, Name = viewmodel.Name, Description = viewmodel.Description, Markdown = viewmodel.Markdown };
+        //public void CreateDocument(CreateDocumentViewModel viewmodel, ApplicationUser creator)
+        //{
+        //    var documentToAdd = new Document { CreatorID = creator.Id, Name = viewmodel.Name, Description = viewmodel.Description, Markdown = viewmodel.Markdown };
 
-            foreach (var user in viewmodel.CheckboxUsers.Where(x => x.IsChecked == true))
-            {
-                ApplicationUser documentUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
-                documentToAdd.Users.Add(documentUser);
+        //    foreach (var user in viewmodel.CheckboxUsers.Where(x => x.IsChecked == true))
+        //    {
+        //        ApplicationUser documentUser = dbContext.Users.Where(x => x.Id == user.ID).Single();
+        //        documentToAdd.Users.Add(documentUser);
 
-            }
+        //    }
 
-            foreach (var group in viewmodel.CheckboxGroups.Where(x => x.IsChecked == true))
-            {
-                Group documentGroup = dbContext.Groups.Where(x => x.ID == group.ID).Single();
-                documentToAdd.Groups.Add(documentGroup);
+        //    foreach (var group in viewmodel.CheckboxGroups.Where(x => x.IsChecked == true))
+        //    {
+        //        Group documentGroup = dbContext.Groups.Where(x => x.ID == group.ID).Single();
+        //        documentToAdd.Groups.Add(documentGroup);
 
-            }
+        //    }
 
-            foreach (var tag in viewmodel.CheckboxTags.Where(x => x.IsChecked == true))
-            {
-                Tag documentTag = dbContext.Tags.Where(x => x.ID == tag.ID).Single();
-                documentToAdd.Tags.Add(documentTag);
+        //    foreach (var tag in viewmodel.CheckboxTags.Where(x => x.IsChecked == true))
+        //    {
+        //        Tag documentTag = dbContext.Tags.Where(x => x.ID == tag.ID).Single();
+        //        documentToAdd.Tags.Add(documentTag);
 
-            }
+        //    }
 
-            foreach (var file in viewmodel.Files)
-            {
-                documentToAdd.Files.Add(file);
+        //    foreach (var file in viewmodel.Files)
+        //    {
+        //        documentToAdd.Files.Add(file);
 
-            }
+        //    }
 
-            dbContext.Documents.Add(documentToAdd);
-            dbContext.SaveChanges();
-        }
+        //    dbContext.Documents.Add(documentToAdd);
+        //    dbContext.SaveChanges();
+        //}
 
         public List<ApplicationUser> ListUsersToCreateGroup()
         {

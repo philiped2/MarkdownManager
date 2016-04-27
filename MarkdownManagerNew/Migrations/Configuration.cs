@@ -127,23 +127,23 @@ namespace MarkdownManagerNew.Migrations
                 group2.Users.Add(william);
                 group2.Users.Add(olle);
 
-                group1.Documents.Add(document1); // GROUP --> DOCUMENTS
-                group1.Documents.Add(document2);
+                //group1.Documents.Add(document1); // GROUP --> DOCUMENTS
+                //group1.Documents.Add(document2);
 
-                group2.Documents.Add(document3);
-                group2.Documents.Add(document4);
+                //group2.Documents.Add(document3);
+                //group2.Documents.Add(document4);
 
-                document1.Groups.Add(group1); // DOCUMENT --> GROUPS AND USERS
-                document1.Users.Add(william);
+                //document1.Groups.Add(group1); // DOCUMENT --> GROUPS AND USERS
+                //document1.Users.Add(william);
 
-                document2.Groups.Add(group1);
-                document2.Users.Add(olle);
+                //document2.Groups.Add(group1);
+                //document2.Users.Add(olle);
 
-                document3.Groups.Add(group2);
-                document3.Users.Add(philip);
+                //document3.Groups.Add(group2);
+                //document3.Users.Add(philip);
 
-                document4.Groups.Add(group2);
-                document4.Users.Add(alexander);
+                //document4.Groups.Add(group2);
+                //document4.Users.Add(alexander);
 
 
 
@@ -255,6 +255,8 @@ namespace MarkdownManagerNew.Migrations
         }
     }
 }
+
+
 
 
 

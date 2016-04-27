@@ -14,9 +14,9 @@ namespace MarkdownManagerNew.Models
             DateCreated = DateTime.Now;
             ChangeLog = new List<string>();
 
-            Users = new List<ApplicationUser>();
+            //Users = new List<ApplicationUser>();
 
-            Groups = new List<Group>();
+            //Groups = new List<Group>();
 
             Tags = new List<Tag>();
 
@@ -47,12 +47,12 @@ namespace MarkdownManagerNew.Models
         public bool IsArchived { get; set; }
         public Nullable<DateTime> TimeArchived { get; set; }
 
-        [Display(Name = "Grupper")]
-        public virtual ICollection<Group> Groups { get; set; }
+        //[Display(Name = "Grupper")]
+        //public virtual ICollection<Group> Groups { get; set; }
         [Display(Name = "Taggar")]
         public virtual ICollection<Tag> Tags { get; set; }
-        [Display(Name = "Gruppmedlemmar")]
-        public virtual ICollection<ApplicationUser> Users { get; set; }
+        //[Display(Name = "Gruppmedlemmar")]
+        //public virtual ICollection<ApplicationUser> Users { get; set; }
         [Display(Name = "Filer")]
         public virtual ICollection<File> Files { get; set; }
 

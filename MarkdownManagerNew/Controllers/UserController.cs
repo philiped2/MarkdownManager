@@ -140,88 +140,50 @@ namespace MarkdownManagerNew.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public ActionResult CreateDocumentJson(string name, string description, string markdown, List<string> tags, List<ListUserViewModel> users, List<ListGroupViewModel> groups)
-        {
-            Document document = new Document() { Name = name, Description = description, Markdown = markdown, CreatorID = GetCurrentUser().Id };
-            List<ApplicationUser> documentUsers = new List<ApplicationUser>();
-            List<Group> documentGroups = new List<Group>();
-            List<Tag> documentTags = new List<Tag>();
-            foreach (var tag in tags)
-            {
-                //If tag exists (check label.lower)
-                    //get tag and add to document.tags
-                if (repo.TagExistCheck(tag))
-                {
-                    //just add the tag
-                    document.Tags.Add(repo.GetTagByLabel(tag));
-                }
+        //[HttpPost]
+        //public ActionResult CreateDocumentJson(string name, string description, string markdown, List<string> tags, List<ListUserViewModel> users, List<ListGroupViewModel> groups)
+        //{
+        //    repo.CreateDocument2(name, description, markdown, tags, users, groups, GetCurrentUser());
 
-                //Else create new tag, get it and add to document.tags
+        //    return Json(new { message = "Document created!" });
+        //}
 
-                else
-                {
-                    //create the tag and then add it
+        //[HttpPost]
+        //[ValidateInput(false)]
+        //public ActionResult CreateDocument(CreateDocumentViewModel viewModel, HttpPostedFileBase upload, string[] selectedFiles)
+        //{
+        //    //dynamic fileArray = JsonConvert.DeserializeObject(viewModel.FilesJson);
 
-                    //repo.CreateTagByLabel(tag);
-                    //document.Tags.Add(repo.GetTagByLabel(tag));
-                }
-                
-            }
+        //    //foreach (var file in fileArray)
+        //    //{
+        //    //    Console.WriteLine(file.Filename); 
+        //    //}
 
-            foreach (var user in users)
-            {
-                var userToAdd = repo.GetUserByID(user.ID);
-                document.Users.Add(userToAdd);
-            }
+        //    if (Request.Form["CreateFile"] != null)
+        //    {
+        //        var file = repo.CreateFile(upload, GetCurrentUser());
+        //        viewModel.Files.Add(file);
+        //        TempData["viewModel"] = viewModel;
 
-            foreach (var group in groups)
-            {
-                var groupToAdd = repo.GetGroupByID(group.ID);
-                document.Groups.Add(groupToAdd);
-            }
+        //        //return RedirectToAction("CreateDocument", file);
+        //        return RedirectToAction("CreateDocument", new { files = viewModel.Files });
+        //    }
+        //    else if (Request.Form["CreateDocument"] != null)
+        //    {
+        //        //List<File> fileList = repo.CreateFileListFromJson(viewModel.FilesJson, GetCurrentUser());
 
-            document.Users.Add(GetCurrentUser());
+        //        var user = GetCurrentUser();
+        //        repo.CreateDocument(viewModel, user);
+        //        return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
+        //    }
 
-            return Json(new { message = "Action ran through"});
-        }
-
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult CreateDocument(CreateDocumentViewModel viewModel, HttpPostedFileBase upload, string[] selectedFiles)
-        {
-            //dynamic fileArray = JsonConvert.DeserializeObject(viewModel.FilesJson);
-
-            //foreach (var file in fileArray)
-            //{
-            //    Console.WriteLine(file.Filename); 
-            //}
-
-            if (Request.Form["CreateFile"] != null)
-            {
-                var file = repo.CreateFile(upload, GetCurrentUser());
-                viewModel.Files.Add(file);
-                TempData["viewModel"] = viewModel;
-
-                //return RedirectToAction("CreateDocument", file);
-                return RedirectToAction("CreateDocument", new { files = viewModel.Files });
-            }
-            else if (Request.Form["CreateDocument"] != null)
-            {
-                //List<File> fileList = repo.CreateFileListFromJson(viewModel.FilesJson, GetCurrentUser());
-
-                var user = GetCurrentUser();
-                repo.CreateDocument(viewModel, user);
-                return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
-            }
-
-            else
-            {
-                return View("Index");
-            }
+        //    else
+        //    {
+        //        return View("Index");
+        //    }
 
             
-        }
+        //}
 
 
         [HttpPost]
