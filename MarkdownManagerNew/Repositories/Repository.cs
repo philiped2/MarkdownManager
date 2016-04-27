@@ -431,7 +431,7 @@ namespace MarkdownManagerNew.Repositories
                     document.Tags.Add(GetTagByLabel(tag));
                 }
 
-        //    }
+            }
 
             document = AddDocumentToDb(document);
 
