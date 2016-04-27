@@ -17,6 +17,8 @@ namespace MarkdownManagerNew.Models
             Users = new List<ApplicationUser>();
 
             Documents = new List<Document>();
+
+            GroupDocumentRights = new List<GroupDocumentRight>();
         }
 
         [Key]
@@ -53,6 +55,6 @@ namespace MarkdownManagerNew.Models
         [Display(Name = "Ändringslogg")]
         public ICollection<string> ChangeLog { get; set; }
 
-        public virtual List<DocumentRight> DocumentRights { get; set; }
+        public virtual List<GroupDocumentRight> GroupDocumentRights { get; set; }
     }
 }

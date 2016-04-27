@@ -17,11 +17,11 @@ namespace MarkdownManagerNew.Models
 
             Documents = new List<Document>();
 
-            Files = new List<File>();
+            //Files = new List<File>();
 
-            GroupRights = new List<GroupRight>();
+            UserGroupRights = new List<UserGroupRight>();
 
-            DocumentRights = new List<DocumentRight>();
+            UserDocumentRights = new List<UserDocumentRight>();
         }
 
         //[Display(Name = "Epost")]
@@ -41,12 +41,12 @@ namespace MarkdownManagerNew.Models
         [Display(Name = "Grupper")]
         public virtual ICollection<Group> Groups { get; set; }
 
-        [Display(Name = "Filer")]
-        public virtual ICollection<File> Files { get; set; }
+        //[Display(Name = "Filer")]
+        //public virtual ICollection<File> Files { get; set; }
 
-        public virtual List<GroupRight> GroupRights { get; set; }
+        public virtual List<UserGroupRight> UserGroupRights { get; set; }
 
-        public virtual List<DocumentRight> DocumentRights { get; set; }
+        public virtual List<UserDocumentRight> UserDocumentRights { get; set; }
 
         public string FullName()
         {
@@ -70,12 +70,13 @@ namespace MarkdownManagerNew.Models
         }
 
         public DbSet<Group> Groups { get; set; }
-        public DbSet<File> Files { get; set; }
+        //public DbSet<File> Files { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Document> Documents { get; set; }
         //public DbSet<GroupUser> GroupUsers { get; set; }
-        public DbSet<GroupRight> GroupRights { get; set; }
-        public DbSet<DocumentRight> DocumentRights { get; set; }
+        public DbSet<UserGroupRight> UserGroupRights { get; set; }
+        public DbSet<UserDocumentRight> UserDocumentRights { get; set; }
+        public DbSet<GroupDocumentRight> GroupDocumentRights { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

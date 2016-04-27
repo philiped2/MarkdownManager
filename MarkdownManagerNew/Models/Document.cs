@@ -20,7 +20,7 @@ namespace MarkdownManagerNew.Models
 
             Tags = new List<Tag>();
 
-            Files = new List<File>();
+            //Files = new List<File>();
 
             IsArchived = false;
         }
@@ -53,8 +53,8 @@ namespace MarkdownManagerNew.Models
         public virtual ICollection<Tag> Tags { get; set; }
         [Display(Name = "Gruppmedlemmar")]
         public virtual ICollection<ApplicationUser> Users { get; set; }
-        [Display(Name = "Filer")]
-        public virtual ICollection<File> Files { get; set; }
+        //[Display(Name = "Filer")]
+        //public virtual ICollection<File> Files { get; set; }
 
         //public string CreatorId { get; set; }
         // En onödig kommentar

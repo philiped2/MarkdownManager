@@ -143,95 +143,57 @@ namespace MarkdownManagerNew.Controllers
         [HttpPost]
         public ActionResult CreateDocumentJson(string name, string description, string markdown, List<string> tags, List<ListUserViewModel> users, List<ListGroupViewModel> groups)
         {
-            Document document = new Document() { Name = name, Description = description, Markdown = markdown, CreatorID = GetCurrentUser().Id };
-            List<ApplicationUser> documentUsers = new List<ApplicationUser>();
-            List<Group> documentGroups = new List<Group>();
-            List<Tag> documentTags = new List<Tag>();
-            foreach (var tag in tags)
-            {
-                //If tag exists (check label.lower)
-                    //get tag and add to document.tags
-                if (repo.TagExistCheck(tag))
-                {
-                    //just add the tag
-                    document.Tags.Add(repo.GetTagByLabel(tag));
-                }
-
-                //Else create new tag, get it and add to document.tags
-
-                else
-                {
-                    //create the tag and then add it
-
-                    //repo.CreateTagByLabel(tag);
-                    //document.Tags.Add(repo.GetTagByLabel(tag));
-                }
-                
-            }
-
-            foreach (var user in users)
-            {
-                var userToAdd = repo.GetUserByID(user.ID);
-                document.Users.Add(userToAdd);
-            }
-
-            foreach (var group in groups)
-            {
-                var groupToAdd = repo.GetGroupByID(group.ID);
-                document.Groups.Add(groupToAdd);
-            }
-
-            document.Users.Add(GetCurrentUser());
-
-            return Json(new { message = "Action ran through"});
+            repo.CreateDocument2( name, description, markdown, tags, users, groups, GetCurrentUser());
+            
+            return Json(new { message = "Document created!"});
         }
 
-        [HttpPost]
-        [ValidateInput(false)]
-        public ActionResult CreateDocument(CreateDocumentViewModel viewModel, HttpPostedFileBase upload, string[] selectedFiles)
-        {
-            //dynamic fileArray = JsonConvert.DeserializeObject(viewModel.FilesJson);
+        //[HttpPost]
+        //[ValidateInput(false)]
+        //public ActionResult CreateDocument(CreateDocumentViewModel viewModel, HttpPostedFileBase upload, string[] selectedFiles)
+        //{
+        //    //dynamic fileArray = JsonConvert.DeserializeObject(viewModel.FilesJson);
 
-            //foreach (var file in fileArray)
-            //{
-            //    Console.WriteLine(file.Filename); 
-            //}
+        //    //foreach (var file in fileArray)
+        //    //{
+        //    //    Console.WriteLine(file.Filename); 
+        //    //}
 
-            if (Request.Form["CreateFile"] != null)
-            {
-                var file = repo.CreateFile(upload, GetCurrentUser());
-                viewModel.Files.Add(file);
-                TempData["viewModel"] = viewModel;
+        //    if (Request.Form["CreateFile"] != null)
+        //    {
+        //        var file = repo.CreateFile(upload, GetCurrentUser());
+        //        viewModel.Files.Add(file);
+        //        TempData["viewModel"] = viewModel;
 
-                //return RedirectToAction("CreateDocument", file);
-                return RedirectToAction("CreateDocument", new { files = viewModel.Files });
-            }
-            else if (Request.Form["CreateDocument"] != null)
-            {
-                //List<File> fileList = repo.CreateFileListFromJson(viewModel.FilesJson, GetCurrentUser());
+        //        //return RedirectToAction("CreateDocument", file);
+        //        return RedirectToAction("CreateDocument", new { files = viewModel.Files });
+        //    }
+        //    else if (Request.Form["CreateDocument"] != null)
+        //    {
+        //        //List<File> fileList = repo.CreateFileListFromJson(viewModel.FilesJson, GetCurrentUser());
 
-                var user = GetCurrentUser();
-                repo.CreateDocument(viewModel, user);
-                return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
-            }
+        //        var user = GetCurrentUser();
+        //        repo.CreateDocument(viewModel, user);
+        //        return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
+        //    }
 
-            else
-            {
-                return View("Index");
-            }
+        //    else
+        //    {
+        //        return View("Index");
+        //    }
 
             
-        }
+        //}
 
 
-        [HttpPost]
-        public ActionResult CreateGroup(CreateGroupViewModel viewModel)
-        {
-            var user = GetCurrentUser();
-            repo.CreateGroup(viewModel, user);
-            ViewBag.Test = "A new group has been created!";
-            return View("Index", repo.GetUserDocuments(GetCurrentUser()));
-        }
+        //[HttpPost]
+        //public ActionResult CreateGroup(CreateGroupViewModel viewModel)
+        //{
+        //    var user = GetCurrentUser();
+        //    repo.CreateGroup(viewModel, user);
+        //    ViewBag.Test = "A new group has been created!";
+        //    return View("Index", repo.GetUserDocuments(GetCurrentUser()));
+        //}
 
 
         [HttpGet]
@@ -275,14 +237,14 @@ namespace MarkdownManagerNew.Controllers
             return View(viewModel);
         }
 
-        [HttpPost]
-        public ActionResult NewCreateGroup(CreateGroupViewModel viewModel)
-        {
-            var user = GetCurrentUser();
-            repo.CreateGroup(viewModel, user);
-            ViewBag.Test = "A new group has been created!";
-            return View("Index", repo.GetUserDocuments(GetCurrentUser()));
-        }
+        //[HttpPost]
+        //public ActionResult NewCreateGroup(CreateGroupViewModel viewModel)
+        //{
+        //    var user = GetCurrentUser();
+        //    repo.CreateGroup(viewModel, user);
+        //    ViewBag.Test = "A new group has been created!";
+        //    return View("Index", repo.GetUserDocuments(GetCurrentUser()));
+        //}
 
         [HttpGet]
         public ActionResult NewCreateGroup()
@@ -406,107 +368,107 @@ namespace MarkdownManagerNew.Controllers
         // POST: User/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Description,Name,Markdown,DateCreated,LastChanged,CreatorID")] Document document)
-        {
-            ApplicationUser currentUser = GetCurrentUser();
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "Id,Description,Name,Markdown,DateCreated,LastChanged,CreatorID")] Document document)
+        //{
+        //    ApplicationUser currentUser = GetCurrentUser();
 
-            if (ModelState.IsValid)
-            {
-                repo.LogDocumentChanges(document, currentUser);
-                db.Entry(document).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+        //    if (ModelState.IsValid)
+        //    {
+        //        repo.LogDocumentChanges(document, currentUser);
+        //        db.Entry(document).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
             
-            return View(document);
-        }
+        //    return View(document);
+        //}
 
-        [HttpPost]
-        public ActionResult EditGroup(EditGroupViewModel viewModel)
-        {
-            //var user = GetCurrentUser();
-            repo.EditGroup2(viewModel);
-            //return View("Index", repo.GetUserDocuments(GetCurrentUser()));
-            return View("Index");
-        }
+        ////[HttpPost]
+        ////public ActionResult EditGroup(EditGroupViewModel viewModel)
+        ////{
+        ////    //var user = GetCurrentUser();
+        ////    repo.EditGroup2(viewModel);
+        ////    //return View("Index", repo.GetUserDocuments(GetCurrentUser()));
+        ////    return View("Index");
+        ////}
 
-        public ActionResult EditGroup(int? id)
-        {
-            EditGroupViewModel viewModel = new EditGroupViewModel();
-            List<ApplicationUser> tempUserList = repo.ListUsersToCreateGroup();
-            var checkBoxListItems = new List<CheckBoxListUser>();
-            Group groupToEdit = db.Groups.Where(x => x.ID == id).Single();
-            viewModel.GroupToEdit = groupToEdit;
-            foreach (var user in tempUserList)
-            {
-                checkBoxListItems.Add(new CheckBoxListUser()
-                {
-                    ID = user.Id,
-                    Display = user.LastName + "," + user.FirstName,
-                    IsChecked = false,
-                    UserToDelete = false,
+        //public ActionResult EditGroup(int? id)
+        //{
+        //    EditGroupViewModel viewModel = new EditGroupViewModel();
+        //    List<ApplicationUser> tempUserList = repo.ListUsersToCreateGroup();
+        //    var checkBoxListItems = new List<CheckBoxListUser>();
+        //    Group groupToEdit = db.Groups.Where(x => x.ID == id).Single();
+        //    viewModel.GroupToEdit = groupToEdit;
+        //    foreach (var user in tempUserList)
+        //    {
+        //        checkBoxListItems.Add(new CheckBoxListUser()
+        //        {
+        //            ID = user.Id,
+        //            Display = user.LastName + "," + user.FirstName,
+        //            IsChecked = false,
+        //            UserToDelete = false,
 
-                    CanEdit = false,
-                    IsGroupAdmin = false
-                });
-            }
-            viewModel.CheckBoxUsers = checkBoxListItems;
+        //            CanEdit = false,
+        //            IsGroupAdmin = false
+        //        });
+        //    }
+        //    viewModel.CheckBoxUsers = checkBoxListItems;
 
-            List<Document> tempDocumentList = repo.GetUserDocuments(GetCurrentUser());
-            var checkBoxListDocuments = new List<CheckBoxListDocuments>();
+        //    List<Document> tempDocumentList = repo.GetUserDocuments(GetCurrentUser());
+        //    var checkBoxListDocuments = new List<CheckBoxListDocuments>();
 
-            foreach (var document in tempDocumentList)
-            {
-                checkBoxListDocuments.Add(new CheckBoxListDocuments()
-                {
-                    ID = document.ID,
-                    Display = document.Name,
-                    IsChecked = false,
-                    DocumentToDelete = false
-                });
-            }
+        //    foreach (var document in tempDocumentList)
+        //    {
+        //        checkBoxListDocuments.Add(new CheckBoxListDocuments()
+        //        {
+        //            ID = document.ID,
+        //            Display = document.Name,
+        //            IsChecked = false,
+        //            DocumentToDelete = false
+        //        });
+        //    }
 
-            viewModel.CheckBoxDocuments = checkBoxListDocuments;
+        //    viewModel.CheckBoxDocuments = checkBoxListDocuments;
 
-            var currentUser = GetCurrentUser();
-            GroupRight usersGroupRights;
-            Group group = db.Groups.Find(id);
-            if (currentUser.GroupRights.Any(x => x.GroupId == group.ID))
-            {
-                usersGroupRights = currentUser.GroupRights.Where(x => x.GroupId == group.ID).Single();
-            }
-            else
-            {
-                usersGroupRights = new GroupRight();
-            }
-            //GroupRight usersGroupRights = currentUser.GroupRights.Where(x => x.GroupName == group.Name).Single();
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Group group = db.Groups.Find(id);
-            //if (group == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //if (currentUser.GroupRights.Any(x => x.GroupName == group.Name || x.CanEdit == true))
-            //{
-            //    return View(viewModel);
-            //}
+        //    var currentUser = GetCurrentUser();
+        //    GroupRight usersGroupRights;
+        //    Group group = db.Groups.Find(id);
+        //    if (currentUser.GroupRights.Any(x => x.GroupId == group.ID))
+        //    {
+        //        usersGroupRights = currentUser.GroupRights.Where(x => x.GroupId == group.ID).Single();
+        //    }
+        //    else
+        //    {
+        //        usersGroupRights = new GroupRight();
+        //    }
+        //    //GroupRight usersGroupRights = currentUser.GroupRights.Where(x => x.GroupName == group.Name).Single();
+        //    //if (id == null)
+        //    //{
+        //    //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    //}
+        //    //Group group = db.Groups.Find(id);
+        //    //if (group == null)
+        //    //{
+        //    //    return HttpNotFound();
+        //    //}
+        //    //if (currentUser.GroupRights.Any(x => x.GroupName == group.Name || x.CanEdit == true))
+        //    //{
+        //    //    return View(viewModel);
+        //    //}
 
-            //if (usersGroupRights.IsGroupAdmin == true) // senaste funktionen för att begränsa rättigheter innan disable button skapades i viewn
-            //{
-            //    return View(viewModel);
-            //}
-            //else
-            //{
-            //    return HttpNotFound();
-            //}
+        //    //if (usersGroupRights.IsGroupAdmin == true) // senaste funktionen för att begränsa rättigheter innan disable button skapades i viewn
+        //    //{
+        //    //    return View(viewModel);
+        //    //}
+        //    //else
+        //    //{
+        //    //    return HttpNotFound();
+        //    //}
 
-            return View(viewModel);
-        }
+        //    return View(viewModel);
+        //}
 
 
 
