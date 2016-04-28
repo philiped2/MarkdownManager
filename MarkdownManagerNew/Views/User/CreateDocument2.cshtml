@@ -5,10 +5,9 @@
 }
 
 <div ng-controller="NewDocumentController">
-    <h3>Nytt dokument (Post via angular)</h3>
+    <h3>Nytt dokument</h3>
     <form name="newDocumentForm" ng-submit="AddDocument()">
         @Html.AntiForgeryToken()
-
         <div class="form-horizontal">
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 

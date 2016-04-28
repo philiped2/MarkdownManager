@@ -167,6 +167,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201604270854015_initial.cs" />
+    <Compile Include="Migrations\201604270854015_initial.Designer.cs">
+      <DependentUpon>201604270854015_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CheckBoxListDocuments.cs" />
     <Compile Include="Models\CheckBoxListGroup.cs" />
@@ -186,13 +191,14 @@
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Viewmodels\AllDocumentsViewModel.cs" />
+    <Compile Include="Viewmodels\CreateDocumentPostModel.cs" />
     <Compile Include="Viewmodels\CreateDocumentViewModel.cs" />
     <Compile Include="Viewmodels\CreateDocumentViewModel2.cs" />
     <Compile Include="Viewmodels\CreateGroupViewModel.cs" />
     <Compile Include="Viewmodels\CreateUserViewModel.cs" />
     <Compile Include="Viewmodels\EditGroupViewModel.cs" />
-    <Compile Include="Viewmodels\ListGroupViewModel.cs" />
-    <Compile Include="Viewmodels\ListUserViewModel.cs" />
+    <Compile Include="Viewmodels\GroupListModel.cs" />
+    <Compile Include="Viewmodels\UserListModel.cs" />
     <Compile Include="Viewmodels\ViewGroupsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1093,6 +1099,7 @@
     <Content Include="Views\User\GroupDetails.cshtml" />
     <Content Include="Views\User\NewCreateGroup.cshtml" />
     <Content Include="Views\User\CreateDocument2.cshtml" />
+    <Content Include="Views\User\CreateGroup2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1103,6 +1110,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201604270854015_initial.resx">
+      <DependentUpon>201604270854015_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

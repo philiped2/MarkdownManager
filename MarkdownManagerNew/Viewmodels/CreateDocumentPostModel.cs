@@ -20,7 +20,7 @@ namespace MarkdownManagerNew.Viewmodels
         public string Description { get; set; }
         public string Markdown { get; set; }
         public List<string> Tags { get; set; }
-        public List<ListUserViewModel> Users { get; set; }
-        public List<ListGroupViewModel> Groups { get; set; }
+        public List<UserListModel> Users { get; set; }
+        public List<GroupListModel> Groups { get; set; }
     }
 }

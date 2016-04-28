@@ -27,6 +27,7 @@
     <script src="~/Scripts/Controllers/TagController.js"></script>
     <script src="~/Scripts/Controllers/FileController.js"></script>
     <script src="~/Scripts/Controllers/NewDocumentController.js"></script>
+    <script src="~/Scripts/Controllers/CreateGroupController.js"></script>
     <script src="~/Scripts/Controllers/MarkdownController.js"></script>
 </head>
 <body ng-app="app">
@@ -54,8 +55,8 @@
                         @if (User.IsInRole("User"))
                         {
                             <li>@Html.ActionLink("Hem", "Index", "User")</li>
-                            <li>@Html.ActionLink("Nytt dokument", "CreateDocument", "User")</li>
-                            <li>@Html.ActionLink("Ny grupp", "CreateGroup", "User")</li>
+                            <li>@Html.ActionLink("Nytt dokument", "CreateDocument2", "User")</li>
+                            <li>@Html.ActionLink("Ny grupp", "CreateGroup2", "User")</li>
                             <li>@Html.ActionLink("Ny tagg", "CreateTag", "User")</li>
                             <li>@Html.ActionLink("Mina grupper", "MyGroups", "User")</li>
                         }

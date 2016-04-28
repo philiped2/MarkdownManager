@@ -141,11 +141,18 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateDocumentJson(string name, string description, string markdown, List<string> tags, List<ListUserViewModel> users, List<ListGroupViewModel> groups)
+        public ActionResult CreateDocumentJson(string name, string description, string markdown, List<string> tags, List<UserListModel> users, List<GroupListModel> groups)
         {
             repo.CreateDocument2( name, description, markdown, tags, users, groups, GetCurrentUser());
             
             return Json(new { message = "Document created!"});
+        }
+
+        [HttpPost]
+        public ActionResult CreateGroupJson(string name, string description, List<UserListModel> users)
+        {
+            repo.CreateGroup(name, description, users, GetCurrentUser());
+            return Json(new { message = "Group created!" });
         }
 
         //[HttpPost]
@@ -197,44 +204,9 @@ namespace MarkdownManagerNew.Controllers
 
 
         [HttpGet]
-        public ActionResult CreateGroup()
+        public ActionResult CreateGroup2()
         {
-            ViewBag.Test = "No group has been created";
-            CreateGroupViewModel viewModel = new CreateGroupViewModel();
-
-            List<ApplicationUser> tempUserList = repo.ListUsersToCreateGroup();
-            var checkBoxListItems = new List<CheckBoxListUser>();
-
-            foreach (var user in tempUserList)
-            {
-                checkBoxListItems.Add(new CheckBoxListUser()
-                {
-                    ID = user.Id,
-                    Display = user.LastName + "," + user.FirstName,
-                    IsChecked = false,
-
-                    CanEdit = false,
-                    IsGroupAdmin = false
-                });
-            }
-            viewModel.CheckBoxUsers = checkBoxListItems;
-
-            List<Document> tempDocumentList = repo.GetUserDocuments(GetCurrentUser());
-            var checkBoxListDocuments = new List<CheckBoxListDocuments>();
-
-            foreach (var document in tempDocumentList)
-            {
-                checkBoxListDocuments.Add(new CheckBoxListDocuments()
-                {
-                    ID = document.ID,
-                    Display = document.Name,
-                    IsChecked = false
-                });
-            }
-
-            viewModel.CheckBoxDocuments = checkBoxListDocuments;
-
-            return View(viewModel);
+            return View(new Group());
         }
 
         //[HttpPost]

@@ -408,7 +408,7 @@ namespace MarkdownManagerNew.Repositories
         //    dbContext.SaveChanges();
         //}
 
-        public Document CreateDocument2(string name, string description, string markdown, List<string> tags, List<ListUserViewModel> users, List<ListGroupViewModel> groups, ApplicationUser currentUser)
+        public Document CreateDocument2(string name, string description, string markdown, List<string> tags, List<UserListModel> users, List<GroupListModel> groups, ApplicationUser currentUser)
         {
             Document document = new Document() { Name = name, Description = description, Markdown = markdown, CreatorID = currentUser.Id, };
             foreach (var tag in tags)
@@ -483,6 +483,13 @@ namespace MarkdownManagerNew.Repositories
             dbContext.Documents.Add(document);
             dbContext.SaveChanges();
             return document;
+        }
+
+        private Group AddGroupToDb(Group group)
+        {
+            dbContext.Groups.Add(group);
+            dbContext.SaveChanges();
+            return group;
         }
 
         public List<ApplicationUser> ListUsersToCreateGroup()
@@ -627,14 +634,14 @@ namespace MarkdownManagerNew.Repositories
             dbContext.SaveChanges();
         }
 
-        public List<ListUserViewModel> GetUsersByName(string keyword, string currentUserID)
+        public List<UserListModel> GetUsersByName(string keyword, string currentUserID)
         {
             var userRole = dbContext.Roles
                 .Where(r => r.Name == "Admin").Single();
 
             var query = dbContext.Users
                 .Where(u => u.FirstName.Contains(keyword) && u.Id != currentUserID && u.Roles.Any(r => r.RoleId != userRole.Id) || u.LastName.Contains(keyword) && u.Id != currentUserID && u.Roles.Any(r => r.RoleId != userRole.Id))
-                .Select(u => new ListUserViewModel {
+                .Select(u => new UserListModel {
                     FullName = u.FirstName + " " + u.LastName,
                     ID = u.Id,
                     Rights = "Read"
@@ -643,11 +650,11 @@ namespace MarkdownManagerNew.Repositories
             return query;
         }
 
-        public List<ListGroupViewModel> GetAuthGroupsByName(string keyword, ApplicationUser currentUser)
+        public List<GroupListModel> GetAuthGroupsByName(string keyword, ApplicationUser currentUser)
         {
             var query = dbContext.Groups
                 .Where(g => g.Users.Any(u => u.Id == currentUser.Id) && g.Name.Contains(keyword) || g.Users.Any(u => u.Id == currentUser.Id) && g.Description.Contains(keyword))
-                .Select(g => new ListGroupViewModel
+                .Select(g => new GroupListModel
                 {
                     Name = g.Name,
                     ID = g.ID,
@@ -705,6 +712,34 @@ namespace MarkdownManagerNew.Repositories
             var query = dbContext.Groups
                 .Where(g => g.ID == id).Single();
             return query;
+        }
+
+        public void CreateGroup(string name, string description, List<UserListModel> users, ApplicationUser currentUser)
+        {
+            Group group = new Group() { Name = name, Description = description, CreatorID = currentUser.Id, };
+
+            group = AddGroupToDb(group);
+
+            foreach (var user in users)
+            {
+                var userToAdd = GetUserByID(user.ID);
+                UserGroupRight right = new UserGroupRight();
+                if (user.Rights == "ReadWrite")
+                {
+                    right.IsGroupAdmin = true;
+                }
+                else if (user.Rights == "Read")
+                {
+                    right.IsGroupAdmin = false;
+                }
+                right.GroupId = group.ID;
+                right.UserId = userToAdd.Id;
+                userToAdd.UserGroupRights.Add(right);
+                dbContext.Entry(userToAdd).State = EntityState.Modified;
+                dbContext.SaveChanges();
+            }
+
+            dbContext.Entry(group).State = EntityState.Modified;
         }
     }
 }
