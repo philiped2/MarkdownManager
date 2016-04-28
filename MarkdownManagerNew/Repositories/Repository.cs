@@ -411,67 +411,86 @@ namespace MarkdownManagerNew.Repositories
         public Document CreateDocument2(string name, string description, string markdown, List<string> tags, List<UserListModel> users, List<GroupListModel> groups, ApplicationUser currentUser)
         {
             Document document = new Document() { Name = name, Description = description, Markdown = markdown, CreatorID = currentUser.Id, };
-            foreach (var tag in tags)
+            if (tags != null)
             {
-                //If tag exists (check label.lower)
-                //get tag and add to document.tags
-                if (TagExistCheck(tag))
+                foreach (var tag in tags)
                 {
-                    //just add the tag
-                    document.Tags.Add(GetTagByLabel(tag));
+                    //If tag exists (check label.lower)
+                    //get tag and add to document.tags
+                    if (TagExistCheck(tag))
+                    {
+                        //just add the tag
+                        document.Tags.Add(GetTagByLabel(tag));
+                    }
+
+                    //Else create new tag, get it and add to document.tags
+
+                    else
+                    {
+                        //create the tag and then add it
+
+                        CreateTagByLabel(tag);
+                        document.Tags.Add(GetTagByLabel(tag));
+                    }
+
                 }
-
-                //Else create new tag, get it and add to document.tags
-
-                else
-                {
-                    //create the tag and then add it
-
-                    CreateTagByLabel(tag);
-                    document.Tags.Add(GetTagByLabel(tag));
-                }
-
             }
 
             document = AddDocumentToDb(document);
 
-            foreach (var user in users)
+            if (users != null)
             {
-                var userToAdd = GetUserByID(user.ID);
-                UserDocumentRight right = new UserDocumentRight();
-                if (user.Rights == "ReadWrite")
+                foreach (var user in users)
                 {
-                    right.CanWrite = true;
+                    var userToAdd = GetUserByID(user.ID);
+                    UserDocumentRight right = new UserDocumentRight();
+                    if (user.Rights == "ReadWrite")
+                    {
+                        right.CanWrite = true;
+                    }
+                    else if (user.Rights == "Read")
+                    {
+                        right.CanWrite = false;
+                    }
+                    right.DocumentId = document.ID;
+                    right.UserId = userToAdd.Id;
+                    userToAdd.UserDocumentRights.Add(right);
+                    dbContext.Entry(userToAdd).State = EntityState.Modified;
+                    dbContext.SaveChanges();
                 }
-                else if (user.Rights == "Read")
-                {
-                    right.CanWrite = false;
-                }
-                right.DocumentId = document.ID;
-                right.UserId = userToAdd.Id;
-                userToAdd.UserDocumentRights.Add(right);
-                dbContext.Entry(userToAdd).State = EntityState.Modified;
-                dbContext.SaveChanges();
             }
+            
 
-            foreach (var group in groups)
+            UserDocumentRight creatorRight = new UserDocumentRight();
+            creatorRight.DocumentId = document.ID;
+            creatorRight.CanWrite = true;
+            creatorRight.UserId = currentUser.Id;
+            currentUser.UserDocumentRights.Add(creatorRight);
+            dbContext.Entry(currentUser).State = EntityState.Modified;
+            dbContext.SaveChanges();
+
+            if (groups != null)
             {
-                var groupToAdd = GetGroupByID(group.ID);
-                GroupDocumentRight right = new GroupDocumentRight();
-                if (group.Rights == "ReadWrite")
+                foreach (var group in groups)
                 {
-                    right.CanWrite = true;
+                    var groupToAdd = GetGroupByID(group.ID);
+                    GroupDocumentRight right = new GroupDocumentRight();
+                    if (group.Rights == "ReadWrite")
+                    {
+                        right.CanWrite = true;
+                    }
+                    else if (group.Rights == "Read")
+                    {
+                        right.CanWrite = false;
+                    }
+                    right.DocumentId = document.ID;
+                    right.GroupId = groupToAdd.ID;
+                    groupToAdd.GroupDocumentRights.Add(right);
+                    dbContext.Entry(groupToAdd).State = EntityState.Modified;
+                    dbContext.SaveChanges();
                 }
-                else if (group.Rights == "Read")
-                {
-                    right.CanWrite = false;
-                }
-                right.DocumentId = document.ID;
-                right.GroupId = groupToAdd.ID;
-                groupToAdd.GroupDocumentRights.Add(right);
-                dbContext.Entry(groupToAdd).State = EntityState.Modified;
-                dbContext.SaveChanges();
             }
+            
 
             dbContext.Entry(document).State = EntityState.Modified;
             //dbContext.SaveChanges();
@@ -720,24 +739,36 @@ namespace MarkdownManagerNew.Repositories
 
             group = AddGroupToDb(group);
 
-            foreach (var user in users)
+            if (users!=null)
             {
-                var userToAdd = GetUserByID(user.ID);
-                UserGroupRight right = new UserGroupRight();
-                if (user.Rights == "ReadWrite")
+                foreach (var user in users)
                 {
-                    right.IsGroupAdmin = true;
+                    var userToAdd = GetUserByID(user.ID);
+                    UserGroupRight right = new UserGroupRight();
+                    if (user.Rights == "ReadWrite")
+                    {
+                        right.IsGroupAdmin = true;
+                    }
+                    else if (user.Rights == "Read")
+                    {
+                        right.IsGroupAdmin = false;
+                    }
+
+                    right.GroupId = group.ID;
+                    right.UserId = userToAdd.Id;
+                    userToAdd.UserGroupRights.Add(right);
+                    dbContext.Entry(userToAdd).State = EntityState.Modified;
+                    dbContext.SaveChanges();
                 }
-                else if (user.Rights == "Read")
-                {
-                    right.IsGroupAdmin = false;
-                }
-                right.GroupId = group.ID;
-                right.UserId = userToAdd.Id;
-                userToAdd.UserGroupRights.Add(right);
-                dbContext.Entry(userToAdd).State = EntityState.Modified;
-                dbContext.SaveChanges();
             }
+
+            UserGroupRight creatorRight = new UserGroupRight();
+            creatorRight.GroupId = group.ID;
+            creatorRight.UserId = currentUser.Id;
+            creatorRight.IsGroupAdmin = true;
+            currentUser.UserGroupRights.Add(creatorRight);
+            dbContext.Entry(currentUser).State = EntityState.Modified;
+            dbContext.SaveChanges();
 
             dbContext.Entry(group).State = EntityState.Modified;
         }
