@@ -45,7 +45,7 @@
         </td>
         <td class="btn-group btn-group-sm">
             @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
-            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.Name == item.Name) || User.IsInRole("Admin"))
+            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
             {
             @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
             }
@@ -53,7 +53,7 @@
             {
                 @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
             }
-            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.Name == item.Name) || User.IsInRole("Admin"))
+            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
             {
                 @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
             }

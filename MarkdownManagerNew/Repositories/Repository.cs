@@ -706,7 +706,7 @@ namespace MarkdownManagerNew.Repositories
             dbContext.SaveChanges();
         }
 
-        public List<ListUserViewModel> GetUsersByName(string keyword, string currentUserID)
+        public List<UserListModel> GetUsersByName(string keyword, string currentUserID)
         {
             var userRole = dbContext.Roles
                 .Where(r => r.Name == "Admin").Single();

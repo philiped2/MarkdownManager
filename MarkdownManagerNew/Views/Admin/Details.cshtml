@@ -4,7 +4,7 @@
     ViewBag.Title = @Model.Name;
 }
 <div class="container">
-    <h3>@Model.Name - Details</h3>
+    <h3>@Html.DisplayFor(model => model.Name</h3>
 
     <div>
         <hr />
@@ -67,7 +67,7 @@
 
     <div class="row">
         <p>
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Tillbaka", "Index")
         </p>
     </div>
     
