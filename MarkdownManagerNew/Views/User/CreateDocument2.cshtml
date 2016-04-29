@@ -89,9 +89,9 @@
                 </div>*@
 
             <div class="row">
-                <h3>Grupper</h3>
-                <input type="text" ng-model="asyncSelectedGroup" class="form-control" ng-change="getAuthGroups2(asyncSelectedGroup)" placeholder="Sök grupp">
-                <div class="col-sm-6 col-sm-offset-2">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h3 class="text-center">Grupper</h3>
+                    <input type="text" ng-model="asyncSelectedGroup" class="form-control col-sm-offset-3 text-center" ng-change="getAuthGroups2(asyncSelectedGroup)" placeholder="Sök grupp">
                     <table class="table card">
                         <tr ng-repeat="group in GroupResult">
                             <td>{{group.Name}}</td>
@@ -103,7 +103,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6 col-sm-offset-2">
+                <div class="col-sm-6 col-sm-offset-3">
                     <table class="table card" ng-show="document.Groups">
                         <tr ng-repeat="group in document.Groups">
                             <td>
@@ -126,9 +126,9 @@
             </div>
 
             <div class="row">
-                <h3>Användare</h3>
-                <input type="text" ng-model="asyncSelectedUser" class="form-control" ng-change="getUsers2(asyncSelectedUser)" placeholder="Sök användare">
-                <div class="col-sm-6 col-sm-offset-2">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h3 class="text-center">Användare</h3>
+                    <input type="text" ng-model="asyncSelectedUser" class="form-control col-sm-offset-3 text-center" ng-change="getUsers2(asyncSelectedUser)" placeholder="Sök användare">
                     <table class="table card">
                         <tr ng-repeat="user in UserResult">
                             <td>{{user.FullName}}</td>
@@ -138,7 +138,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6 col-sm-offset-2">
+                <div class="col-sm-6 col-sm-offset-3">
                     <table class="table card" ng-show="document.Users">
                         <tr ng-repeat="user in document.Users">
                             <td>
@@ -161,11 +161,11 @@
             </div>
 
             <div class="row">
-                <h3>Taggar</h3>
-                <input type="text" ng-model="asyncSelected" placeholder="Lägg till tagg" uib-typeahead="tags for tags in getTags($viewValue)" typeahead-loading="loadingTags" typeahead-no-results="noResults" class="form-control">
-                <button type="button" class="btn btn-primary" ng-click="addSelectedTag(asyncSelected)">Lägg till</button>
-                <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
-                <div class="col-sm-6 col-sm-offset-2">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h3 class="text-center">Taggar</h3>
+                    <input type="text" ng-model="asyncSelected" placeholder="Lägg till tagg" uib-typeahead="tags for tags in getTags($viewValue)" typeahead-loading="loadingTags" typeahead-no-results="noResults" class="form-control col-sm-offset-3 text-center">
+                    <button type="button" class="btn btn-primary" ng-click="addSelectedTag(asyncSelected)">Lägg till</button>
+                    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
                     <table class="table card" ng-show="document.Tags">
                         <tr ng-repeat="tag in document.Tags">
                             <td>

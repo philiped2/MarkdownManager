@@ -13,9 +13,9 @@ namespace MarkdownManagerNew.Models
     {
         public ApplicationUser()
         {
-            Groups = new List<Group>();
+            //Groups = new List<Group>();
 
-            Documents = new List<Document>();
+            //Documents = new List<Document>();
 
             //Files = new List<File>();
 
@@ -35,11 +35,11 @@ namespace MarkdownManagerNew.Models
         [Display(Name = "Efternamn")]
         public string LastName { get; set; }
 
-        [Display(Name = "Dokument")]
-        public virtual ICollection<Document> Documents { get; set; }
+        //[Display(Name = "Dokument")]
+        //public virtual ICollection<Document> Documents { get; set; }
 
-        [Display(Name = "Grupper")]
-        public virtual ICollection<Group> Groups { get; set; }
+        //[Display(Name = "Grupper")]
+        //public virtual ICollection<Group> Groups { get; set; }
 
         //[Display(Name = "Filer")]
         //public virtual ICollection<File> Files { get; set; }
@@ -90,9 +90,9 @@ namespace MarkdownManagerNew.Models
             //    .HasForeignKey(t => t.Id)
             //    .WillCascadeOnDelete(true);
 
-            modelBuilder.Entity<Group>()
-                .HasMany(t => t.Users)
-                .WithMany(u => u.Groups);
+            //modelBuilder.Entity<Group>()
+            //    .HasMany(t => t.Users)
+            //    .WithMany(u => u.Groups);
 
             //modelBuilder.Entity<GroupUser>()
             //    .HasRequired(x => x.group)

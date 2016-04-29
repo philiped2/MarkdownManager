@@ -32,15 +32,15 @@ namespace MarkdownManagerNew.Repositories
         public List<Document> GetUserDocuments(ApplicationUser user) //Fixa denna med lamba-linq sedan
         {
             List<Document> query = new List<Document>();
-            var documentsByUserRights = user.Documents.ToList();
+            //var documentsByUserRights = user.Documents.ToList();
 
-            foreach (var item in documentsByUserRights)
-            {
-                if (item.IsArchived == false)
-                {
-                    query.Add(item);
-                }
-            }
+            //foreach (var item in documentsByUserRights)
+            //{
+            //    if (item.IsArchived == false)
+            //    {
+            //        query.Add(item);
+            //    }
+            //}
 
             //foreach (var group in user.Groups) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
             //{
@@ -75,10 +75,10 @@ namespace MarkdownManagerNew.Repositories
         {
             List<Group> userGroups = new List<Group>();
 
-            foreach (Group group in user.Groups)
-            {
-                userGroups.Add(group);
-            }
+            //foreach (Group group in user.Groups)
+            //{
+            //    userGroups.Add(group);
+            //}
 
             return userGroups;
         }
@@ -137,10 +137,10 @@ namespace MarkdownManagerNew.Repositories
         //    }
 
         //    foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
-            //    {
+        //    {
         //        Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
         //        groupToAdd.Documents.Add(groupDocument);
-            //    }
+        //    }
 
         //    //var newGroup = new Group();
         //    ////newGroup.CreatorID = user.Id;
@@ -151,14 +151,14 @@ namespace MarkdownManagerNew.Repositories
         //    //    {
         //    //        newGroup.Users.Add(member);
         //    //    }
-            
+
         //    //}
         //    ////newGroup.Users = groupMembers;
         //    ////newGroup.Documents = documents;
         //    //newGroup.Creator = user;
         //    //newGroup.Name = name;
         //    //newGroup.Description = description;
-            
+
         //    //userGroupRights.GroupId = groupToAdd.ID;
 
 
@@ -204,7 +204,7 @@ namespace MarkdownManagerNew.Repositories
         //            updatedGroupUser.GroupRights.Add(userGroupRights);
         //            group.Users.Add(updatedGroupUser);
         //        }
-                
+
 
         //        if (user.IsGroupAdmin == true)
         //        {
@@ -228,8 +228,8 @@ namespace MarkdownManagerNew.Repositories
 
 
 
-                
- 
+
+
 
         //        //if (!group.Users.Any(x => x.Id == updatedGroupUser.Id))
         //        //{
@@ -242,10 +242,10 @@ namespace MarkdownManagerNew.Repositories
         //        //    NotUpdatedGroupUser = new ApplicationUser();
         //        //}
 
-                
+
 
         //        //theUser = groupUser;
-                
+
         //    }
 
         //    foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
@@ -347,18 +347,18 @@ namespace MarkdownManagerNew.Repositories
         {
             var userToAdd = new ApplicationUser { UserName = viewmodel.UserName, FirstName = viewmodel.FirstName, LastName = viewmodel.LastName, Email = viewmodel.MailAdress };
 
-            foreach (var group in viewmodel.Groups.Where(x => x.IsChecked == true))
-            {
-                Group userGroup = dbContext.Groups.Where(x => x.ID == group.ID).Single();
-                userToAdd.Groups.Add(userGroup);
+            //foreach (var group in viewmodel.Groups.Where(x => x.IsChecked == true))
+            //{
+            //    Group userGroup = dbContext.Groups.Where(x => x.ID == group.ID).Single();
+            //    userToAdd.Groups.Add(userGroup);
 
-            }
+            //}
 
-            foreach (var document in viewmodel.Documents.Where(x => x.IsChecked == true))
-            {
-                Document userDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
-                userToAdd.Documents.Add(userDocument);
-            }
+            //foreach (var document in viewmodel.Documents.Where(x => x.IsChecked == true))
+            //{
+            //    Document userDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+            //    userToAdd.Documents.Add(userDocument);
+            //}
 
             if (viewmodel.admin)
             {
@@ -459,7 +459,7 @@ namespace MarkdownManagerNew.Repositories
                     dbContext.SaveChanges();
                 }
             }
-            
+
 
             UserDocumentRight creatorRight = new UserDocumentRight();
             creatorRight.DocumentId = document.ID;
@@ -490,7 +490,7 @@ namespace MarkdownManagerNew.Repositories
                     dbContext.SaveChanges();
                 }
             }
-            
+
 
             dbContext.Entry(document).State = EntityState.Modified;
             //dbContext.SaveChanges();
@@ -606,7 +606,7 @@ namespace MarkdownManagerNew.Repositories
             List<File> fileList = new List<File>();
             //var binaryReader = new System.IO.BinaryReader(upload.InputStream);
 
-            foreach(var file in fileArray)
+            foreach (var file in fileArray)
             {
                 //var newFile = new File
                 //{
@@ -633,7 +633,7 @@ namespace MarkdownManagerNew.Repositories
         {
             var query = dbContext.Tags
                 .Where(t => t.Label.Contains(tagLabel))
-                .Select(t=>t.Label).ToList();
+                .Select(t => t.Label).ToList();
             return query;
         }
 
@@ -660,7 +660,8 @@ namespace MarkdownManagerNew.Repositories
 
             var query = dbContext.Users
                 .Where(u => u.FirstName.Contains(keyword) && u.Id != currentUserID && u.Roles.Any(r => r.RoleId != userRole.Id) || u.LastName.Contains(keyword) && u.Id != currentUserID && u.Roles.Any(r => r.RoleId != userRole.Id))
-                .Select(u => new UserListModel {
+                .Select(u => new UserListModel
+                {
                     FullName = u.FirstName + " " + u.LastName,
                     ID = u.Id,
                     Rights = "Read"
@@ -671,17 +672,63 @@ namespace MarkdownManagerNew.Repositories
 
         public List<GroupListModel> GetAuthGroupsByName(string keyword, ApplicationUser currentUser)
         {
-            var query = dbContext.Groups
-                .Where(g => g.Users.Any(u => u.Id == currentUser.Id) && g.Name.Contains(keyword) || g.Users.Any(u => u.Id == currentUser.Id) && g.Description.Contains(keyword))
-                .Select(g => new GroupListModel
+            //var query = dbContext.Groups
+            //    .Where(g => g.Users.Any(u => u.Id == currentUser.Id) && g.Name.Contains(keyword) || g.Users.Any(u => u.Id == currentUser.Id) && g.Description.Contains(keyword))
+            //    .Select(g => new GroupListModel
+            //    {
+            //        Name = g.Name,
+            //        ID = g.ID,
+            //        Description = g.Description,
+            //        Rights = "Read",
+            //        Users = g.Users.Select(u => u.FirstName + " " + u.LastName).ToList()
+            //    })
+            //    .ToList();
+            //var query = new List<GroupListModel>();
+
+            //var query = dbContext.Groups.ToList()
+            //    .Select(g => new GroupListModel
+            //    {
+            //        Name = g.Name,
+            //        ID = g.ID,
+            //        Description = g.Description,
+            //        Rights = "Read",
+            //        Users = null
+            //    })
+            //    .ToList();
+
+            //var query = dbContext.Groups.Where(y => userGroupRights.Any(z => z.GroupId == y.ID))
+
+            //    .Select(g => new GroupListModel
+            //    {
+            //        Name = g.Name,
+            //        ID = g.ID,
+            //        Description = g.Description,
+            //        Rights = "Read",
+            //        Users = null
+            //    })
+            //    .ToList();
+            List<Group> selectedGroups = new List<Group>();
+            List<Group> groups = dbContext.Groups.ToList();
+
+            foreach (Group group in groups) //Ger tydligen inte rätt grupper
+            {
+                if (currentUser.UserDocumentRights.Any(x => x.DocumentId == group.ID))
+                {
+                    selectedGroups.Add(group);
+                }
+
+            }
+
+            var query = selectedGroups.Select(g => new GroupListModel
                 {
                     Name = g.Name,
                     ID = g.ID,
                     Description = g.Description,
                     Rights = "Read",
-                    Users = g.Users.Select(u => u.FirstName + " " + u.LastName).ToList()
+                    Users = null
                 })
                 .ToList();
+                
             return query;
         }
 
@@ -694,12 +741,12 @@ namespace MarkdownManagerNew.Repositories
             {
                 return true;
             }
-            
+
             else
             {
                 return false;
             }
-            
+
         }
 
         public Tag GetTagByLabel(string tag)
@@ -720,7 +767,7 @@ namespace MarkdownManagerNew.Repositories
         {
             var query = userStore
                 .Users
-                .Where(u=>u.Id == id)
+                .Where(u => u.Id == id)
                 .Single();
             return query;
 
@@ -739,7 +786,7 @@ namespace MarkdownManagerNew.Repositories
 
             group = AddGroupToDb(group);
 
-            if (users!=null)
+            if (users != null)
             {
                 foreach (var user in users)
                 {

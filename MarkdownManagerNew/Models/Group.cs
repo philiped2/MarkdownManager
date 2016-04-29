@@ -14,7 +14,7 @@ namespace MarkdownManagerNew.Models
             DateCreated = DateTime.Now;
             ChangeLog = new List<string>();
 
-            Users = new List<ApplicationUser>();
+            //Users = new List<ApplicationUser>();
 
             //Documents = new List<Document>();
             
@@ -25,8 +25,8 @@ namespace MarkdownManagerNew.Models
         [Key]
         public int ID { get; set; }
 
-        [Display(Name = "Medlemmar")] //FKEY
-        public virtual ICollection<ApplicationUser> Users { get; set; }
+        //[Display(Name = "Medlemmar")] //FKEY
+        //public virtual ICollection<ApplicationUser> Users { get; set; }
 
         //[Display(Name = "Gruppmedlemmar")]
         //public virtual ICollection<GroupUser> GroupUsers { get; set; }
