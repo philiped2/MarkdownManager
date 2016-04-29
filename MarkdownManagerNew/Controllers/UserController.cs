@@ -31,7 +31,7 @@ namespace MarkdownManagerNew.Controllers
         {
             AllDocumentsViewModel documentViewmodel = new AllDocumentsViewModel();
             documentViewmodel.CurrentUser = GetCurrentUser();
-            documentViewmodel.Documents = repo.GetUserDocuments(GetCurrentUser());
+            documentViewmodel.Documents = repo.GetAuthorisedUserDocuments(GetCurrentUser());
 
             return View(documentViewmodel);
             //return View(repo.GetUserDocuments(GetCurrentUser())); senaste använda
@@ -49,7 +49,7 @@ namespace MarkdownManagerNew.Controllers
         public ActionResult CreateTag(Tag model)
         {
             repo.CreateTag(model);
-            return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
+            return RedirectToAction("Index", repo.GetAuthorisedUserDocuments(GetCurrentUser()));
         }
 
         public ActionResult GetUsersJson(string keyword)
@@ -219,7 +219,7 @@ namespace MarkdownManagerNew.Controllers
             }
             viewModel.CheckBoxUsers = checkBoxListItems;
 
-            List<Document> tempDocumentList = repo.GetUserDocuments(GetCurrentUser());
+            List<Document> tempDocumentList = repo.GetAuthorisedUserDocuments(GetCurrentUser());
             var checkBoxListDocuments = new List<CheckBoxListDocuments>();
 
             foreach (var document in tempDocumentList)
@@ -269,7 +269,7 @@ namespace MarkdownManagerNew.Controllers
             }
             viewModel.CheckBoxUsers = checkBoxListItems;
 
-            List<Document> tempDocumentList = repo.GetUserDocuments(GetCurrentUser());
+            List<Document> tempDocumentList = repo.GetAuthorisedUserDocuments(GetCurrentUser());
             var checkBoxListDocuments = new List<CheckBoxListDocuments>();
 
             foreach (var document in tempDocumentList)
@@ -532,5 +532,7 @@ namespace MarkdownManagerNew.Controllers
             }
             base.Dispose(disposing);
         }
+
+        
     }
 }

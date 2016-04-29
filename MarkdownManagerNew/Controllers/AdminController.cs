@@ -291,5 +291,12 @@ namespace MarkdownManagerNew.Controllers
         //    }
         //    base.Dispose(disposing);
         //}
+
+        public ActionResult RestoreDocument(int? id)
+        {
+            Document document = db.Documents.Find(id);
+            repo.RestoreArchivedDocument(document);
+            return View("ShowDocuments", repo.GetAllDocuments());
+        }
     }
 }

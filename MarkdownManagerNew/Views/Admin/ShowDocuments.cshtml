@@ -44,9 +44,9 @@
             @Html.DisplayFor(modelItem => item.Creator.UserName)
         </td>
         <td class="btn-group btn-group-sm">
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @Class= "btn btn-default" })
-            @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
-            @Html.ActionLink("Delete", "DeleteDocument", new { id = item.ID }, new { @Class = "btn btn-danger" })
+            @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class= "btn btn-default" })
+            @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
+            @Html.ActionLink("Radera", "DeleteDocument", new { id = item.ID }, new { @Class = "btn btn-danger" })
         </td>
     </tr>
 }
@@ -94,9 +94,9 @@
                 @Html.DisplayFor(modelItem => item.Creator.UserName)
             </td>
             <td class="btn-group btn-group-sm">
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
-                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
-                @Html.ActionLink("Återskapa", "", new { id = item.ID }, new { @Class = "btn btn-primary" })
+                @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
+                @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
+                @Html.ActionLink("Återskapa", "RestoreDocument", new { id = item.ID }, new { @Class = "btn btn-primary" })
             </td>
         </tr>
     }

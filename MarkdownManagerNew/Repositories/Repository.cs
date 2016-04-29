@@ -29,12 +29,12 @@ namespace MarkdownManagerNew.Repositories
             this.userManager = new UserManager<ApplicationUser>(userStore);
         }
 
-        public List<Document> GetUserDocuments(ApplicationUser user) //Fixa denna med lamba-linq sedan
+        public List<Document> GetAuthorisedUserDocuments(ApplicationUser user) //Fixa denna med lamba-linq sedan
         {
             List<Document> query = new List<Document>();
-            var documentsByUserRights = user.Documents.ToList();
+            var usersDocuments = user.Documents.ToList();
 
-            foreach (var item in documentsByUserRights)
+            foreach (var item in usersDocuments)
             {
                 if (item.IsArchived == false)
                 {
@@ -42,18 +42,63 @@ namespace MarkdownManagerNew.Repositories
                 }
             }
 
-            //foreach (var group in user.Groups) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
+            //foreach (Document doc in dbContext.Documents.Where(x => x.IsArchived == false))
             //{
-            //    foreach (var document in group.Documents)
+            //    if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID))
             //    {
-            //        if (document.IsArchived == false)
-            //        {
-            //            query.Add(document);
-            //        }
+            //        query.Add(doc);
             //    }
+                
+            //    query.Add(doc);                            
             //}
 
-            return query;
+            List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false).ToList();
+
+            foreach (Document doc in dbDocuments)                  // usern får en rätt userright i sin lista men metoden kastar ej in doc i query
+            {
+                if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID))
+                {
+                    query.Add(doc);
+                }
+                //foreach (UserDocumentRight right in user.UserDocumentRights)
+                //{
+                //    if (right.ID == doc.ID)
+                //    {
+                //        query.Add(doc);
+                //    }
+             }
+
+
+            //}
+
+            //for (int x = 0; dbDocuments.Count > x; x++ )
+            //{
+            //    if (user.UserDocumentRights.Any(x => x.ID == dbDocuments[x].ID))
+            //}
+
+
+
+                //List<Document> docs = dbContext.Documents.Where(x => x.IsArchived == false && user.UserDocumentRights.Any(d => d.DocumentId == x.ID)).ToList();
+
+
+
+                //foreach (Document doc in docs)
+                //{
+                //    query.Add(doc);
+                //}
+
+                //foreach (var group in user.Groups) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
+                //{
+                //    foreach (var document in group.Documents)
+                //    {
+                //        if (document.IsArchived == false)
+                //        {
+                //            query.Add(document);
+                //        }
+                //    }
+                //}
+
+                return query;
 
         }
 
@@ -623,6 +668,14 @@ namespace MarkdownManagerNew.Repositories
         {
             Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
             document.IsArchived = true;
+            dbContext.Entry(dbDocument).CurrentValues.SetValues(document);
+            dbContext.SaveChanges();
+        }
+
+        public void RestoreArchivedDocument(Document document)
+        {
+            Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+            document.IsArchived = false;
             dbContext.Entry(dbDocument).CurrentValues.SetValues(document);
             dbContext.SaveChanges();
         }
