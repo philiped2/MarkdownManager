@@ -1,0 +1,78 @@
+﻿@model MarkdownManagerNew.Models.Group
+
+<div ng-controller="CreateGroupController">
+    <h3>Ny grupp</h3>
+    <form name="newGroupForm" ng-submit="AddGroup()">
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @ng_model = "group.Name" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @ng_model = "group.Description" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2">Användare</label>
+                <div class="col-md-10">
+                    <input type="text" ng-model="asyncSelectedUser" class="form-control" ng-change="getUsers2(asyncSelectedUser)" placeholder="Sök användare">
+                </div>
+
+                <div class="col-sm-6 col-sm-offset-2">
+                    <table class="table card">
+                        <tr ng-repeat="user in UserResult">
+                            <td>{{user.FullName}}</td>
+                            <td><button ng-click="addSelectedUser(user)" class="btn btn-primary btn-xs pull-right">Lägg till</button></td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="col-sm-6 col-sm-offset-2">
+                    <table class="table card" ng-show="group.Users">
+                        <tr ng-repeat="user in group.Users">
+                            <td>
+                                {{user.FullName}}
+                            </td>
+                            <td>
+                                <div class="btn-group btn-group-sm">
+                                    <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'Read'">Medlem</label>
+                                    <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'ReadWrite'">Gruppadministratör</label>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="removeUser(user)">
+                                    Ta bort
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="button" class="btn btn-primary" ng-click="CreateGroup(group)">Skapa grupp</button>
+                </div>
+            </div>
+        </div>
+        <div class="alert alert-info alert-dismissable" role="alert" ng-show="showMessage" id="statusMessage">{{statusMessage}}</div>
+    </form>
+
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+</div>

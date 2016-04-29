@@ -186,13 +186,14 @@
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Viewmodels\AllDocumentsViewModel.cs" />
+    <Compile Include="Viewmodels\CreateDocumentPostModel.cs" />
     <Compile Include="Viewmodels\CreateDocumentViewModel.cs" />
     <Compile Include="Viewmodels\CreateDocumentViewModel2.cs" />
     <Compile Include="Viewmodels\CreateGroupViewModel.cs" />
     <Compile Include="Viewmodels\CreateUserViewModel.cs" />
     <Compile Include="Viewmodels\EditGroupViewModel.cs" />
-    <Compile Include="Viewmodels\ListGroupViewModel.cs" />
-    <Compile Include="Viewmodels\ListUserViewModel.cs" />
+    <Compile Include="Viewmodels\GroupListModel.cs" />
+    <Compile Include="Viewmodels\UserListModel.cs" />
     <Compile Include="Viewmodels\ViewGroupsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1093,6 +1094,7 @@
     <Content Include="Views\User\GroupDetails.cshtml" />
     <Content Include="Views\User\NewCreateGroup.cshtml" />
     <Content Include="Views\User\CreateDocument2.cshtml" />
+    <Content Include="Views\User\CreateGroup2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

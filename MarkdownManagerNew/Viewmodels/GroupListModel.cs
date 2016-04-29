@@ -5,7 +5,7 @@ using System.Web;
 
 namespace MarkdownManagerNew.Viewmodels
 {
-    public class ListGroupViewModel
+    public class GroupListModel
     {
         public int ID { get; set; }
         public string Name { get; set; }

@@ -8,6 +8,13 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.card{
+    margin: 10px 0px 10px 0px;
+    padding: 10px 10px 10px 10px;
+    box-shadow: 0px 1px 2px grey;
+    background-color: #FFFFFF;
+}
+
 .IndexMessage
 {
     font-size: 16px !important;

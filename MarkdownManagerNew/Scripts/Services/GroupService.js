@@ -15,6 +15,10 @@
             ;
         };
 
+        fac.CreateGroup = function (group) {
+            return $http.post("/User/CreateGroupJson", { name: group.Name, description: group.Description, users: group.Users});
+        };
+
         return fac;
     }
     app.factory("GroupService", GroupService);
