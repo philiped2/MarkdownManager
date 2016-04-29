@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Documents</h2> 
+<h2>Dokument</h2> 
 
 <table class="table">
     <tr>
@@ -26,7 +26,7 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Documents) {
+@foreach (var item in Model.Documents.Where(x => x.IsArchived == false)) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Name)
@@ -44,22 +44,22 @@
             @Html.DisplayFor(modelItem => item.Creator.UserName)
         </td>
         <td class="btn-group btn-group-sm">
-            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.Name == item.Name) || User.IsInRole("Admin"))
+            @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
+            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
             {
-            @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
+            @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
             }
             else
             {
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
+                @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
             }
-                @Html.ActionLink("Details", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
-            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.Name == item.Name) || User.IsInRole("Admin"))
+            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
             {
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
+                @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
             }
             else
             {
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
+                @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
             }
             
             @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })*@

@@ -29,7 +29,7 @@ namespace MarkdownManagerNew.Repositories
             this.userManager = new UserManager<ApplicationUser>(userStore);
         }
 
-        public List<Document> GetUserDocuments(ApplicationUser user) //Fixa denna med lamba-linq sedan
+        public List<Document> GetAuthorisedUserDocuments(ApplicationUser user) //Fixa denna med lamba-linq sedan
         {
             List<Document> query = new List<Document>();
             //var documentsByUserRights = user.Documents.ToList();
@@ -41,6 +41,51 @@ namespace MarkdownManagerNew.Repositories
             //        query.Add(item);
             //    }
             //}
+
+            //foreach (Document doc in dbContext.Documents.Where(x => x.IsArchived == false))
+            //{
+            //    if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID))
+            //    {
+            //        query.Add(doc);
+            //    }
+                
+            //    query.Add(doc);                            
+            //}
+
+            List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false).ToList();
+
+            foreach (Document doc in dbDocuments)                  // usern får en rätt userright i sin lista men metoden kastar ej in doc i query
+            {
+                if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID))
+                {
+                    query.Add(doc);
+                }
+                //foreach (UserDocumentRight right in user.UserDocumentRights)
+                //{
+                //    if (right.ID == doc.ID)
+                //    {
+                //        query.Add(doc);
+                //    }
+             }
+
+
+            //}
+
+            //for (int x = 0; dbDocuments.Count > x; x++ )
+            //{
+            //    if (user.UserDocumentRights.Any(x => x.ID == dbDocuments[x].ID))
+            //}
+
+
+
+                //List<Document> docs = dbContext.Documents.Where(x => x.IsArchived == false && user.UserDocumentRights.Any(d => d.DocumentId == x.ID)).ToList();
+
+
+
+                //foreach (Document doc in docs)
+                //{
+                //    query.Add(doc);
+                //}
 
             //foreach (var group in user.Groups) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
             //{
@@ -137,10 +182,10 @@ namespace MarkdownManagerNew.Repositories
         //    }
 
         //    foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
-        //    {
+            //    {
         //        Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
         //        groupToAdd.Documents.Add(groupDocument);
-        //    }
+            //    }
 
         //    //var newGroup = new Group();
         //    ////newGroup.CreatorID = user.Id;
@@ -151,14 +196,14 @@ namespace MarkdownManagerNew.Repositories
         //    //    {
         //    //        newGroup.Users.Add(member);
         //    //    }
-
+            
         //    //}
         //    ////newGroup.Users = groupMembers;
         //    ////newGroup.Documents = documents;
         //    //newGroup.Creator = user;
         //    //newGroup.Name = name;
         //    //newGroup.Description = description;
-
+            
         //    //userGroupRights.GroupId = groupToAdd.ID;
 
 
@@ -204,7 +249,7 @@ namespace MarkdownManagerNew.Repositories
         //            updatedGroupUser.GroupRights.Add(userGroupRights);
         //            group.Users.Add(updatedGroupUser);
         //        }
-
+                
 
         //        if (user.IsGroupAdmin == true)
         //        {
@@ -228,8 +273,8 @@ namespace MarkdownManagerNew.Repositories
 
 
 
-
-
+                
+ 
 
         //        //if (!group.Users.Any(x => x.Id == updatedGroupUser.Id))
         //        //{
@@ -242,10 +287,10 @@ namespace MarkdownManagerNew.Repositories
         //        //    NotUpdatedGroupUser = new ApplicationUser();
         //        //}
 
-
+                
 
         //        //theUser = groupUser;
-
+                
         //    }
 
         //    foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
@@ -459,7 +504,7 @@ namespace MarkdownManagerNew.Repositories
                     dbContext.SaveChanges();
                 }
             }
-
+            
 
             UserDocumentRight creatorRight = new UserDocumentRight();
             creatorRight.DocumentId = document.ID;
@@ -490,7 +535,7 @@ namespace MarkdownManagerNew.Repositories
                     dbContext.SaveChanges();
                 }
             }
-
+            
 
             dbContext.Entry(document).State = EntityState.Modified;
             //dbContext.SaveChanges();
@@ -653,6 +698,14 @@ namespace MarkdownManagerNew.Repositories
             dbContext.SaveChanges();
         }
 
+        public void RestoreArchivedDocument(Document document)
+        {
+            Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
+            document.IsArchived = false;
+            dbContext.Entry(dbDocument).CurrentValues.SetValues(document);
+            dbContext.SaveChanges();
+        }
+
         public List<UserListModel> GetUsersByName(string keyword, string currentUserID)
         {
             var userRole = dbContext.Roles
@@ -741,12 +794,12 @@ namespace MarkdownManagerNew.Repositories
             {
                 return true;
             }
-
+            
             else
             {
                 return false;
             }
-
+            
         }
 
         public Tag GetTagByLabel(string tag)

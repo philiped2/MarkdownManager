@@ -31,7 +31,7 @@ namespace MarkdownManagerNew.Controllers
         {
             AllDocumentsViewModel documentViewmodel = new AllDocumentsViewModel();
             documentViewmodel.CurrentUser = GetCurrentUser();
-            documentViewmodel.Documents = repo.GetUserDocuments(GetCurrentUser());
+            documentViewmodel.Documents = repo.GetAuthorisedUserDocuments(GetCurrentUser());
 
             return View(documentViewmodel);
             //return View(repo.GetUserDocuments(GetCurrentUser())); senaste använda
@@ -49,7 +49,7 @@ namespace MarkdownManagerNew.Controllers
         public ActionResult CreateTag(Tag model)
         {
             repo.CreateTag(model);
-            return RedirectToAction("Index", repo.GetUserDocuments(GetCurrentUser()));
+            return RedirectToAction("Index", repo.GetAuthorisedUserDocuments(GetCurrentUser()));
         }
 
         public ActionResult GetUsersJson(string keyword)
@@ -204,9 +204,44 @@ namespace MarkdownManagerNew.Controllers
 
 
         [HttpGet]
-        public ActionResult CreateGroup2()
+        public ActionResult CreateGroup()
         {
-            return View(new Group());
+            ViewBag.Test = "No group has been created";
+            CreateGroupViewModel viewModel = new CreateGroupViewModel();
+
+            List<ApplicationUser> tempUserList = repo.ListUsersToCreateGroup();
+            var checkBoxListItems = new List<CheckBoxListUser>();
+
+            foreach (var user in tempUserList)
+            {
+                checkBoxListItems.Add(new CheckBoxListUser()
+                {
+                    ID = user.Id,
+                    Display = user.LastName + "," + user.FirstName,
+                    IsChecked = false,
+
+                    CanEdit = false,
+                    IsGroupAdmin = false
+                });
+            }
+            viewModel.CheckBoxUsers = checkBoxListItems;
+
+            List<Document> tempDocumentList = repo.GetAuthorisedUserDocuments(GetCurrentUser());
+            var checkBoxListDocuments = new List<CheckBoxListDocuments>();
+
+            foreach (var document in tempDocumentList)
+            {
+                checkBoxListDocuments.Add(new CheckBoxListDocuments()
+                {
+                    ID = document.ID,
+                    Display = document.Name,
+                    IsChecked = false
+                });
+            }
+
+            viewModel.CheckBoxDocuments = checkBoxListDocuments;
+
+            return View(viewModel);
         }
 
         //[HttpPost]
@@ -241,7 +276,7 @@ namespace MarkdownManagerNew.Controllers
             }
             viewModel.CheckBoxUsers = checkBoxListItems;
 
-            List<Document> tempDocumentList = repo.GetUserDocuments(GetCurrentUser());
+            List<Document> tempDocumentList = repo.GetAuthorisedUserDocuments(GetCurrentUser());
             var checkBoxListDocuments = new List<CheckBoxListDocuments>();
 
             foreach (var document in tempDocumentList)
@@ -504,5 +539,7 @@ namespace MarkdownManagerNew.Controllers
             }
             base.Dispose(disposing);
         }
+
+        
     }
 }
