@@ -385,13 +385,16 @@ namespace MarkdownManagerNew.Controllers
             {
                 return HttpNotFound();
             }
-            //else if (currentUser.DocumentRights.Any(x => x.document.ID == document.ID))
-            else
+                //(Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
+            else if (currentUser.UserDocumentRights.Any(x => x.document.ID == document.ID && x.CanWrite == true))
             {
                 //return View(document);
                 return View(new Document() { ID = id.Value });
             }
-            //return HttpNotFound();
+            else
+            {
+                return HttpNotFound();
+            }
             //return View(document);
         }
 
@@ -507,6 +510,7 @@ namespace MarkdownManagerNew.Controllers
         // GET: User/Delete/5
         public ActionResult Delete(int? id)
         {
+            ApplicationUser currentUser = GetCurrentUser();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -517,7 +521,15 @@ namespace MarkdownManagerNew.Controllers
                 return HttpNotFound();
             }
 
-            return View(document);
+            else if (currentUser.UserDocumentRights.Any(x => x.document.ID == document.ID && x.CanWrite == true))
+            {
+                return View(document);
+            }
+
+            else
+            {
+                return HttpNotFound();
+            }
         }
 
         public ActionResult MyGroups()
