@@ -167,11 +167,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201604291301202_Initial.cs" />
-    <Compile Include="Migrations\201604291301202_Initial.Designer.cs">
-      <DependentUpon>201604291301202_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CheckBoxListDocuments.cs" />
     <Compile Include="Models\CheckBoxListGroup.cs" />
@@ -243,6 +238,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Controllers\CreateGroupController.js" />
+    <Content Include="Scripts\Controllers\EditDocumentController.js" />
     <Content Include="Scripts\Controllers\NewDocumentController.js" />
     <Content Include="Scripts\Controllers\TagController.js" />
     <Content Include="Scripts\Directives\Autocomplete.js" />
@@ -1110,11 +1106,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201604291301202_Initial.resx">
-      <DependentUpon>201604291301202_Initial.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

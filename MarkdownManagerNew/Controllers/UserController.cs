@@ -90,6 +90,12 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpGet]
+        public ActionResult CreateGroup2()
+        {
+            return View(new Group());
+        }
+
+        [HttpGet]
         public ActionResult CreateDocument(List<File> files)
         {
             CreateDocumentViewModel viewModel = (CreateDocumentViewModel)TempData["viewModel"];
