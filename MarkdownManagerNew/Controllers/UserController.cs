@@ -29,6 +29,11 @@ namespace MarkdownManagerNew.Controllers
 
         public ActionResult Index(string message)
         {
+            //List<Document> ArchivedDocumentsToDelete = repo.DeleteOldArchivedDocuments();
+            //foreach (Document)
+
+            repo.DeleteOldArchivedDocuments();
+
             ViewBag.message = "";
             AllDocumentsViewModel documentViewmodel = new AllDocumentsViewModel();
             documentViewmodel.CurrentUser = GetCurrentUser();
@@ -146,7 +151,7 @@ namespace MarkdownManagerNew.Controllers
 
             return View(model);
         }
-        
+
         public ActionResult GetDocumentFormDataJson(int ID)
         {
             var documentToGet = repo.GetDocumentById(ID, GetCurrentUser()); //Also checks if user is auth to get document

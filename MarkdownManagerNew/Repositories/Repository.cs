@@ -694,6 +694,7 @@ namespace MarkdownManagerNew.Repositories
         {
             Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
             document.IsArchived = true;
+            document.TimeArchived = DateTime.Now;
             dbContext.Entry(dbDocument).CurrentValues.SetValues(document);
             dbContext.SaveChanges();
         }
@@ -702,6 +703,7 @@ namespace MarkdownManagerNew.Repositories
         {
             Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
             document.IsArchived = false;
+            document.TimeArchived = null;
             dbContext.Entry(dbDocument).CurrentValues.SetValues(document);
             dbContext.SaveChanges();
         }

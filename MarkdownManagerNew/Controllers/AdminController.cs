@@ -26,6 +26,8 @@ namespace MarkdownManagerNew.Controllers
 
         public ActionResult Index(string message)
         {
+            repo.DeleteOldArchivedDocuments();
+
             ViewBag.message = message;
             return View(GetCurrentUser());
         }

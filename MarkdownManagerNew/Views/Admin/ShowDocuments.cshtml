@@ -72,6 +72,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Creator)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeArchived)
+        </th>
         <th></th>
     </tr>
 
@@ -93,6 +96,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Creator.UserName)
             </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeArchived)
+            </td>
+            
             <td class="btn-group btn-group-sm">
                 @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
                 @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
