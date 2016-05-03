@@ -929,5 +929,28 @@ namespace MarkdownManagerNew.Repositories
             }
             return userList;
         }
+
+        public void DeleteOldArchivedDocuments()
+        {
+            //List<Document> documentToDelete = new List<Document>();
+
+            //foreach (Document document in dbContext.Documents.Where(x => x.TimeArchived >= DateTime.Now.AddMonths(-1)))
+            //{
+            //    documentToDelete.Add(document);
+            //}
+
+            //return documentToDelete;
+
+            foreach (Document oldDocument in dbContext.Documents)
+            {
+                if (oldDocument.IsArchived == true && oldDocument.TimeArchived <= DateTime.Now.AddMinutes(-1))
+                {
+                    dbContext.Documents.Remove(oldDocument);
+                }
+
+            }
+
+            dbContext.SaveChanges();
+        }
     }
 }
