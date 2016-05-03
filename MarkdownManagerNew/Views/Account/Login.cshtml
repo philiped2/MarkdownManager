@@ -2,7 +2,7 @@
 @using MarkdownManagerNew.Models
 @model LoginViewModel
 @{
-    ViewBag.Title = "Log in";
+    ViewBag.Title = "Logga in";
 }
 
 <div class="container" id="loginWallaper">
@@ -15,14 +15,14 @@
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="form-group">
-                        @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
+                        <label class="col-md-2 control-label">Användarnamn</label>
                         <div class="col-md-10">
                             @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                         </div>
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <label class="col-md-2 control-label">Lösenord</label>
                         <div class="col-md-10">
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
@@ -44,11 +44,11 @@
                 }
             </section>
         </div>
-        <div class="col-md-4">
+        @*<div class="col-md-4">
             <section id="socialLoginForm">
                 @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
             </section>
-        </div>
+        </div>*@
     </div>
 </div>
 

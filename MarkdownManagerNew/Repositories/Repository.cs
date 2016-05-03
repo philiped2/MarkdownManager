@@ -761,11 +761,11 @@ namespace MarkdownManagerNew.Repositories
             //    })
             //    .ToList();
             List<Group> selectedGroups = new List<Group>();
-            List<Group> groups = dbContext.Groups.ToList();
+            List<Group> groups = dbContext.Groups.Where(g => g.Name.Contains(keyword)).ToList();
 
             foreach (Group group in groups) //Ger tydligen inte rätt grupper
             {
-                if (currentUser.UserDocumentRights.Any(x => x.DocumentId == group.ID))
+                if (currentUser.UserGroupRights.Any(x => x.GroupId == group.ID))
                 {
                     selectedGroups.Add(group);
                 }

@@ -4,9 +4,9 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Dokument</h2> 
+<h2>Dokument</h2>
 
-<table class="table">
+<table class="table table-condensed card">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Documents.First().Name)
@@ -26,45 +26,48 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model.Documents.Where(x => x.IsArchived == false)) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DateCreated)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastChanged)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Creator.UserName)
-        </td>
-        <td class="btn-group btn-group-sm">
-            @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
-            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
-            {
-            @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
-            }
-            else
-            {
-                @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
-            }
-            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
-            {
-                @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
-            }
-            else
-            {
-                @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
-            }
-            
-            @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })*@
-        </td>
-    </tr>
-}
+    @foreach (var item in Model.Documents.Where(x => x.IsArchived == false))
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastChanged)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Creator.UserName)
+            </td>
+            <td class="btn-group btn-group-sm pull-right">
+                @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
+                @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
+                }
+                else
+                {
+                    @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
+                }
+                @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
+                {
+                    @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
+                }
+                else
+                {
+                    @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
+                }
+
+                @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })*@
+            </td>
+        </tr>
+    }
 
 </table>
+
+
