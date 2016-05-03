@@ -27,8 +27,9 @@ namespace MarkdownManagerNew.Controllers
         }
         // GET: User
 
-        public ActionResult Index()
+        public ActionResult Index(string message)
         {
+            ViewBag.message = "";
             AllDocumentsViewModel documentViewmodel = new AllDocumentsViewModel();
             documentViewmodel.CurrentUser = GetCurrentUser();
             documentViewmodel.Documents = repo.GetAuthorisedUserDocuments(GetCurrentUser());
@@ -144,6 +145,22 @@ namespace MarkdownManagerNew.Controllers
             }
 
             return View(model);
+        }
+        
+        public ActionResult GetDocumentFormDataJson(int ID)
+        {
+            var documentToGet = repo.GetDocumentById(ID, GetCurrentUser()); //Also checks if user is auth to get document
+            var userDocumentRights = repo.getDocumentUserDocumentRights(ID);
+            var groupDocumentRights = repo.getDocumentGroupDocumentRights(ID);
+            if (documentToGet == null)
+            {
+                return View(new { message = "Ett problem uppstod när dokumentet skulle hämtas. Du kan sakna rättigheter för åtgärden."});
+            }
+            else //description  markdown tags users,  groups
+            {
+                return Json(new { name = documentToGet.Name, description = documentToGet.Description, markdown = documentToGet.Markdown, users = userDocumentRights, groups = groupDocumentRights, tags = documentToGet.Tags.Select(t => t.Label) }, JsonRequestBehavior.AllowGet);
+            }
+            
         }
 
         [HttpPost]
@@ -371,7 +388,8 @@ namespace MarkdownManagerNew.Controllers
             //else if (currentUser.DocumentRights.Any(x => x.document.ID == document.ID))
             else
             {
-                return View(document);
+                //return View(document);
+                return View(new Document() { ID = id.Value });
             }
             //return HttpNotFound();
             //return View(document);

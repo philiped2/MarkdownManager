@@ -9,6 +9,10 @@
             return $http.post("/User/CreateDocumentJson", { name: document.Name, description: document.Description, markdown: document.Markdown, tags: document.Tags, users: document.Users, groups: document.Groups });
         };
 
+        fac.GetDocumentFormDataJson = function (ID) {
+            return $http.get("/User/GetDocumentFormDataJson", { params: { ID: ID } });
+        };
+
         return fac
 
     }

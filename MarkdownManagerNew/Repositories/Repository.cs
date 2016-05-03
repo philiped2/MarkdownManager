@@ -872,5 +872,60 @@ namespace MarkdownManagerNew.Repositories
 
             dbContext.Entry(group).State = EntityState.Modified;
         }
+
+        public Document GetDocumentById(int ID, ApplicationUser currentUser)
+        {
+            var query = dbContext.Documents.Where(d => d.ID == ID).Single();
+
+            if (currentUser.UserDocumentRights.Any(r=>r.DocumentId == ID))
+            {
+                return query;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<UserListModel> getDocumentUserDocumentRights(int ID)
+        {
+            List<UserListModel> userList = new List<UserListModel>();
+            var result = dbContext.UserDocumentRights.Where(r => r.DocumentId == ID).ToList();
+            foreach (var right in result)
+            { 
+                UserListModel modelToAdd = new UserListModel() {FullName = right.user.FirstName + " " + right.user.LastName, ID = right.UserId};
+                if (right.CanWrite == true)
+                {
+                    modelToAdd.Rights = "ReadWrite";
+                }
+                else if (right.CanWrite == false)
+                {
+                    modelToAdd.Rights = "Read";
+                }
+                userList.Add(modelToAdd);
+            }
+            return userList;
+        }
+
+        public List<GroupListModel> getDocumentGroupDocumentRights(int ID)
+        {
+            List<GroupListModel> userList = new List<GroupListModel>();
+            var result = dbContext.GroupDocumentRights.Where(r => r.DocumentId == ID).ToList();
+
+            foreach (var right in result)
+            {
+                GroupListModel modelToAdd = new GroupListModel() {Name = right.group.Name, Description = right.group.Description, ID = right.GroupId, Users=null };
+                if (right.CanWrite == true)
+                {
+                    modelToAdd.Rights = "ReadWrite";
+                }
+                else if (right.CanWrite == false)
+                {
+                    modelToAdd.Rights = "Read";
+                }
+                userList.Add(modelToAdd);
+            }
+            return userList;
+        }
     }
 }

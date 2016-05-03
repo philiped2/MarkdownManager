@@ -9,6 +9,22 @@
             $scope.showModal = !$scope.showModal;
         };
 
+        $scope.GetDocumentFormData = function(id)
+        {
+            var returnPromise = DocumentService.GetDocumentFormDataJson(id);
+            returnPromise.success(function (response) {
+                $scope.document.Name = response.name;
+                $scope.document.Description = response.description;
+                $scope.document.Markdown = response.markdown;
+                $scope.document.Tags = response.tags;
+                $scope.document.Users = response.users;
+                $scope.document.Groups = response.groups;
+            })
+            returnPromise.error(function (response) {
+                $scope.message = "Ett problem gjorde att dokumentet inte kunde hämtas"
+            })
+        };
+
         $("#mdEditor").scroll(function () { //Syncs scrolling between markdown-editor and markdown-result
             $("#mdResult").scrollTop($("#mdEditor").scrollTop());
             $("#mdResult").scrollLeft($("#mdEditor").scrollLeft());

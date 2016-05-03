@@ -5,7 +5,9 @@
 }
 
 <div ng-controller="NewDocumentController">
-    <h3>Nytt dokument</h3>
+    <h4>Nytt dokument</h4>
+    <h1 class="text-center">{{document.Name}}</h1>
+    <hr />
     <form name="newDocumentForm" ng-submit="AddDocument()">
         @Html.AntiForgeryToken()
         <div class="form-horizontal">
