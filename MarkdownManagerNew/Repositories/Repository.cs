@@ -694,6 +694,7 @@ namespace MarkdownManagerNew.Repositories
         {
             Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
             document.IsArchived = true;
+            document.TimeArchived = DateTime.Now;
             dbContext.Entry(dbDocument).CurrentValues.SetValues(document);
             dbContext.SaveChanges();
         }
@@ -702,6 +703,7 @@ namespace MarkdownManagerNew.Repositories
         {
             Document dbDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
             document.IsArchived = false;
+            document.TimeArchived = null;
             dbContext.Entry(dbDocument).CurrentValues.SetValues(document);
             dbContext.SaveChanges();
         }
@@ -871,6 +873,29 @@ namespace MarkdownManagerNew.Repositories
             dbContext.SaveChanges();
 
             dbContext.Entry(group).State = EntityState.Modified;
+        }
+
+        public void DeleteOldArchivedDocuments()
+        {
+            //List<Document> documentToDelete = new List<Document>();
+
+            //foreach (Document document in dbContext.Documents.Where(x => x.TimeArchived >= DateTime.Now.AddMonths(-1)))
+            //{
+            //    documentToDelete.Add(document);
+            //}
+
+            //return documentToDelete;
+            
+            foreach (Document oldDocument in dbContext.Documents)
+            {
+                if (oldDocument.IsArchived == true && oldDocument.TimeArchived <= DateTime.Now.AddMinutes(-1))
+                {
+                    dbContext.Documents.Remove(oldDocument);
+                }
+                
+            }
+
+            dbContext.SaveChanges();
         }
     }
 }

@@ -29,6 +29,11 @@ namespace MarkdownManagerNew.Controllers
 
         public ActionResult Index()
         {
+            //List<Document> ArchivedDocumentsToDelete = repo.DeleteOldArchivedDocuments();
+            //foreach (Document)
+
+            repo.DeleteOldArchivedDocuments();
+
             AllDocumentsViewModel documentViewmodel = new AllDocumentsViewModel();
             documentViewmodel.CurrentUser = GetCurrentUser();
             documentViewmodel.Documents = repo.GetAuthorisedUserDocuments(GetCurrentUser());
