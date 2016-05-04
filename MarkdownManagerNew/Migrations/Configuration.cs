@@ -121,12 +121,6 @@ namespace MarkdownManagerNew.Migrations
                 //groupTest.GroupUsers.Add(groupUser1);
                 //groupTest.GroupUsers.Add(groupUser2);
 
-                //group1.Users.Add(philip);  // GROUP --> USERS
-                //group1.Users.Add(alexander);
-
-                //group2.Users.Add(william);
-                //group2.Users.Add(olle);
-
                 //group1.Documents.Add(document1); // GROUP --> DOCUMENTS
                 //group1.Documents.Add(document2);
 
@@ -178,16 +172,6 @@ namespace MarkdownManagerNew.Migrations
                 tag4a.Documents.Add(document4);
                 tag4b.Documents.Add(document4);
                 tagGeneral.Documents.Add(document4);
-
-                //alexander.Groups.Add(group1);  // USER --> GROUPS
-                //philip.Groups.Add(group1);
-                //william.Groups.Add(group2);
-                //olle.Groups.Add(group2);
-
-                //alexander.Documents.Add(document4); // USER --> DOCUMENTS
-                //philip.Documents.Add(document3);
-                //william.Documents.Add(document1);
-                //olle.Documents.Add(document2);
 
                 //alexander.GroupRights.Add(GroupRightTest);                                  // USER --> GROUPRIGHTS                // GROUPRIGHTS
                 //alexander.DocumentRights.Add(DocumentRightTest);
@@ -255,7 +239,6 @@ namespace MarkdownManagerNew.Migrations
         }
     }
 }
-
 
 
 
