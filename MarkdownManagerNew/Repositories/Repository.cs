@@ -56,7 +56,10 @@ namespace MarkdownManagerNew.Repositories
 
             foreach (Document doc in dbDocuments)                  // usern får en rätt userright i sin lista men metoden kastar ej in doc i query
             {
-                if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID))
+                if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID) ||
+                    dbContext.UserGroupRights.Any(x => x.UserId == user.Id &&
+                        dbContext.GroupDocumentRights.Any(g => g.GroupId == x.GroupId &&
+                            g.DocumentId == doc.ID)))
                 {
                     query.Add(doc);
                 }
