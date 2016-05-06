@@ -10,5 +10,6 @@ namespace MarkdownManagerNew.Viewmodels
     {
         public ApplicationUser CurrentUser { get; set; }
         public List<Document> Documents { get; set; }
+        public List<int> DocumentWithEditRightsById { get; set; }
     }
 }

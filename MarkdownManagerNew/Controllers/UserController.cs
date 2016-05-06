@@ -39,6 +39,10 @@ namespace MarkdownManagerNew.Controllers
             documentViewmodel.CurrentUser = GetCurrentUser();
             documentViewmodel.Documents = repo.GetAuthorisedUserDocuments(GetCurrentUser());
 
+            List<int> usersGroupDocumentRightsById = new List<int>();
+            documentViewmodel.DocumentWithEditRightsById = usersGroupDocumentRightsById;
+            documentViewmodel.DocumentWithEditRightsById = repo.ListUsersGroupDocumentRights(GetCurrentUser(), usersGroupDocumentRightsById);
+
             return View(documentViewmodel);
             //return View(repo.GetUserDocuments(GetCurrentUser())); senaste använda
             //return View(repo.listAllDocuments());
@@ -391,11 +395,14 @@ namespace MarkdownManagerNew.Controllers
                 return HttpNotFound();
             }
                 //(Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
-            else if (currentUser.UserDocumentRights.Any(x => x.document.ID == document.ID && x.CanWrite == true))
+            else if (currentUser.UserDocumentRights.Any(x => x.document.ID == document.ID && x.CanWrite == true) || db.UserGroupRights.Any(x => x.UserId == currentUser.Id &&
+                        db.GroupDocumentRights.Any(g => g.GroupId == x.GroupId &&
+                            g.DocumentId == id)))
             {
                 //return View(document);
                 return View(new Document() { ID = id.Value });
             }
+
             else
             {
                 return HttpNotFound();
@@ -526,7 +533,9 @@ namespace MarkdownManagerNew.Controllers
                 return HttpNotFound();
             }
 
-            else if (currentUser.UserDocumentRights.Any(x => x.document.ID == document.ID && x.CanWrite == true))
+            else if (currentUser.UserDocumentRights.Any(x => x.document.ID == document.ID && x.CanWrite == true) || db.UserGroupRights.Any(x => x.UserId == currentUser.Id &&
+                        db.GroupDocumentRights.Any(g => g.GroupId == x.GroupId &&
+                            g.DocumentId == id)))
             {
                 return View(document);
             }

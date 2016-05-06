@@ -54,6 +54,7 @@ namespace MarkdownManagerNew.Repositories
 
             List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false).ToList();
 
+
             foreach (Document doc in dbDocuments)                  // usern får en rätt userright i sin lista men metoden kastar ej in doc i query
             {
                 if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID) ||
@@ -103,6 +104,28 @@ namespace MarkdownManagerNew.Repositories
 
             return query;
 
+        }
+
+        public List<int> ListUsersGroupDocumentRights(ApplicationUser user, List<int> usersGroupDocumentRightsById)
+        {
+            List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false).ToList();
+
+
+            foreach (Document doc in dbDocuments)                  
+            {
+                if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID && x.CanWrite == true) ||
+                    dbContext.UserGroupRights.Any(x => x.UserId == user.Id &&
+                        dbContext.GroupDocumentRights.Any(g => g.GroupId == x.GroupId &&
+                            g.DocumentId == doc.ID)))
+                {
+                    //int id;
+                    //id = doc.ID;
+                    usersGroupDocumentRightsById.Add(doc.ID);
+                }
+                
+            }
+            
+            return usersGroupDocumentRightsById;
         }
 
         public List<Document> GetAllDocuments()
