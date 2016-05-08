@@ -958,90 +958,92 @@ namespace MarkdownManagerNew.Repositories
 
         public void EditDocument(int Id, string name, string description, string markdown, List<string> tags, List<UserListModel> users, List<GroupListModel> groups, ApplicationUser applicationUser)
         {
-            Document documentToChange = dbContext.Documents.Where(d => d.ID == Id).Single();
+            //Document documentToChange = dbContext.Documents.Where(d => d.ID == Id).Single();
 
-            if (tags != null)
-            {
-                foreach (var tag in tags)
-                {
-                    //If tag exists (check label.lower)
-                    //get tag and add to document.tags
-                    if (TagExistCheck(tag))
-                    {
-                        //just add the tag
-                        documentToChange.Tags.Add(GetTagByLabel(tag));
-                    }
+            //if (tags != null)
+            //{
+            //    foreach (var tag in tags)
+            //    {
+            //        //If tag exists (check label.lower)
+            //        //get tag and add to document.tags
+            //        if (TagExistCheck(tag))
+            //        {
+            //            //just add the tag
+            //            documentToChange.Tags.Add(GetTagByLabel(tag));
+            //        }
 
-                    //Else create new tag, get it and add to document.tags
+            //        //Else create new tag, get it and add to document.tags
 
-                    else
-                    {
-                        //create the tag and then add it
+            //        else
+            //        {
+            //            //create the tag and then add it
 
-                        CreateTagByLabel(tag);
-                        documentToChange.Tags.Add(GetTagByLabel(tag));
-                    }
+            //            CreateTagByLabel(tag);
+            //            documentToChange.Tags.Add(GetTagByLabel(tag));
+            //        }
 
-                }
-            }
+            //    }
+            //}
 
-            if (users != null)
-            {
-                foreach (var user in users)
-                {
-                    var userToAdd = GetUserByID(user.ID);
-                    UserDocumentRight right = new UserDocumentRight();
-                    if (user.Rights == "ReadWrite")
-                    {
-                        right.CanWrite = true;
-                    }
-                    else if (user.Rights == "Read")
-                    {
-                        right.CanWrite = false;
-                    }
-                    right.DocumentId = documentToChange.ID;
-                    right.UserId = userToAdd.Id;
-                    if (!dbContext.UserDocumentRights.Any(r=>r.DocumentId==documentToChange.ID && r.UserId == userToAdd.Id))
-                    {
+            //if (users != null)
+            //{
+            //    foreach (var user in users)
+            //    {
+            //        var userToAdd = GetUserByID(user.ID);
+            //        UserDocumentRight right = new UserDocumentRight();
+            //        if (user.Rights == "ReadWrite")
+            //        {
+            //            right.CanWrite = true;
+            //        }
+            //        else if (user.Rights == "Read")
+            //        {
+            //            right.CanWrite = false;
+            //        }
+            //        right.DocumentId = documentToChange.ID;
+            //        right.UserId = userToAdd.Id;
+            //        if (!dbContext.UserDocumentRights.Any(r=>r.DocumentId==documentToChange.ID && r.UserId == userToAdd.Id))
+            //        {
 
-                    }
+            //        }
                     
-                }
-            }
+            //    }
+            //}
 
 
-            UserDocumentRight creatorRight = new UserDocumentRight();
-            creatorRight.DocumentId = documentToChange.ID;
-            creatorRight.CanWrite = true;
-            creatorRight.UserId = documentToChange.Id;
-            documentToChange.UserDocumentRights.Add(creatorRight);
-            dbContext.Entry(documentToChange).State = EntityState.Modified;
-            dbContext.SaveChanges();
+            //UserDocumentRight creatorRight = new UserDocumentRight();
+            //creatorRight.DocumentId = documentToChange.ID;
+            //creatorRight.CanWrite = true;
+            //creatorRight.UserId = documentToChange.Id;
+            //documentToChange.UserDocumentRights.Add(creatorRight);
+            //dbContext.Entry(documentToChange).State = EntityState.Modified;
+            //dbContext.SaveChanges();
 
-            if (groups != null)
-            {
-                foreach (var group in groups)
-                {
-                    var groupToAdd = GetGroupByID(group.ID);
-                    GroupDocumentRight right = new GroupDocumentRight();
-                    if (group.Rights == "ReadWrite")
-                    {
-                        right.CanWrite = true;
-                    }
-                    else if (group.Rights == "Read")
-                    {
-                        right.CanWrite = false;
-                    }
-                    right.DocumentId = document.ID;
-                    right.GroupId = groupToAdd.ID;
-                    groupToAdd.GroupDocumentRights.Add(right);
-                    dbContext.Entry(groupToAdd).State = EntityState.Modified;
-                    dbContext.SaveChanges();
-                }
-            }
+            //if (groups != null)
+            //{
+            //    foreach (var group in groups)
+            //    {
+            //        var groupToAdd = GetGroupByID(group.ID);
+            //        GroupDocumentRight right = new GroupDocumentRight();
+            //        if (group.Rights == "ReadWrite")
+            //        {
+            //            right.CanWrite = true;
+            //        }
+            //        else if (group.Rights == "Read")
+            //        {
+            //            right.CanWrite = false;
+            //        }
+            //        right.DocumentId = document.ID;
+            //        right.GroupId = groupToAdd.ID;
+            //        groupToAdd.GroupDocumentRights.Add(right);
+            //        dbContext.Entry(groupToAdd).State = EntityState.Modified;
+            //        dbContext.SaveChanges();
+            //    }
+            //}
 
 
-            dbContext.Entry(document).State = EntityState.Modified;
+            //dbContext.Entry(document).State = EntityState.Modified;
+
+            //////
             
             //if (documentToChange.Name != name)
             //{
