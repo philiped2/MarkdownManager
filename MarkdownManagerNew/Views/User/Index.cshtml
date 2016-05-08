@@ -46,7 +46,8 @@
             </td>
             <td class="btn-group btn-group-sm pull-right">
                 @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
-                @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
+                @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any
+                    (x => x == item.ID))
                 {
                     @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
                 }
@@ -54,7 +55,8 @@
                 {
                     @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
                 }
-                @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin"))
+                @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any
+                    (x => x == item.ID))
                 {
                     @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
                 }
