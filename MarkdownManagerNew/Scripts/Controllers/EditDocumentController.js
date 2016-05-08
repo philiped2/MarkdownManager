@@ -112,6 +112,16 @@
             })
         };
 
+        $scope.SaveChanges = function (document, ID) {
+            var returnPromise = DocumentService.SaveChanges(document, ID);
+            returnPromise.success(function (response) {
+                $scope.statusMessage = response.message;
+                $scope.showMessage = true;
+                $location.hash('statusMessage');
+                $anchorScroll();
+            })
+        };
+
         $scope.getAuthGroups2 = function (val) {
             if (val.length < 1) {
                 $scope.GroupResult = [];
