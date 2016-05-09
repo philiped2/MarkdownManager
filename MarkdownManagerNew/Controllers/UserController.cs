@@ -27,6 +27,7 @@ namespace MarkdownManagerNew.Controllers
         }
         // GET: User
 
+
         public ActionResult Index(string message)
         {
             //List<Document> ArchivedDocumentsToDelete = repo.DeleteOldArchivedDocuments();
@@ -76,6 +77,13 @@ namespace MarkdownManagerNew.Controllers
             var result = repo.GetAuthGroupsByName(keyword, currentUser);
 
             return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetSettingsJson(string settingName)
+        {
+            //var currentUser = GetCurrentUser();
+
+            return Json("asd", JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetTagsJson (string tagLabel)

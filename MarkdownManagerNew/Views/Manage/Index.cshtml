@@ -17,7 +17,7 @@
                 if (User.IsInRole("Admin"))
                 {
                     <br />
-                    @Html.ActionLink("Tid för dokumentrensning", "AdminSettings", "Admin", new { @class = "btn btn-default" })
+                    @Html.ActionLink("Tid för dokumentrensning", "DocumentDelTimeSetting", "Admin", null, new { @class = "btn btn-default" })
                 }
             }
             else
@@ -26,7 +26,7 @@
                 if (User.IsInRole("Admin"))
                 {
                     <br />
-                    @Html.ActionLink("Tid för dokumentrensning", "AdminSettings", "Admin", new { @class = "btn btn-default" })
+                    @Html.ActionLink("Tid för dokumentrensning", "DocumentDelTimeSetting", "Admin", null, new { @class = "btn btn-default" })
                 }
             }
 

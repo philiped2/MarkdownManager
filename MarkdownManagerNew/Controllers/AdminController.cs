@@ -301,7 +301,7 @@ namespace MarkdownManagerNew.Controllers
             return View("ShowDocuments", repo.GetAllDocuments());
         }
 
-        public ActionResult AdminSettings()
+        public ActionResult DocumentDelTimeSetting()
         {
             return View();
         }
