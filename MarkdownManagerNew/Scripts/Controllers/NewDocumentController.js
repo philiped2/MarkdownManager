@@ -127,13 +127,7 @@
         };
 
         $scope.getTags = function (val) {
-            var tagsPromise = TagService.getTags(val);
-            tagsPromise.then(function (response) {
-                var tags = response;
-
-                return tags;
-            })
-
+            return TagService.getTags(val, $scope.document.Tags);
         };
 
         $scope.addSelectedTag = function (tag) {

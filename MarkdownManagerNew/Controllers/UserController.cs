@@ -79,9 +79,16 @@ namespace MarkdownManagerNew.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetTagsJson (string tagLabel)
+        public ActionResult GetTagsJson (string tagLabel, List<string> selectedTags)
         {
             var result = repo.GetTagsByName(tagLabel);
+            if (selectedTags != null)
+            {
+                foreach (string tag in selectedTags)
+                {
+                    result.Remove(tag);
+                }
+            }
 
             return Json(result, JsonRequestBehavior.AllowGet);
         }
