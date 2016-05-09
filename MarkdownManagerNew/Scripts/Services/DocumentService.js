@@ -17,6 +17,10 @@
             return $http.get("/User/GetDocumentFormDataJson", { params: { ID: ID } });
         };
 
+        fac.SaveChanges = function (document, ID) {
+            return $http.post("/User/EditDocumentJson", { Id: ID, name: document.Name, description: document.Description, markdown: document.Markdown, tags: document.Tags, users: document.Users, groups: document.Groups });
+        };
+
         return fac
 
     }

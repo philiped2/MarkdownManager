@@ -168,11 +168,17 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605091336411_initial.cs" />
+    <Compile Include="Migrations\201605091336411_initial.Designer.cs">
+      <DependentUpon>201605091336411_initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\CheckBoxListDocuments.cs" />
     <Compile Include="Models\CheckBoxListGroup.cs" />
     <Compile Include="Models\CheckBoxListTags.cs" />
     <Compile Include="Models\CheckBoxListUser.cs" />
+    <Compile Include="Models\DeleteArchivedDocumentTimeSetting.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\GroupDocumentRight.cs" />
     <Compile Include="Models\UserDocumentRight.cs" />
@@ -239,6 +245,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\Controllers\CreateGroupController.js" />
+    <Content Include="Scripts\Controllers\DocumentDelTimeSettingController.js" />
     <Content Include="Scripts\Controllers\EditDocumentController.js" />
     <Content Include="Scripts\Controllers\NewDocumentController.js" />
     <Content Include="Scripts\Controllers\TagController.js" />
@@ -1022,6 +1029,7 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\Services\DocumentService.js" />
     <Content Include="Scripts\Services\GroupService.js" />
+    <Content Include="Scripts\Services\SystemSettingsService.js" />
     <Content Include="Scripts\Services\TagService.js" />
     <Content Include="Scripts\Services\UserService.js" />
     <Content Include="Scripts\_references.js" />
@@ -1097,6 +1105,7 @@
     <Content Include="Views\User\NewCreateGroup.cshtml" />
     <Content Include="Views\User\CreateDocument2.cshtml" />
     <Content Include="Views\User\CreateGroup2.cshtml" />
+    <Content Include="Views\Admin\DocumentDelTimeSetting.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1107,6 +1116,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201605091336411_initial.resx">
+      <DependentUpon>201605091336411_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

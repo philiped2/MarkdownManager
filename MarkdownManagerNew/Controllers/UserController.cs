@@ -27,6 +27,7 @@ namespace MarkdownManagerNew.Controllers
         }
         // GET: User
 
+
         public ActionResult Index(string message)
         {
             //List<Document> ArchivedDocumentsToDelete = repo.DeleteOldArchivedDocuments();

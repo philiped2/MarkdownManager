@@ -77,6 +77,7 @@ namespace MarkdownManagerNew.Models
         public DbSet<UserGroupRight> UserGroupRights { get; set; }
         public DbSet<UserDocumentRight> UserDocumentRights { get; set; }
         public DbSet<GroupDocumentRight> GroupDocumentRights { get; set; }
+        public DbSet<DeleteArchivedDocumentTimeSetting> DeleteArchivedDocumentTimeSetting { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

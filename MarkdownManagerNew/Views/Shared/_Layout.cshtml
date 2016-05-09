@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @*<title>@ViewBag.Title - My ASP.NET Application</title>*@
+    <title>@ViewBag.Title - My ASP.NET Application</title>
     <link rel="stylesheet" href="~/Content/autocomplete.css">
     <link rel="stylesheet" href="http://yandex.st/highlightjs/8.0/styles/default.min.css">
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:light,regular,medium,thin,italic,mediumitalic,bold" title="roboto">
@@ -17,6 +17,7 @@
     @Scripts.Render("~/bundles/angularUI")
     <script src="~/Scripts/Directives/Autocomplete.js"></script>
     <script src="~/Scripts/app.js"></script>
+    <script src="~/Scripts/Services/SystemSettingsService.js"></script>
     <script src="~/Scripts/Services/DocumentService.js"></script>
     <script src="~/Scripts/Services/TagService.js"></script>
     <script src="~/Scripts/Services/UserService.js"></script>
@@ -26,6 +27,7 @@
     <script src="~/Scripts/Directives/CustomOnChange.js"></script>
     <script src="~/Scripts/Controllers/TagController.js"></script>
     <script src="~/Scripts/Controllers/FileController.js"></script>
+    <script src="~/Scripts/Controllers/DocumentDelTimeSettingController.js"></script>
     <script src="~/Scripts/Controllers/EditDocumentController.js"></script>
     <script src="~/Scripts/Controllers/NewDocumentController.js"></script>
     <script src="~/Scripts/Controllers/CreateGroupController.js"></script>

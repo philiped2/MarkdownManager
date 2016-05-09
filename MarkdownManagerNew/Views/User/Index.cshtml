@@ -44,28 +44,31 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Creator.UserName)
             </td>
-            <td class="btn-group btn-group-sm pull-right">
-                @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
-                @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any
+            <td>
+                <span class="btn-group btn-group-sm pull-right">
+                    @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
+                    @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any
                     (x => x == item.ID))
-                {
-                    @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
-                }
-                else
-                {
-                    @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
-                }
-                @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any
+                    {
+                        @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
+                    }
+                    @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any
                     (x => x == item.ID))
-                {
-                    @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
-                }
-                else
-                {
-                    @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
-                }
+                    {
+                        @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger", @Disabled = "disabled" })
+                    }
 
-                @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })*@
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })*@
+                </span>
+                
             </td>
         </tr>
     }

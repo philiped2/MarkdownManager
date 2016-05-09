@@ -1,23 +1,33 @@
 ﻿@model MarkdownManagerNew.Models.IndexViewModel
 @{
-    ViewBag.Title = "Min sida";
+    ViewBag.Title = "Inställningar";
 }
 
 <h2>@ViewBag.Title</h2>
 
 <p class="text-success">@ViewBag.StatusMessage</p>
 <div>
-    <h4>Kontoinställningar</h4>
     <hr />
 
 
             @if (Model.HasPassword)
             {
                 @Html.ActionLink("Ändra lösenord", "ChangePassword", "Manage", new { @class = "btn btn-default"})
+                
+                if (User.IsInRole("Admin"))
+                {
+                    <br />
+                    @Html.ActionLink("Tid för dokumentrensning", "DocumentDelTimeSetting", "Admin", null, new { @class = "btn btn-default" })
+                }
             }
             else
             {
                 @Html.ActionLink("Skapa", "SetPassword", "Manage", new { @class = "btn btn-default" })
+                if (User.IsInRole("Admin"))
+                {
+                    <br />
+                    @Html.ActionLink("Tid för dokumentrensning", "DocumentDelTimeSetting", "Admin", null, new { @class = "btn btn-default" })
+                }
             }
 
         @*<dt>External Logins:</dt>

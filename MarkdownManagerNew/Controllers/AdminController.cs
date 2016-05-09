@@ -300,5 +300,39 @@ namespace MarkdownManagerNew.Controllers
             repo.RestoreArchivedDocument(document);
             return View("ShowDocuments", repo.GetAllDocuments());
         }
+
+        public ActionResult DocumentDelTimeSetting()
+        {
+            return View();
+        }
+
+        public ActionResult GetSystemSettingsJson(string settingName)
+        {
+            if (settingName == "documentDelTime")
+            {
+                var settings = repo.GetDocumentDeleteTimeSettings();
+                return Json(new { activated = settings.Activated, timeValue = settings.TimeValue, timeUnit = settings.TimeUnit, settingName = settingName }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(new { message = "Error" }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult SetArchiveDeleteSettings(bool activated, int timeValue, string timeUnit)
+        {
+            if (timeValue > 0)
+            {
+                repo.SetDocumentDeleteTimeSettings(activated, timeValue, timeUnit);
+                return Json(new { message = "Inställningar ändrade" });
+            }
+            else
+            {
+                return Json(new { message = "Inställnigar godkänns inte" });
+            }
+
+        }
     }
 }
