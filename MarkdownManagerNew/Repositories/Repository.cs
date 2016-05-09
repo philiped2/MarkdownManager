@@ -1153,5 +1153,19 @@ namespace MarkdownManagerNew.Repositories
             //}
 
         }
+
+        public DeleteArchivedDocumentTimeSetting GetDocumentDeleteTimeSettings()
+        {
+            return dbContext.DeleteArchivedDocumentTimeSetting.First();
+        }
+
+        public void SetDocumentDeleteTimeSettings(bool activated, int timeValue, string timeUnit)
+        {
+            var setting = dbContext.DeleteArchivedDocumentTimeSetting.First();
+            setting.Activated = activated;
+            setting.TimeValue = timeValue;
+            setting.TimeUnit = timeUnit;
+            dbContext.Entry(setting).State = EntityState.Modified;
+        }
     }
 }

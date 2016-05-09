@@ -79,13 +79,6 @@ namespace MarkdownManagerNew.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetSettingsJson(string settingName)
-        {
-            //var currentUser = GetCurrentUser();
-
-            return Json("asd", JsonRequestBehavior.AllowGet);
-        }
-
         public ActionResult GetTagsJson (string tagLabel)
         {
             var result = repo.GetTagsByName(tagLabel);

@@ -5,9 +5,7 @@
         var fac = {};
 
         fac.GetSettings = function (settingName) {
-            return $http.get("/Admin/GetSystemSettingsJson", { params: { settingName: settingName } }).then(function (response) {
-                return response.data;
-            });
+            return $http.get("/Admin/GetSystemSettingsJson", { params: { settingName: settingName } });
         };
 
         fac.SetArchiveDeleteSettings = function (settings) {
@@ -16,5 +14,5 @@
 
         return fac;
     }
-    app.factory("GroupService", GroupService);
+    app.factory("SystemSettingsService", SystemSettingsService);
 }());
