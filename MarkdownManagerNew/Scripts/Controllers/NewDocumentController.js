@@ -1,12 +1,22 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var NewDocumentController = function ($scope, $http, $log, $filter,$location, $anchorScroll, TagService, UserService, GroupService, DocumentService) {
+    var NewDocumentController = function ($scope, $http, $log, $filter,$location, $timeout, $anchorScroll, TagService, UserService, GroupService, DocumentService) {
 
         $scope.showModal = false;
         $scope.showMessage = false;
         $scope.toggleModal = function () {
             $scope.showModal = !$scope.showModal;
+        };
+
+        var toggleShowMessage = function ()
+        {
+            $scope.showMessage = !$scope.showMessage;
+        }
+
+        var ShowMessage = function () {
+            toggleShowMessage();
+            $timeout(toggleShowMessage, 2000);
         };
 
         $("#mdEditor").scroll(function () { //Syncs scrolling between markdown-editor and markdown-result
@@ -94,8 +104,19 @@
         $scope.CreateDocument = function (document) {
             var returnPromise = DocumentService.CreateDocument(document);
             returnPromise.success(function (response) {
+                $scope.document = {
+                    Name: "",
+                    Description: "",
+                    Markdown: "",
+                    Tags: [],
+                    Users: [],
+                    Groups: []
+                }
+                $scope.asyncSelected = "";
+                $scope.asyncSelectedGroup = "";
+                $scope.asyncSelectedUser = "";
                 $scope.statusMessage = response.message;
-                $scope.showMessage = true;
+                ShowMessage();
                 $location.hash('statusMessage');
                 $anchorScroll();
             })
