@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "AdminSettings";
+}
+
+<h2>AdminSettings</h2>
+
+<h4>Archived documents</h4>
+<p>
+    Automatically deleted after: 1 month
+</p>
+
+<form class="form-horizontal">
+    <label>Rensa automatiskt efter</label>
+    <input type="text" class="form-control"/>
+    @*<div class="btn btn-group">
+        <label class="btn btn-primary btn-sm"  uib-btn-radio="'Minuter'">Minuter</label>
+        <label class="btn btn-primary btn-sm"  uib-btn-radio="'Dagar'">Dagar</label>
+        <label class="btn btn-primary btn-sm"  uib-btn-radio="'Veckor'">Veckor</label>
+        <label class="btn btn-primary btn-sm" uib-btn-radio="'Månader'">Månader</label>
+    </div>*@
+    <div class="radio">
+        <label><input type="radio" name="optradio">Minuter</label>
+    </div>
+    <div class="radio">
+        <label><input type="radio" name="optradio">Dagar</label>
+    </div>
+    <div class="radio disabled">
+        <label><input type="radio" name="optradio" disabled>Veckor</label>
+    </div>
+    <div class="radio disabled">
+        <label><input type="radio" name="optradio" disabled>Månader</label>
+    </div>
+    <button class="btn btn-default">Spara</button>
+</form>
