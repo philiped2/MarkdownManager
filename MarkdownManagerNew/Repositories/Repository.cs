@@ -981,56 +981,83 @@ namespace MarkdownManagerNew.Repositories
 
         public void EditDocument(int Id, string name, string description, string markdown, List<string> tags, List<UserListModel> users, List<GroupListModel> groups, ApplicationUser applicationUser)
         {
-            //Document documentToChange = dbContext.Documents.Where(d => d.ID == Id).Single();
+            Document documentToChange = dbContext.Documents.Where(d => d.ID == Id).Single();
 
-            //if (tags != null)
-            //{
-            //    foreach (var tag in tags)
-            //    {
-            //        //If tag exists (check label.lower)
-            //        //get tag and add to document.tags
-            //        if (TagExistCheck(tag))
-            //        {
-            //            //just add the tag
-            //            documentToChange.Tags.Add(GetTagByLabel(tag));
-            //        }
+            if (documentToChange.Description != description)
+            {
+                documentToChange.Description = description;
+            }
 
-            //        //Else create new tag, get it and add to document.tags
+            if (documentToChange.Markdown != markdown)
+            {
+                documentToChange.Markdown = markdown;
+            }
 
-            //        else
-            //        {
-            //            //create the tag and then add it
+            if (documentToChange.Name != name)
+            {
+                documentToChange.Name = name;
+            }
 
-            //            CreateTagByLabel(tag);
-            //            documentToChange.Tags.Add(GetTagByLabel(tag));
-            //        }
+            if (tags != null)
+            {
+                foreach (var tag in tags)
+                {
+                    //If tag exists (check label.lower)
+                    //get tag and add to document.tags
+                    if (TagExistCheck(tag))
+                    {
+                        //just add the tag
+                        documentToChange.Tags.Add(GetTagByLabel(tag));
+                    }
 
-            //    }
-            //}
+                    //Else create new tag, get it and add to document.tags
 
-            //if (users != null)
-            //{
-            //    foreach (var user in users)
-            //    {
-            //        var userToAdd = GetUserByID(user.ID);
-            //        UserDocumentRight right = new UserDocumentRight();
-            //        if (user.Rights == "ReadWrite")
-            //        {
-            //            right.CanWrite = true;
-            //        }
-            //        else if (user.Rights == "Read")
-            //        {
-            //            right.CanWrite = false;
-            //        }
-            //        right.DocumentId = documentToChange.ID;
-            //        right.UserId = userToAdd.Id;
-            //        if (!dbContext.UserDocumentRights.Any(r=>r.DocumentId==documentToChange.ID && r.UserId == userToAdd.Id))
-            //        {
+                    else
+                    {
+                        //create the tag and then add it
 
-            //        }
+                        CreateTagByLabel(tag);
+                        documentToChange.Tags.Add(GetTagByLabel(tag));
+                    }
+
+                }
+            }
+
+            if (users != null)
+            {
+                foreach (var user in users)
+                {
+                    UserDocumentRight right;
+
+                    var userToAdd = GetUserByID(user.ID);
+                    if (!dbContext.UserDocumentRights.Any(x => x.user.Id == user.ID && x.DocumentId == documentToChange.ID))
+                    {
+                        right = new UserDocumentRight();
+                        userToAdd.UserDocumentRights.Add(right);
+                    }
+
+                    else
+                    {
+                        right = dbContext.UserDocumentRights.Where(x => x.user.Id == user.ID && x.DocumentId == documentToChange.ID).Single();
+                    }
                     
-            //    }
-            //}
+                    if (user.Rights == "ReadWrite")
+                    {
+                        right.CanWrite = true;
+                    }
+                    else if (user.Rights == "Read")
+                    {
+                        right.CanWrite = false;
+                    }
+                    right.DocumentId = documentToChange.ID;
+                    right.UserId = userToAdd.Id;
+                    //if (!dbContext.UserDocumentRights.Any(r => r.DocumentId == documentToChange.ID && r.UserId == userToAdd.Id))
+                    //{
+                    //    dbContext.UserDocumentRights.Add(right);
+                    //}
+                    dbContext.SaveChanges();
+                }
+            }
 
 
             //UserDocumentRight creatorRight = new UserDocumentRight();
@@ -1038,8 +1065,8 @@ namespace MarkdownManagerNew.Repositories
             //creatorRight.CanWrite = true;
             //creatorRight.UserId = documentToChange.Id;
             //documentToChange.UserDocumentRights.Add(creatorRight);
-            //dbContext.Entry(documentToChange).State = EntityState.Modified;
-            //dbContext.SaveChanges();
+            dbContext.Entry(documentToChange).State = EntityState.Modified;
+            dbContext.SaveChanges();
 
             //if (groups != null)
             //{
