@@ -300,5 +300,10 @@ namespace MarkdownManagerNew.Controllers
             repo.RestoreArchivedDocument(document);
             return View("ShowDocuments", repo.GetAllDocuments());
         }
+
+        public ActionResult AdminSettings()
+        {
+            return View();
+        }
     }
 }

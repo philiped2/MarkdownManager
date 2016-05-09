@@ -1096,6 +1096,7 @@
     <Content Include="Views\User\NewCreateGroup.cshtml" />
     <Content Include="Views\User\CreateDocument2.cshtml" />
     <Content Include="Views\User\CreateGroup2.cshtml" />
+    <Content Include="Views\Admin\AdminSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
