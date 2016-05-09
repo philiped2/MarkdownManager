@@ -958,21 +958,26 @@ namespace MarkdownManagerNew.Repositories
 
         public void DeleteOldArchivedDocuments()
         {
-            //List<Document> documentToDelete = new List<Document>();
-
-            //foreach (Document document in dbContext.Documents.Where(x => x.TimeArchived >= DateTime.Now.AddMonths(-1)))
-            //{
-            //    documentToDelete.Add(document);
-            //}
-
-            //return documentToDelete;
-
-            foreach (Document oldDocument in dbContext.Documents)
+            List<Document> archivedDocuments = dbContext.Documents.Where(d => d.IsArchived == true).ToList();
+            if(dbContext.DeleteArchivedDocumentTimeSetting.First().TimeUnit=="days")
             {
-                if (oldDocument.IsArchived == true && oldDocument.TimeArchived <= DateTime.Now.AddMinutes(-1))
+                foreach (Document document in archivedDocuments)
                 {
-                    dbContext.Documents.Remove(oldDocument);
+                    //if (DateTime.Now > document.TimeArchived.date)
+                    //{
+                    //    dbContext.Documents.Remove(oldDocument);
+                    //}
+
                 }
+            }
+
+            if (dbContext.DeleteArchivedDocumentTimeSetting.First().TimeUnit == "weeks")
+            {
+
+            }
+
+            if (dbContext.DeleteArchivedDocumentTimeSetting.First().TimeUnit == "months")
+            {
 
             }
 
@@ -1166,6 +1171,7 @@ namespace MarkdownManagerNew.Repositories
             setting.TimeValue = timeValue;
             setting.TimeUnit = timeUnit;
             dbContext.Entry(setting).State = EntityState.Modified;
+            dbContext.SaveChanges();
         }
     }
 }

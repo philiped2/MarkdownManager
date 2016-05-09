@@ -9,7 +9,7 @@
         };
 
         fac.SetArchiveDeleteSettings = function (settings) {
-            return $http.post("/User/SetArchiveDeleteSettings", { activated: settings.activated, timeValue: settings.timeValue, timeUnit: settings.timeUnit });
+            return $http.post("/Admin/SetArchiveDeleteSettings", { activated: settings.activated, timeValue: settings.timeValue, timeUnit: settings.timeUnit });
         };
 
         return fac;
