@@ -181,6 +181,14 @@ namespace MarkdownManagerNew.Controllers
         }
 
         [HttpPost]
+        public ActionResult EditDocumentJson(int Id, string name, string description, string markdown, List<string> tags, List<UserListModel> users, List<GroupListModel> groups)
+        {
+            repo.EditDocument(Id, name, description, markdown, tags, users, groups, GetCurrentUser());
+
+            return Json(new { message = "Document created!" });
+        }
+
+        [HttpPost]
         public ActionResult CreateGroupJson(string name, string description, List<UserListModel> users)
         {
             repo.CreateGroup(name, description, users, GetCurrentUser());
