@@ -958,30 +958,51 @@ namespace MarkdownManagerNew.Repositories
 
         public void DeleteOldArchivedDocuments()
         {
-            List<Document> archivedDocuments = dbContext.Documents.Where(d => d.IsArchived == true).ToList();
-            if(dbContext.DeleteArchivedDocumentTimeSetting.First().TimeUnit=="days")
+            
+            DeleteArchivedDocumentTimeSetting settings = dbContext.DeleteArchivedDocumentTimeSetting.First();
+            if (settings.Activated==true)
             {
-                foreach (Document document in archivedDocuments)
+                List<Document> archivedDocuments = dbContext.Documents.Where(d => d.IsArchived == true).ToList();
+
+                if (settings.TimeUnit == "days")
                 {
-                    //if (DateTime.Now > document.TimeArchived.date)
-                    //{
-                    //    dbContext.Documents.Remove(oldDocument);
-                    //}
+                    foreach (Document document in archivedDocuments)
+                    {
+                        if (DateTime.Now >= document.TimeArchived.Value.AddDays(settings.TimeValue))
+                        {
+                            dbContext.Documents.Remove(document);
+                        }
 
+                    }
                 }
+
+                if (settings.TimeUnit == "weeks")
+                {
+                    foreach (Document document in archivedDocuments)
+                    {
+                        if (DateTime.Now >= document.TimeArchived.Value.AddDays(settings.TimeValue * 7))
+                        {
+                            dbContext.Documents.Remove(document);
+                        }
+
+                    }
+                }
+
+                if (settings.TimeUnit == "months")
+                {
+                    foreach (Document document in archivedDocuments)
+                    {
+                        if (DateTime.Now >= document.TimeArchived.Value.AddMonths(settings.TimeValue))
+                        {
+                            dbContext.Documents.Remove(document);
+                        }
+
+                    }
+                }
+
+                dbContext.SaveChanges();
             }
-
-            if (dbContext.DeleteArchivedDocumentTimeSetting.First().TimeUnit == "weeks")
-            {
-
-            }
-
-            if (dbContext.DeleteArchivedDocumentTimeSetting.First().TimeUnit == "months")
-            {
-
-            }
-
-            dbContext.SaveChanges();
+            
         }
 
         public void EditDocument(int Id, string name, string description, string markdown, List<string> tags, List<UserListModel> users, List<GroupListModel> groups, ApplicationUser applicationUser)

@@ -79,6 +79,10 @@
                 var promise = UserService.getUsers2(val);
                 promise.then(function (response) {
                     $scope.UserResult = response.data;
+                    for (user in $scope.document.Users)
+                    {
+                        $scope.UserResult = $filter('filter')($scope.UserResult, { ID: '!' + $scope.document.Users[user].ID });
+                    }
                     console.log("-----");
                     console.log("UserResult Updated");
                     console.log($scope.UserResult);
@@ -105,6 +109,9 @@
                 var promise = GroupService.getAuthGroups2(val);
                 promise.then(function (response) {
                     $scope.GroupResult = response.data;
+                    for (group in $scope.document.Groups) {
+                        $scope.GroupResult = $filter('filter')($scope.GroupResult, { ID: '!' + $scope.document.Groups[group].ID });
+                    }
                     console.log("-----");
                     console.log("GroupResult Updated");
                     console.log($scope.GroupResult);
@@ -114,31 +121,45 @@
         };
 
         $scope.removeUser = function (user) {
-            $scope.document.Users = $filter('filter')($scope.document.checkboxUsers, { ID: '!' + user.ID });
+            $scope.document.Users = $filter('filter')($scope.document.Users, { ID: '!' + user.ID });
+            console.log("User removed from selection");
+            console.log($scope.document.Users);
         };
 
         $scope.getTags = function (val) {
-            return TagService.getTags(val);
+            var tagsPromise = TagService.getTags(val);
+            tagsPromise.then(function (response) {
+                var tags = response;
+
+                return tags;
+            })
+
         };
 
         $scope.addSelectedTag = function (tag) {
             $scope.document.Tags.push(tag);
+            $scope.asyncSelected = "";
         }
 
         $scope.removeTag = function (tag) {
-            $scope.document.Tags = $filter('filter')($scope.document.tags, "!" + tag);
+            $scope.document.Tags = $filter('filter')($scope.document.Tags, "!" + tag);
         };
 
         $scope.addSelectedUser = function (user) {
             $scope.document.Users.push(user);
+            $scope.UserResult = $filter('filter')($scope.UserResult, { ID: '!' + user.ID });
+            console.log($scope.tags);
         }
 
         $scope.addSelectedGroup = function (group) {
             $scope.document.Groups.push(group);
+            $scope.GroupResult = $filter('filter')($scope.GroupResult, { ID: '!' + group.ID });
         }
 
         $scope.removeGroup = function (group) {
-            $scope.document.Groups = $filter('filter')($scope.document.checkboxGroups, { ID: '!' + group.ID });
+            $scope.document.Groups = $filter('filter')($scope.document.Groups, { ID: '!' + group.ID });
+            console.log("group removed from selection");
+            console.log($scope.document.Groups);
         };
         var OnTagsComplete = function (response) {
             $scope.tags = response.data;
