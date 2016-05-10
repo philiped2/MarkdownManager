@@ -189,7 +189,7 @@
                         @*<input type="submit" value="Spara" class="btn btn-default" />*@
                     <button type="button" class="btn btn-primary buttonFullWidth" ng-click="SaveChanges(document, @Model.ID)">Spara ändringar</button>
                 </div>
-                <div class="alert alert-info alert-dismissable" role="alert" id="statusMessage">{{statusMessage}}</div>
+                <div class="alert alert-info alert-dismissable" role="alert" ng-show="showMessage" id="statusMessage">{{statusMessage}}</div>
             </div>
         </form>
     </div>

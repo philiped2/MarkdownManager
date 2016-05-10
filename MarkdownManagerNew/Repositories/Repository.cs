@@ -102,7 +102,6 @@ namespace MarkdownManagerNew.Repositories
                                 g.DocumentId == dbDocuments[i].ID)))
                         {
                             query.Add(dbDocuments[i]);
-                            i++;
                         }
                     }
                 }
@@ -560,6 +559,7 @@ namespace MarkdownManagerNew.Repositories
             creatorRight.CanWrite = true;
             creatorRight.UserId = currentUser.Id;
             document.DateCreated = DateTime.Now;
+            document.LastChanged = document.DateCreated;
             currentUser.UserDocumentRights.Add(creatorRight);
             dbContext.Entry(currentUser).State = EntityState.Modified;
             dbContext.SaveChanges();
@@ -1032,6 +1032,7 @@ namespace MarkdownManagerNew.Repositories
         public void EditDocument(int Id, string name, string description, string markdown, List<string> tags, List<UserListModel> users, List<GroupListModel> groups, ApplicationUser applicationUser)
         {
             Document documentToChange = dbContext.Documents.Where(d => d.ID == Id).Single();
+            documentToChange.LastChanged = DateTime.Now;
 
             if (documentToChange.Description != description)
             {

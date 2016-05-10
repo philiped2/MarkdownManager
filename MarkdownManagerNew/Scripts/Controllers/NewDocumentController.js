@@ -1,7 +1,7 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var NewDocumentController = function ($scope, $http, $log, $filter,$location, $timeout, $anchorScroll, TagService, UserService, GroupService, DocumentService) {
+    var NewDocumentController = function ($scope, $http, $log, $filter, $location, $timeout, $anchorScroll, TagService, UserService, GroupService, DocumentService) {
 
         $scope.showModal = false;
         $scope.showMessage = false;

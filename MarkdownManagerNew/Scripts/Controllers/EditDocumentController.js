@@ -1,12 +1,21 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var EditDocumentController = function ($scope, $http, $log, $filter, $location, $anchorScroll, TagService, UserService, GroupService, DocumentService) {
+    var EditDocumentController = function ($scope, $http, $log, $filter, $location, $timeout, $anchorScroll, TagService, UserService, GroupService, DocumentService) {
 
         $scope.showModal = false;
         $scope.showMessage = false;
         $scope.toggleModal = function () {
             $scope.showModal = !$scope.showModal;
+        };
+
+        var toggleShowMessage = function () {
+            $scope.showMessage = !$scope.showMessage;
+        }
+
+        var ShowMessage = function () {
+            toggleShowMessage();
+            $timeout(toggleShowMessage, 2000);
         };
 
         $scope.GetDocumentFormData = function(id)
@@ -116,7 +125,7 @@
             var returnPromise = DocumentService.SaveChanges(document, ID);
             returnPromise.success(function (response) {
                 $scope.statusMessage = response.message;
-                $scope.showMessage = true;
+                ShowMessage();
                 $location.hash('statusMessage');
                 $anchorScroll();
             })

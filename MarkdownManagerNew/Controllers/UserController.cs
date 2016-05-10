@@ -193,7 +193,7 @@ namespace MarkdownManagerNew.Controllers
         {
             repo.CreateDocument2( name, description, markdown, tags, users, groups, GetCurrentUser());
             
-            return Json(new { message = "Document created!"});
+            return Json(new { message = "Dokument sparat!"});
         }
 
         [HttpPost]
@@ -201,14 +201,14 @@ namespace MarkdownManagerNew.Controllers
         {
             repo.EditDocument(Id, name, description, markdown, tags, users, groups, GetCurrentUser());
 
-            return Json(new { message = "Document created!" });
+            return Json(new { message = "Ändringar sparade!" });
         }
 
         [HttpPost]
         public ActionResult CreateGroupJson(string name, string description, List<UserListModel> users)
         {
             repo.CreateGroup(name, description, users, GetCurrentUser());
-            return Json(new { message = "Group created!" });
+            return Json(new { message = "Grupp skapad!" });
         }
 
         //[HttpPost]

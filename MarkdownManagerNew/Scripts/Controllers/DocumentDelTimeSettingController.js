@@ -1,15 +1,25 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var DocumentDelTimeSettingController = function ($scope, $http, $log, $filter, $location, $anchorScroll, SystemSettingsService) {
+    var DocumentDelTimeSettingController = function ($scope, $http, $log, $filter, $timeout, $location, $anchorScroll, SystemSettingsService) {
 
         $scope.showresult = false;
+        $scope.showMessage = false;
 
         $scope.settings = {
             activated: null,
             timeValue: null,
             timeUnit: null
         }
+
+        var toggleShowMessage = function () {
+            $scope.showMessage = !$scope.showMessage;
+        }
+
+        var ShowMessage = function () {
+            toggleShowMessage();
+            $timeout(toggleShowMessage, 2000);
+        };
         
         $scope.GetSettings = function (settingName) {
             var promise = SystemSettingsService.GetSettings(settingName);
@@ -32,6 +42,7 @@
             })
             promise.error(function (response) {
                 $scope.message = "Inställningar kunde inte hämtas"
+                ShowMessage();
             })
         };
 
@@ -39,6 +50,7 @@
             var returnPromise = SystemSettingsService.SetArchiveDeleteSettings(settings);
             returnPromise.success(function (response) {
                 $scope.statusMessage = response.message;
+                ShowMessage();
             })
         };
 
