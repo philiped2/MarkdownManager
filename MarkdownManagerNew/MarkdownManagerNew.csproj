@@ -198,6 +198,7 @@
     <Compile Include="Viewmodels\CreateDocumentViewModel2.cs" />
     <Compile Include="Viewmodels\CreateGroupViewModel.cs" />
     <Compile Include="Viewmodels\CreateUserViewModel.cs" />
+    <Compile Include="Viewmodels\DocumentListModel.cs" />
     <Compile Include="Viewmodels\EditGroupViewModel.cs" />
     <Compile Include="Viewmodels\GroupListModel.cs" />
     <Compile Include="Viewmodels\UserListModel.cs" />
@@ -250,6 +251,7 @@
     <Content Include="Scripts\Controllers\EditDocumentController.js" />
     <Content Include="Scripts\Controllers\NewDocumentController.js" />
     <Content Include="Scripts\Controllers\TagController.js" />
+    <Content Include="Scripts\Controllers\UserIndexController.js" />
     <Content Include="Scripts\Directives\Autocomplete.js" />
     <Content Include="Scripts\Directives\CustomOnChange.js" />
     <Content Include="Scripts\Controllers\FileController.js" />
