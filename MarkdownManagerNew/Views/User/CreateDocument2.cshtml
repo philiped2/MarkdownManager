@@ -5,29 +5,34 @@
 }
 
 <div ng-controller="NewDocumentController" ng-cloak>
-    <h1 class="text-center">Nytt dokument</h1>
-    <hr />
-    <form name="newDocumentForm" ng-submit="AddDocument()">
-        @Html.AntiForgeryToken()
-        <div class="form-horizontal">
-            <div id="leftContainer" class="col-sm-6">
+    <div class="container">
+        <h1 class="text-center">Nytt dokument</h1>
+        <hr />
+        <form name="newDocumentForm" ng-submit="AddDocument()">
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                @*<div id="leftContainer" class="col-sm-6">*@
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control fullWidth text-center", placeholder = "Titel", @ng_model = "document.Name", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="form-group col-sm-6">
+                        <div class="col-sm-12">
+                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control fullWidth text-center", placeholder = "Titel", @ng_model = "document.Name", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-md-12">
-                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control fullWidth text-center", placeholder = "Beskrivning", @ng_model = "document.Description", @autocomplete = "off" } })
-                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    <div class="form-group col-sm-6">
+                        <div class="col-sm-12">
+                            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control fullWidth text-center", placeholder = "Beskrivning", @ng_model = "document.Description", @autocomplete = "off" } })
+                            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
                 <div class="row mdDivWrapper">
-                    <div class="col-sm-12">
-                        <button ng-click="toggleModal()" class="btn btn-default buttonFullWidth" type="button">Text från markdown-fil</button>
+                    <div class="col-sm-6">
+                        <div class="col-sm-12">
+                            <button ng-click="toggleModal()" class="btn btn-default buttonFullWidth" type="button">Text från markdown-fil</button>
+                        </div>
                     </div>
                     <modal title="Text från fil" visib="showModal">
                         <div class="form-group">
@@ -36,151 +41,219 @@
                         </div>
                     </modal>
 
-                    <div class="col-sm-12 markdownEditorForm">
+
+                    @*<div class="col-sm-6 markdownResult"></div>*@
+                    @*<div ng-init="initTest='@Model.Markdown'; mdText=initTest;">*@
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 markdownEditorForm">
 
                         @Html.EditorFor(model => model.Markdown, new { htmlAttributes = new { @class = "form-control markdownEditor", @ng_model = "document.Markdown", @id = "mdEditor" } })
                         @Html.ValidationMessageFor(model => model.Markdown, "", new { @class = "text-danger" })
 
                     </div>
-                    @*<div class="col-sm-6 markdownResult"></div>*@
-                    @*<div ng-init="initTest='@Model.Markdown'; mdText=initTest;">*@
-
+                    <div class="col-sm-6" ng-init="initTest='@Html.Encode(Model.Markdown)'; document.markdown=initTest;">
+                        <md class="col-sm-11 col-sm-offset-0.5 markdownResult" ng-model="document.Markdown" id="mdResult">
+                        </md>
+                    </div>
                 </div>
-                <div class="col-sm-12">
-                    <h3 class="text-center">Grupper</h3>
-                    <input type="text" ng-model="asyncSelectedGroup" class="form-control text-center fullWidth" ng-change="getAuthGroups2(asyncSelectedGroup)" placeholder="Sök grupp">
-                    <table class="table card">
-                        <tr ng-repeat="group in GroupResult">
-                            <td>{{group.Name}}</td>
-                            <td><button uib-popover="{{group.Description}}" popover-title="Beskrivning" type="button" popover-trigger="mouseenter" popover-placement="bottom" class="btn btn-default btn-xs">Visa beskrivning</button></td>
-                            <td><button uib-popover="Users goes here" popover-title="Title" type="button" popover-trigger="mouseenter" popover-placement="bottom" class="btn btn-default btn-xs">Visa medlemmmar</button></td>
-                            <td><button ng-click="addSelectedGroup(group)" class="btn btn-primary btn-xs">Lägg till</button></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm-12">
-                    <h3 class="text-center">Användare</h3>
-                    <input type="text" ng-model="asyncSelectedUser" class="form-control col-sm-12 text-center fullWidth" ng-change="getUsers2(asyncSelectedUser)" placeholder="Sök användare">
-                    <table class="table card">
-                        <tr ng-repeat="user in UserResult">
-                            <td>{{user.FullName}}</td>
-                            <td><button ng-click="addSelectedUser(user)" class="btn btn-primary btn-xs pull-right">Lägg till</button></td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm-12">
-                    <h3 class="text-center">Taggar</h3>
-                    <input type="text" ng-model="asyncSelected" placeholder="Lägg till tagg" uib-typeahead="tags for tags in getTags($viewValue)" typeahead-loading="loadingTags" typeahead-no-results="noResults" class="form-control col-sm-12 text-center fullWidth">
-                    <button type="button" class="btn btn-default buttonFullWidth" ng-click="addSelectedTag(asyncSelected)">Lägg till</button>
-                    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
-                </div>
-            </div>
-            <div id="rightContainer" class="col-sm-6">
-                <h2 class="text-center">{{document.Name}}</h2>
-                <hr />
-                <p class="col-sm-8 col-sm-offset-2 text-center">{{document.Description}}</p>
-                <div ng-init="initTest='@Html.Encode(Model.Markdown)'; document.markdown=initTest;">
-                    <md class="col-sm-11 col-sm-offset-0.5 markdownResult" ng-model="document.Markdown" id="mdResult">
-                    </md>
-                </div>
-                <div class="col-sm-12">
-                    <table class="table card" ng-show="document.Groups">
-                        <tr ng-repeat="group in document.Groups">
-                            <td>
-                                {{group.Name}}
-                            </td>
-                            <td>
-                                <div class="btn-group">
-                                    <label class="btn btn-primary btn-sm" ng-model="group.Rights" uib-btn-radio="'Read'">Läsa</label>
-                                    <label class="btn btn-primary btn-sm" ng-model="group.Rights" uib-btn-radio="'ReadWrite'">Läsa/Skriva</label>
-                                </div>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger btn-sm" ng-click="removeGroup(group)">
-                                    Ta bort
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm-12">
-                    <table class="table card" ng-show="document.Users">
-                        <tr ng-repeat="user in document.Users">
-                            <td>
-                                {{user.FullName}}
-                            </td>
-                            <td>
-                                <div class="btn-group btn-group-sm">
-                                    <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'Read'">Läsa</label>
-                                    <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'ReadWrite'">Läsa/Skriva</label>
-                                </div>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="removeUser(user)">
-                                    Ta bort
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-sm-12">
-                    <table class="table card" ng-show="document.Tags">
-                        <tr ng-repeat="tag in document.Tags">
-                            <td>
-                                {{tag}}
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="removeTag(tag)">
-                                    Ta bort
-                                </button>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            @*<div class="row">
-                    <p><b>Selected User: </b><br />{{asyncSelectedUser}}</p>
-                    <input type="text" ng-model="asyncSelectedUser" placeholder="Sök användare" uib-typeahead="user for user in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults" class="form-control">
-                    <button type="button" class="btn btn-primary" ng-click="addSelectedUser(asyncSelectedUser)">Lägg till</button>
-                    <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
-                    <div>
-                        <table class="table col-sm-12" ng-show="document.checkboxUsers">
-                            <tr>
-                                <th>
-                                    Användare
-                                </th>
-                                <th>
-                                    Rättigheter
-                                </th>
-                                <th>
-                                </th>
+                <div class="row card selectionBox">
+                    <div class="col-sm-6">
+                        <h3 class="text-center">Grupper</h3>
+                        <input type="text" ng-model="asyncSelectedGroup" class="form-control text-center fullWidth" ng-change="getAuthGroups2(asyncSelectedGroup)" placeholder="Sök grupp">
+                        <table class="table card">
+                            <tr ng-repeat="group in GroupResult">
+                                <td>{{group.Name}}</td>
+                                <td><button uib-popover="{{group.Description}}" popover-title="Beskrivning" type="button" popover-trigger="mouseenter" popover-placement="bottom" class="btn btn-default btn-xs">Visa beskrivning</button></td>
+                                <td><button uib-popover="Users goes here" popover-title="Title" type="button" popover-trigger="mouseenter" popover-placement="bottom" class="btn btn-default btn-xs">Visa medlemmmar</button></td>
+                                <td><button ng-click="addSelectedGroup(group)" class="btn btn-primary btn-xs">Lägg till</button></td>
                             </tr>
-                            <tr ng-repeat="user in document.checkboxUsers">
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <table class="table card" ng-show="document.Groups">
+                            <tr ng-repeat="group in document.Groups">
                                 <td>
-                                    {{user.FullName}}
+                                    {{group.Name}}
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'Read'">Läsa</label>
-                                        <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'ReadWrite'">Läsa/Skriva</label>
+                                        <label class="btn btn-primary btn-sm" ng-model="group.Rights" uib-btn-radio="'Read'">Läsa</label>
+                                        <label class="btn btn-primary btn-sm" ng-model="group.Rights" uib-btn-radio="'ReadWrite'">Läsa/Skriva</label>
                                     </div>
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn-danger" ng-click="removeUser(user)">
-                                        <span class="glyphicon glyphicon-remove-sign"></span>
+                                    <button type="button" class="btn btn-danger btn-sm" ng-click="removeGroup(group)">
+                                        Ta bort
                                     </button>
                                 </td>
                             </tr>
                         </table>
                     </div>
-                </div>*@
-            @*<input type="submit" value="Skapa" class="btn btn-default" name="CreateDocument" />*@
-            <button type="button" class="btn btn-primary buttonFullWidth" ng-click="CreateDocument(document)">Skapa dokument</button>
+                </div>
+                <div class="row card selectionBox">
+                    <div class="col-sm-6">
+                        <h3 class="text-center">Användare</h3>
+                        <input type="text" ng-model="asyncSelectedUser" class="form-control col-sm-12 text-center fullWidth" ng-change="getUsers2(asyncSelectedUser)" placeholder="Sök användare">
+                        <table class="table card">
+                            <tr ng-repeat="user in UserResult">
+                                <td>{{user.FullName}}</td>
+                                <td><button ng-click="addSelectedUser(user)" class="btn btn-primary btn-xs pull-right">Lägg till</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <table class="table card" ng-show="document.Users">
+                            <tr ng-repeat="user in document.Users">
+                                <td>
+                                    {{user.FullName}}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'Read'">Läsa</label>
+                                        <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'ReadWrite'">Läsa/Skriva</label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="removeUser(user)">
+                                        Ta bort
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="row card selectionBox">
+                    <div class="col-sm-6">
+                        <h3 class="text-center">Taggar</h3>
+                        <input type="text" ng-model="asyncSelected" placeholder="Lägg till tagg" uib-typeahead="tags for tags in getTags($viewValue)" typeahead-loading="loadingTags" typeahead-no-results="noResults" class="form-control col-sm-12 text-center fullWidth">
+                        <button type="button" class="btn btn-default buttonFullWidth" ng-click="addSelectedTag(asyncSelected)">Lägg till</button>
+                        <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
+                    </div>
+                    <div class="col-sm-6">
+                        <table class="table card" ng-show="document.Tags">
+                            <tr ng-repeat="tag in document.Tags">
+                                <td>
+                                    {{tag}}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="removeTag(tag)">
+                                        Ta bort
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                @*</div>*@
+                <div id="rightContainer" class="col-sm-6">
+                    <h2 class="text-center">{{document.Name}}</h2>
+                    <hr />
+                    <p class="col-sm-8 col-sm-offset-2 text-center">{{document.Description}}</p>
+                    @*<div ng-init="initTest='@Html.Encode(Model.Markdown)'; document.markdown=initTest;">
+                            <md class="col-sm-11 col-sm-offset-0.5 markdownResult" ng-model="document.Markdown" id="mdResult">
+                            </md>
+                        </div>*@
+                    @*<div class="col-sm-12">
+                            <table class="table card" ng-show="document.Groups">
+                                <tr ng-repeat="group in document.Groups">
+                                    <td>
+                                        {{group.Name}}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <label class="btn btn-primary btn-sm" ng-model="group.Rights" uib-btn-radio="'Read'">Läsa</label>
+                                            <label class="btn btn-primary btn-sm" ng-model="group.Rights" uib-btn-radio="'ReadWrite'">Läsa/Skriva</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm" ng-click="removeGroup(group)">
+                                            Ta bort
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>*@
+                    @*<div class="col-sm-12">
+                            <table class="table card" ng-show="document.Users">
+                                <tr ng-repeat="user in document.Users">
+                                    <td>
+                                        {{user.FullName}}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group btn-group-sm">
+                                            <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'Read'">Läsa</label>
+                                            <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'ReadWrite'">Läsa/Skriva</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="removeUser(user)">
+                                            Ta bort
+                                        </button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>*@
+                    @*<div class="col-sm-12">
+                                <table class="table card" ng-show="document.Tags">
+                                    <tr ng-repeat="tag in document.Tags">
+                                        <td>
+                                            {{tag}}
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-sm pull-right" ng-click="removeTag(tag)">
+                                                Ta bort
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>*@
 
-        </div>
-        <div class="alert alert-info alert-dismissable" role="alert" ng-show="showMessage" id="statusMessage">{{statusMessage}}</div>
-    </form>
+                    @*<div class="row">
+                            <p><b>Selected User: </b><br />{{asyncSelectedUser}}</p>
+                            <input type="text" ng-model="asyncSelectedUser" placeholder="Sök användare" uib-typeahead="user for user in getUsers($viewValue)" typeahead-loading="loadingUsers" typeahead-no-results="noResults" class="form-control">
+                            <button type="button" class="btn btn-primary" ng-click="addSelectedUser(asyncSelectedUser)">Lägg till</button>
+                            <i ng-show="loadingLocations" class="glyphicon glyphicon-refresh"> Hämtar taggar</i>
+                            <div>
+                                <table class="table col-sm-12" ng-show="document.checkboxUsers">
+                                    <tr>
+                                        <th>
+                                            Användare
+                                        </th>
+                                        <th>
+                                            Rättigheter
+                                        </th>
+                                        <th>
+                                        </th>
+                                    </tr>
+                                    <tr ng-repeat="user in document.checkboxUsers">
+                                        <td>
+                                            {{user.FullName}}
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'Read'">Läsa</label>
+                                                <label class="btn btn-primary" ng-model="user.Rights" uib-btn-radio="'ReadWrite'">Läsa/Skriva</label>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger" ng-click="removeUser(user)">
+                                                <span class="glyphicon glyphicon-remove-sign"></span>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>*@
+                    @*<input type="submit" value="Skapa" class="btn btn-default" name="CreateDocument" />*@
+                    <button type="button" class="btn btn-primary buttonFullWidth" ng-click="CreateDocument(document)">Skapa dokument</button>
+
+                </div>
+                <div class="alert alert-info alert-dismissable" role="alert" ng-show="showMessage" id="statusMessage">{{statusMessage}}</div>
+        </form>
+    </div>
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

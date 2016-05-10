@@ -536,6 +536,7 @@ namespace MarkdownManagerNew.Repositories
             creatorRight.DocumentId = document.ID;
             creatorRight.CanWrite = true;
             creatorRight.UserId = currentUser.Id;
+            document.DateCreated = DateTime.Now;
             currentUser.UserDocumentRights.Add(creatorRight);
             dbContext.Entry(currentUser).State = EntityState.Modified;
             dbContext.SaveChanges();
@@ -561,8 +562,8 @@ namespace MarkdownManagerNew.Repositories
                     dbContext.SaveChanges();
                 }
             }
-            
 
+            
             dbContext.Entry(document).State = EntityState.Modified;
             //dbContext.SaveChanges();
             return document;

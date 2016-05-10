@@ -257,3 +257,8 @@ background-color:#F8F8F8 !important
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.selectionBox
+{
+    min-height: 370px;
+}

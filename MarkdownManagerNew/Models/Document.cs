@@ -11,7 +11,7 @@ namespace MarkdownManagerNew.Models
     {
         public Document()
         {
-            DateCreated = DateTime.Now;
+            //DateCreated = DateTime.Now;
             ChangeLog = new List<string>();
 
             //Users = new List<ApplicationUser>();
