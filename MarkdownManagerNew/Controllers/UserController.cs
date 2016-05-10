@@ -38,7 +38,8 @@ namespace MarkdownManagerNew.Controllers
             ViewBag.message = "";
             AllDocumentsViewModel documentViewmodel = new AllDocumentsViewModel();
             documentViewmodel.CurrentUser = GetCurrentUser();
-            documentViewmodel.Documents = repo.GetAuthorisedUserDocuments(GetCurrentUser());
+            //documentViewmodel.Documents = repo.GetAuthorisedUserDocuments(GetCurrentUser());
+            documentViewmodel.Documents = repo.Get10LatestAuthorisedUserDocuments(GetCurrentUser());
 
             List<int> usersGroupDocumentRightsById = new List<int>();
             documentViewmodel.DocumentWithEditRightsById = usersGroupDocumentRightsById;
@@ -47,6 +48,13 @@ namespace MarkdownManagerNew.Controllers
             return View(documentViewmodel);
             //return View(repo.GetUserDocuments(GetCurrentUser())); senaste använda
             //return View(repo.listAllDocuments());
+        }
+
+        public ActionResult SearchAuthDocumentsByKeyword (string keyword)
+        {
+            var result = repo.GetAuthorisedUserDocumentsByKeyword(keyword, GetCurrentUser());
+
+            return Json(result, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

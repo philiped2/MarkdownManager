@@ -21,7 +21,11 @@
             return $http.post("/User/EditDocumentJson", { Id: ID, name: document.Name, description: document.Description, markdown: document.Markdown, tags: document.Tags, users: document.Users, groups: document.Groups });
         };
 
-        return fac
+        fac.SearchAuthDocumentsByKeyword = function (search) {
+            return $http.get("/User/SearchAuthDocumentsByKeyword", { params: { keyword: search } });
+        };
+
+        return fac;
 
     }
     app.factory("DocumentService", DocumentService);

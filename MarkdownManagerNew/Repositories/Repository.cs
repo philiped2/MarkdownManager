@@ -32,28 +32,8 @@ namespace MarkdownManagerNew.Repositories
         public List<Document> GetAuthorisedUserDocuments(ApplicationUser user) //Fixa denna med lamba-linq sedan
         {
             List<Document> query = new List<Document>();
-            //var documentsByUserRights = user.Documents.ToList();
-
-            //foreach (var item in documentsByUserRights)
-            //{
-            //    if (item.IsArchived == false)
-            //    {
-            //        query.Add(item);
-            //    }
-            //}
-
-            //foreach (Document doc in dbContext.Documents.Where(x => x.IsArchived == false))
-            //{
-            //    if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID))
-            //    {
-            //        query.Add(doc);
-            //    }
-                
-            //    query.Add(doc);                            
-            //}
 
             List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false).ToList();
-
 
             foreach (Document doc in dbDocuments)                  // usern får en rätt userright i sin lista men metoden kastar ej in doc i query
             {
@@ -64,44 +44,87 @@ namespace MarkdownManagerNew.Repositories
                 {
                     query.Add(doc);
                 }
-                //foreach (UserDocumentRight right in user.UserDocumentRights)
-                //{
-                //    if (right.ID == doc.ID)
-                //    {
-                //        query.Add(doc);
-                //    }
-             }
 
+            }
+            return query;
 
-            //}
+        }
 
-            //for (int x = 0; dbDocuments.Count > x; x++ )
-            //{
-            //    if (user.UserDocumentRights.Any(x => x.ID == dbDocuments[x].ID))
-            //}
+        public List<DocumentListModel> GetAuthorisedUserDocumentsByKeyword(string keyword, ApplicationUser user) //Fixa denna med lamba-linq sedan
+        {
+            List<Document> query = new List<Document>();
 
+            List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false && x.Name.Contains(keyword) || x.IsArchived == false && x.Description.Contains(keyword)).ToList();
 
+            foreach (Document doc in dbDocuments)                  // usern får en rätt userright i sin lista men metoden kastar ej in doc i query
+            {
+                if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID) ||
+                    dbContext.UserGroupRights.Any(x => x.UserId == user.Id &&
+                        dbContext.GroupDocumentRights.Any(g => g.GroupId == x.GroupId &&
+                            g.DocumentId == doc.ID)))
+                {
+                    query.Add(doc);
+                }
 
-                //List<Document> docs = dbContext.Documents.Where(x => x.IsArchived == false && user.UserDocumentRights.Any(d => d.DocumentId == x.ID)).ToList();
+            }
 
+            var fixedquery = query.Select(d => new DocumentListModel
+            {
+                ID = d.ID,
+                Name = d.Name,
+                Description = d.Description,
+                DateCreated = d.DateCreated.ToString(),
+                LastChanged = d.LastChanged.ToString(),
+                Creator = d.Creator.FirstName
+            }).ToList();
 
+            return fixedquery;
 
-                //foreach (Document doc in docs)
-                //{
-                //    query.Add(doc);
-                //}
+        }
 
-            //foreach (var group in user.Groups) bortkommenterad tisdag för att se om delete fungerar utan många till många förhållanden i modeller
-            //{
-            //    foreach (var document in group.Documents)
-            //    {
-            //        if (document.IsArchived == false)
-            //        {
-            //            query.Add(document);
-            //        }
-            //    }
-            //}
+        public List<Document> Get10LatestAuthorisedUserDocuments(ApplicationUser user) //Fixa denna med lamba-linq sedan
+        {
+            List<Document> query = new List<Document>();
 
+            List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false).ToList();
+
+            /*foreach (Document doc in dbDocuments.OrderBy(d=>d.DateCreated)) */                 // usern får en rätt userright i sin lista men metoden kastar ej in doc i query
+
+            if (dbDocuments.Count<10)
+            {
+                for (int i = 0; i < dbDocuments.Count; i++)
+                {
+                    if (dbDocuments[i] != null)
+                    {
+                        if (user.UserDocumentRights.Any(x => x.DocumentId == dbDocuments[i].ID) ||
+                        dbContext.UserGroupRights.Any(x => x.UserId == user.Id &&
+                            dbContext.GroupDocumentRights.Any(g => g.GroupId == x.GroupId &&
+                                g.DocumentId == dbDocuments[i].ID)))
+                        {
+                            query.Add(dbDocuments[i]);
+                            i++;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                    if (dbDocuments[i] != null)
+                    {
+                        if (user.UserDocumentRights.Any(x => x.DocumentId == dbDocuments[i].ID) ||
+                        dbContext.UserGroupRights.Any(x => x.UserId == user.Id &&
+                            dbContext.GroupDocumentRights.Any(g => g.GroupId == x.GroupId &&
+                                g.DocumentId == dbDocuments[i].ID)))
+                        {
+                            query.Add(dbDocuments[i]);
+                            i++;
+                        }
+                    }
+                }
+            }
+            
             return query;
 
         }
@@ -111,7 +134,7 @@ namespace MarkdownManagerNew.Repositories
             List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false).ToList();
 
 
-            foreach (Document doc in dbDocuments)                  
+            foreach (Document doc in dbDocuments)
             {
                 if (user.UserDocumentRights.Any(x => x.DocumentId == doc.ID && x.CanWrite == true) ||
                     dbContext.UserGroupRights.Any(x => x.UserId == user.Id &&
@@ -122,9 +145,9 @@ namespace MarkdownManagerNew.Repositories
                     //id = doc.ID;
                     usersGroupDocumentRightsById.Add(doc.ID);
                 }
-                
+
             }
-            
+
             return usersGroupDocumentRightsById;
         }
 
@@ -208,10 +231,10 @@ namespace MarkdownManagerNew.Repositories
         //    }
 
         //    foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
-            //    {
+        //    {
         //        Document groupDocument = dbContext.Documents.Where(x => x.ID == document.ID).Single();
         //        groupToAdd.Documents.Add(groupDocument);
-            //    }
+        //    }
 
         //    //var newGroup = new Group();
         //    ////newGroup.CreatorID = user.Id;
@@ -222,14 +245,14 @@ namespace MarkdownManagerNew.Repositories
         //    //    {
         //    //        newGroup.Users.Add(member);
         //    //    }
-            
+
         //    //}
         //    ////newGroup.Users = groupMembers;
         //    ////newGroup.Documents = documents;
         //    //newGroup.Creator = user;
         //    //newGroup.Name = name;
         //    //newGroup.Description = description;
-            
+
         //    //userGroupRights.GroupId = groupToAdd.ID;
 
 
@@ -275,7 +298,7 @@ namespace MarkdownManagerNew.Repositories
         //            updatedGroupUser.GroupRights.Add(userGroupRights);
         //            group.Users.Add(updatedGroupUser);
         //        }
-                
+
 
         //        if (user.IsGroupAdmin == true)
         //        {
@@ -299,8 +322,8 @@ namespace MarkdownManagerNew.Repositories
 
 
 
-                
- 
+
+
 
         //        //if (!group.Users.Any(x => x.Id == updatedGroupUser.Id))
         //        //{
@@ -313,10 +336,10 @@ namespace MarkdownManagerNew.Repositories
         //        //    NotUpdatedGroupUser = new ApplicationUser();
         //        //}
 
-                
+
 
         //        //theUser = groupUser;
-                
+
         //    }
 
         //    foreach (var document in viewmodel.CheckBoxDocuments.Where(x => x.IsChecked == true))
@@ -530,7 +553,7 @@ namespace MarkdownManagerNew.Repositories
                     dbContext.SaveChanges();
                 }
             }
-            
+
 
             UserDocumentRight creatorRight = new UserDocumentRight();
             creatorRight.DocumentId = document.ID;
@@ -561,7 +584,7 @@ namespace MarkdownManagerNew.Repositories
                     dbContext.SaveChanges();
                 }
             }
-            
+
 
             dbContext.Entry(document).State = EntityState.Modified;
             //dbContext.SaveChanges();
@@ -801,15 +824,15 @@ namespace MarkdownManagerNew.Repositories
             }
 
             var query = selectedGroups.Select(g => new GroupListModel
-                {
-                    Name = g.Name,
-                    ID = g.ID,
-                    Description = g.Description,
-                    Rights = "Read",
-                    Users = null
-                })
+            {
+                Name = g.Name,
+                ID = g.ID,
+                Description = g.Description,
+                Rights = "Read",
+                Users = null
+            })
                 .ToList();
-                
+
             return query;
         }
 
@@ -822,12 +845,12 @@ namespace MarkdownManagerNew.Repositories
             {
                 return true;
             }
-            
+
             else
             {
                 return false;
             }
-            
+
         }
 
         public Tag GetTagByLabel(string tag)
@@ -905,7 +928,7 @@ namespace MarkdownManagerNew.Repositories
         {
             var query = dbContext.Documents.Where(d => d.ID == ID).Single();
 
-            if (currentUser.UserDocumentRights.Any(r=>r.DocumentId == ID))
+            if (currentUser.UserDocumentRights.Any(r => r.DocumentId == ID))
             {
                 return query;
             }
@@ -920,8 +943,8 @@ namespace MarkdownManagerNew.Repositories
             List<UserListModel> userList = new List<UserListModel>();
             var result = dbContext.UserDocumentRights.Where(r => r.DocumentId == ID).ToList();
             foreach (var right in result)
-            { 
-                UserListModel modelToAdd = new UserListModel() {FullName = right.user.FirstName + " " + right.user.LastName, ID = right.UserId};
+            {
+                UserListModel modelToAdd = new UserListModel() { FullName = right.user.FirstName + " " + right.user.LastName, ID = right.UserId };
                 if (right.CanWrite == true)
                 {
                     modelToAdd.Rights = "ReadWrite";
@@ -942,7 +965,7 @@ namespace MarkdownManagerNew.Repositories
 
             foreach (var right in result)
             {
-                GroupListModel modelToAdd = new GroupListModel() {Name = right.group.Name, Description = right.group.Description, ID = right.GroupId, Users=null };
+                GroupListModel modelToAdd = new GroupListModel() { Name = right.group.Name, Description = right.group.Description, ID = right.GroupId, Users = null };
                 if (right.CanWrite == true)
                 {
                     modelToAdd.Rights = "ReadWrite";
@@ -958,9 +981,9 @@ namespace MarkdownManagerNew.Repositories
 
         public void DeleteOldArchivedDocuments()
         {
-            
+
             DeleteArchivedDocumentTimeSetting settings = dbContext.DeleteArchivedDocumentTimeSetting.First();
-            if (settings.Activated==true)
+            if (settings.Activated == true)
             {
                 List<Document> archivedDocuments = dbContext.Documents.Where(d => d.IsArchived == true).ToList();
 
@@ -1002,7 +1025,7 @@ namespace MarkdownManagerNew.Repositories
 
                 dbContext.SaveChanges();
             }
-            
+
         }
 
         public void EditDocument(int Id, string name, string description, string markdown, List<string> tags, List<UserListModel> users, List<GroupListModel> groups, ApplicationUser applicationUser)
@@ -1066,7 +1089,7 @@ namespace MarkdownManagerNew.Repositories
                     {
                         right = dbContext.UserDocumentRights.Where(x => x.user.Id == user.ID && x.DocumentId == documentToChange.ID).Single();
                     }
-                    
+
                     if (user.Rights == "ReadWrite")
                     {
                         right.CanWrite = true;
@@ -1120,7 +1143,7 @@ namespace MarkdownManagerNew.Repositories
             //dbContext.Entry(document).State = EntityState.Modified;
 
             //////
-            
+
             //if (documentToChange.Name != name)
             //{
             //    documentToChange.Name = name;
@@ -1148,7 +1171,7 @@ namespace MarkdownManagerNew.Repositories
             //        {
             //            documentToChange.Tags.Add(new Tag() { Label = tag, ID = documentToChange.ID });
             //        }
-                    
+
             //    }
             //}
 
