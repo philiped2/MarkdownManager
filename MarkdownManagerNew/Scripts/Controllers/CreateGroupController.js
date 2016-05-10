@@ -1,9 +1,18 @@
 ﻿(function () {
     var app = angular.module("app");
 
-    var CreateGroupController = function ($scope, $http, $log, $filter, GroupService, UserService) {
+    var CreateGroupController = function ($scope, $http, $log, $timeout, $filter, GroupService, UserService) {
 
         $scope.showMessage = false;
+
+        var toggleShowMessage = function () {
+            $scope.showMessage = !$scope.showMessage;
+        }
+
+        var ShowMessage = function () {
+            toggleShowMessage();
+            $timeout(toggleShowMessage, 2000);
+        };
 
         $scope.group = {
             Name: "",
@@ -14,6 +23,18 @@
         $scope.getUsers = function (val) {
             return UserService.getUsers(val);
         };
+
+        var ResetForm = function()
+        {
+            $scope.group = {
+                Name: "",
+                Description: "",
+                Users: []
+            }
+            $scope.UserResult = [];
+
+            $scope.asyncSelectedUser = "";
+        }
 
         $scope.getUsers2 = function (val) {
             if (val.length < 1) {
@@ -43,7 +64,8 @@
             var returnPromise = GroupService.CreateGroup(group);
             returnPromise.success(function (response) {
                 $scope.statusMessage = response.message;
-                $scope.showMessage = true;
+                ResetForm();
+                ShowMessage();
             })
         };
 

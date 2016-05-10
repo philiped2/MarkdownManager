@@ -10,7 +10,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @ng_model = "group.Name" } })
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", @ng_model = "group.Name", @autocomplete = "off" } })
                         @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @ng_model = "group.Description" } })
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", @ng_model = "group.Description", @autocomplete = "off" } })
                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -75,9 +75,4 @@
         
     </form>
     <div class="alert alert-info alert-dismissable" role="alert" ng-show="showMessage" id="statusMessage">{{statusMessage}}</div>
-
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
 </div>

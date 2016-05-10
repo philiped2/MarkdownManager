@@ -9,7 +9,7 @@
         <input type="text" class="form-control pull-right" placeholder="Sök dokument" ng-model="search" ng-change="SearchDocuments(search)" />
     </div>
 
-    <div class="row" ng-show="DocumentResult">
+    <div class="row" ng-show="DocumentResult" ng-cloak>
         <h3 class="text-center">Sökresultat</h3>
         <div>
             <table class="table table-condensed card">
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-    <div class="row">
+    <div class="row" ng-cloak>
         <h3 class="text-center">Senaste dokumenten</h3>
         <table class="table table-condensed card">
             <tr>

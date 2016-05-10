@@ -54,7 +54,7 @@ namespace MarkdownManagerNew.Repositories
         {
             List<Document> query = new List<Document>();
 
-            List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false && x.Name.Contains(keyword) || x.IsArchived == false && x.Description.Contains(keyword)).ToList();
+            List<Document> dbDocuments = dbContext.Documents.Where(x => x.IsArchived == false && x.Name.Contains(keyword) || x.IsArchived == false && x.Description.Contains(keyword) || x.IsArchived == false && x.Tags.Any(t=>t.Label.Contains(keyword))).ToList();
 
             foreach (Document doc in dbDocuments)                  // usern får en rätt userright i sin lista men metoden kastar ej in doc i query
             {
