@@ -8,68 +8,71 @@
 
 <div>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
+    <div class="card">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.DateCreated)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.LastChanged)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.LastChanged)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.LastChanged)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.LastChanged)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Creator)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Creator)
+            </dt>
 
-        <dd>
-            @Model.Creator.FirstName @Model.Creator.LastName 
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Tags)
-        </dt>
+            <dd>
+                @Model.Creator.FirstName @Model.Creator.LastName
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Tags)
+            </dt>
 
-        @foreach (var tag in Model.Tags)
-        {
-             <dd>@tag.Label</dd>
-        }
+            @foreach (var tag in Model.Tags)
+            {
+                <dd>@tag.Label</dd>
+            }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ChangeLog)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.ChangeLog)
+            </dt>
 
-        @foreach (var log in Model.ChangeLog)
-        {
-            <dd>@log</dd>
-        }
+            @foreach (var log in Model.ChangeLog)
+            {
+                <dd>@log</dd>
+            }
 
 
-    </dl>
+        </dl>
+    </div>
+    
     <div class="row">
-        <div class="markdown col-sm-10 col-sm-offset-1" ng-init="initTest='@Model.Markdown'; mdText=initTest;">
+        <div class="markdown col-sm-10 col-sm-offset-1" ng-init="initTest='@Html.Encode(Model.Markdown)'; mdText=initTest;">
             <md ng-model="mdText">
             </md>
         </div>
@@ -78,5 +81,5 @@
 </div>
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model. }) |*@
-    @Html.ActionLink("Tillbaka", "Index")
+    @Html.ActionLink("Tillbaka", "Index", null, new { @class = "btn btn-default btn-sm"})
 </p>

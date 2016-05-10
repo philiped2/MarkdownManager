@@ -40,9 +40,9 @@
                     <td>{{item.Creator}}</td>
                     <td>
                         <span class="btn-group btn-group-sm pull-right">
-                            <button class="btn btn-default">Öppna</button>
-                            <button class="btn btn-default">Redigera</button>
-                            <button class="btn btn-danger">Radera</button>
+                            <a ng-href="@Url.Content("~/User/Details/"){{item.ID}}" class="btn btn-default">Öppna</a>
+                            <a ng-href="@Url.Content("~/User/Edit/"){{item.ID}}" class="btn btn-default">Redigera</a>
+                            <a ng-href="@Url.Content("~/User/Delete/"){{item.ID}}" class="btn btn-danger">Radera</a>
                         </span>
                     </td>
                 </tr>
@@ -94,8 +94,7 @@
                     <td>
                         <span class="btn-group btn-group-sm pull-right">
                             @Html.ActionLink("Öppna", "Details", new { id = item.ID }, new { @Class = "btn btn-default" })
-                            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any
-(x => x == item.ID))
+                            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any(x => x == item.ID))
                             {
                                 @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default" })
                             }
@@ -103,8 +102,7 @@
                             {
                                 @Html.ActionLink("Redigera", "Edit", new { id = item.ID }, new { @Class = "btn btn-default", @Disabled = "disabled" })
                             }
-                            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any
-(x => x == item.ID))
+                            @if (Model.CurrentUser.UserDocumentRights.Any(x => x.document.ID == item.ID && x.CanWrite == true) || User.IsInRole("Admin") || Model.DocumentWithEditRightsById.Any(x => x == item.ID))
                             {
                                 @Html.ActionLink("Radera", "Delete", new { id = item.ID }, new { @Class = "btn btn-danger" })
                             }
