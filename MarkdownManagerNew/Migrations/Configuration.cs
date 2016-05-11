@@ -57,13 +57,17 @@ namespace MarkdownManagerNew.Migrations
 
 
 
-                var philip = new ApplicationUser { UserName = "Philip", FirstName = "Philip", LastName = "Edin", Email = "philip.e@markdownmanager.com" };
+                var philip = new ApplicationUser { UserName = "phiedi", FirstName = "Philip", LastName = "Edin", Email = "philip.e@markdownmanager.com" };
 
-                var alexander = new ApplicationUser { UserName = "Alexander", FirstName = "Alexander", LastName = "Edin", Email = "alexander.e@markdownmanager.com" };
+                var alexander = new ApplicationUser { UserName = "aleedi", FirstName = "Alexander", LastName = "Edin", Email = "alexander.e@markdownmanager.com" };
 
-                var william = new ApplicationUser { UserName = "William", FirstName = "William", LastName = "Edin", Email = "William.e@markdownmanager.com" };
+                var per = new ApplicationUser { UserName = "perolo", FirstName = "Per", LastName = "Olofsson", Email = "per.o@markdownmanager.com" };
 
-                var olle = new ApplicationUser { UserName = "Olle", FirstName = "Olle", LastName = "Marklund", Email = "Olle.m@markdownmanager.com" };
+                var andreas = new ApplicationUser { UserName = "andjoh", FirstName = "Andreas", LastName = "Johansson", Email = "andreas.j@markdownmanager.com" };
+
+                var anton = new ApplicationUser { UserName = "antber", FirstName = "Anton", LastName = "Berglund", Email = "anton.b@markdownmanager.com" };
+
+
 
                 if (!context.Users.Any(u => u.UserName == philip.UserName))
                 {
@@ -77,17 +81,33 @@ namespace MarkdownManagerNew.Migrations
                     userManager.AddToRole(alexander.Id, "User");
                 }
 
-                if (!context.Users.Any(u => u.UserName == william.UserName))
+                if (!context.Users.Any(u => u.UserName == per.UserName))
                 {
-                    userManager.Create(william, "Password123");
-                    userManager.AddToRole(william.Id, "User");
+                    userManager.Create(per, "Password123");
+                    userManager.AddToRole(per.Id, "User");
                 }
 
-                if (!context.Users.Any(u => u.UserName == olle.UserName))
+                if (!context.Users.Any(u => u.UserName == andreas.UserName))
                 {
-                    userManager.Create(olle, "Password123");
-                    userManager.AddToRole(olle.Id, "User");
+                    userManager.Create(andreas, "Password123");
+                    userManager.AddToRole(andreas.Id, "User");
                 }
+
+                if (!context.Users.Any(u => u.UserName == anton.UserName))
+                {
+                    userManager.Create(anton, "Password123");
+                    userManager.AddToRole(anton.Id, "User");
+                }
+
+                //var group1 = new Group { Name = "Drift", Description = "Gruppbeskrivning", CreatorID = andreas.Id };
+                //var group2 = new Group { Name = "Plan", Description = "Gruppbeskrivning", CreatorID = anton.Id };
+                //var group3 = new Group { Name = "Praktik", Description = "Gruppbeskrivning", CreatorID = alexander.Id };
+
+                //context.Groups.AddOrUpdate(group1);  // GROUPS
+                //context.Groups.AddOrUpdate(group2);
+                //context.Groups.AddOrUpdate(group3);
+
+                context.SaveChanges();
 
                 //var group1 = new Group { Name = "Grupp1", Description = "Den första gruppen", CreatorID = philip.Id };
                 //var group2 = new Group { Name = "Grupp2", Description = "Den andra gruppen", CreatorID = william.Id };
